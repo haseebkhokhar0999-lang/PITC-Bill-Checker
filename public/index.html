@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bijli Bill Checker - Check Your Electricity Bill Online</title>
+  <meta name="description" content="Check your electricity bill online for all Pakistani DISCOs (LESCO, MEPCO, FESCO, IESCO, GEPCO, PESCO, HESCO). Fast, secure and easy — all in one place.">
+  <meta name="keywords" content="Bijli Bill Checker, electricity bill online, lesco bill, mepco bill, iesco bill, fesco bill, gepco bill, hesco bill, pesco bill">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Top Clean White Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      
+      <!-- Brand Logo on Left -->
+      <a href="/" class="brand-link">
+        <div class="brand-icon-box">
+          <svg class="brand-bolt-svg" viewBox="0 0 24 24" fill="none">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Bijli Bill Checker</span>
+          <span class="brand-subtitle">Check Your Electricity Bill Online</span>
+        </div>
+      </a>
+
+      <!-- Center Navigation Links -->
+      <nav class="nav-links">
+        <a href="/" class="nav-item active">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+          <span>Home</span>
+        </a>
+        <a href="#heroSection" class="nav-item" onclick="if(document.getElementById('refNoInput')) document.getElementById('refNoInput').focus()">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Bill Check</span>
+        </a>
+        <a href="#howItWorksSection" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>How It Works</span>
+        </a>
+        <a href="#faqSection" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span>FAQ</span>
+        </a>
+        <a href="/terms" class="nav-item">
+          <span>Terms</span>
+        </a>
+        <a href="/privacy" class="nav-item">
+          <span>Privacy</span>
+        </a>
+      </nav>
+
+      <!-- Right Controls: Theme Toggle & All Cities Dropdown -->
+      <div class="nav-right">
+        <!-- Sun/Moon Theme Toggle -->
+        <button type="button" class="theme-icon-btn" id="themeToggleBtn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+          <svg class="sun-moon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Pakistan All Cities Dropdown -->
+        <div class="city-selector-dropdown-wrap" id="cityDropdownWrap">
+          <button type="button" class="city-selector-btn" id="cityDropdownBtn" aria-expanded="false" aria-label="Select City in Pakistan">
+            <span class="flag-box">🇵🇰</span>
+            <span class="selected-city-text" id="selectedCityText">Lahore</span>
+            <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          
+          <!-- Dropdown Popover List of All Cities -->
+          <div class="city-menu-popover" id="cityMenuPopover">
+            <div class="city-search-box">
+              <input type="text" id="citySearchInput" placeholder="Search your city..." autocomplete="off">
+            </div>
+            <div class="city-options-list" id="cityOptionsList">
+              <!-- Dynamically populated with all Pakistani cities -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="heroSection">
+    <div class="hero-container">
+      
+      <!-- Left Column: Search & Headline -->
+      <div class="hero-left">
+        
+        <!-- Two-Tone Pill Badge: WAPDA & DISCOs | Official Bill Checking -->
+        <div class="pill-badge-wrap">
+          <span class="badge-wapda">
+            <svg class="badge-bolt-icon" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            WAPDA & DISCOs
+          </span>
+          <span class="badge-official">
+            <span class="green-dot"></span>
+            Official Bill Checking
+          </span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="hero-title">
+          Electricity Bill <span class="highlight-blue">Check Online</span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="hero-subtitle">
+          Enter your reference number to check your electricity bill instantly.<br>
+          Fast, secure and easy — all in one place.
+        </p>
+
+        <!-- Search Input Bar with Integrated Company Selector -->
+        <form class="search-bar-wrap" id="billSearchForm">
+          <div class="search-input-inner">
+            
+            <!-- Company Selector Dropdown -->
+            <div class="search-company-badge">
+              <span class="company-badge-icon">⚡</span>
+              <select id="companySelectDropdown" class="company-inline-select" aria-label="Select Electricity Distribution Company">
+                <option value="lesco" selected>LESCO (Lahore)</option>
+                <option value="mepco">MEPCO (Multan)</option>
+                <option value="iesco">IESCO (Islamabad)</option>
+                <option value="fesco">FESCO (Faisalabad)</option>
+                <option value="gepco">GEPCO (Gujranwala)</option>
+                <option value="pesco">PESCO (Peshawar)</option>
+                <option value="hesco">HESCO (Hyderabad)</option>
+                <option value="qesco">QESCO (Quetta)</option>
+                <option value="sepco">SEPCO (Sukkur)</option>
+              </select>
+            </div>
+
+            <!-- Input Field -->
+            <input 
+              type="text" 
+              id="refNoInput" 
+              class="search-input-field" 
+              placeholder="Enter Reference Number (e.g. 14-digit)" 
+              maxlength="14"
+              value="06113530462901"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-check-bill" id="btnSubmitBill">
+            <svg class="btn-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span id="btnSubmitText">Check Bill</span>
+            <span class="btn-arrow">&rarr;</span>
+          </button>
+        </form>
+
+        <!-- Popular Providers Pills Row -->
+        <div class="popular-providers-row">
+          <span class="popular-label">Popular Providers:</span>
+          <div class="provider-pills-list">
+            <button type="button" class="provider-pill active" data-disco="lesco" onclick="selectCompany('lesco')">LESCO</button>
+            <button type="button" class="provider-pill" data-disco="mepco" onclick="selectCompany('mepco')">MEPCO</button>
+            <button type="button" class="provider-pill" data-disco="fesco" onclick="selectCompany('fesco')">FESCO</button>
+            <button type="button" class="provider-pill" data-disco="iesco" onclick="selectCompany('iesco')">IESCO</button>
+            <button type="button" class="provider-pill" data-disco="gepco" onclick="selectCompany('gepco')">GEPCO</button>
+            <button type="button" class="provider-pill" data-disco="pesco" onclick="selectCompany('pesco')">PESCO</button>
+            <button type="button" class="provider-pill" data-disco="hesco" onclick="selectCompany('hesco')">HESCO</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: 3D Illustration matching reference image -->
+      <div class="hero-right">
+        <div class="hero-img-stage">
+          <img 
+            src="/assets/hero-illustration-exact.png" 
+            alt="Bijli Bill Checker 3D Illustration with Light Bulb and Electricity Bill" 
+            class="hero-illustration-img"
+          />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Notification Alert Banner -->
+  <div class="container" id="alertContainer"></div>
+
+  <!-- Real-time Bill Result Section (Revealed when bill checked) -->
+  <section class="bill-result-section" id="billResultSection" style="display: none;">
+    <div class="container" id="resultsArea">
+      <!-- Populated dynamically by JavaScript -->
+    </div>
+  </section>
+
+  <!-- "Why Check Your Bill Online?" Feature Bar -->
+  <section class="why-section" id="whySection">
+    <div class="container">
+      <div class="why-card-bar">
+        
+        <!-- Left: Why Check Your Bill Online? -->
+        <div class="why-left">
+          <div class="why-icon-circle">
+            <svg viewBox="0 0 24 24" fill="#0066ff">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <div class="why-text">
+            <h3 class="why-title">Why Check Your Bill Online?</h3>
+            <p class="why-desc">Get your electricity bill details in seconds. No waiting, no hassle.</p>
+          </div>
+        </div>
+
+        <!-- Right: 3 Features -->
+        <div class="why-right">
+          
+          <div class="feature-item">
+            <div class="feat-icon-box">
+              <svg viewBox="0 0 24 24" fill="#0066ff">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <div>
+              <h4 class="feat-title">Fast & Easy</h4>
+              <p class="feat-desc">Get your bill in seconds</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feat-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h4 class="feat-title">100% Secure</h4>
+              <p class="feat-desc">Your data is safe with us</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feat-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h4 class="feat-title">24/7 Access</h4>
+              <p class="feat-desc">Check anytime, anywhere</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCO Cards Section (7 Cards Exactly Matching Image) -->
+  <section class="disco-cards-section" id="discoCardsSection">
+    <div class="container">
+      <div class="disco-cards-grid">
+        
+        <!-- 1. LESCO Card -->
+        <div class="disco-card card-lesco active" id="disco-card-lesco" onclick="selectCompany('lesco', true)">
+          <div class="disco-logo-wrap">
+            <img src="/assets/lesco_logo_exact.png" alt="LESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">LESCO</h3>
+          <p class="disco-fullname">Lahore Electric Supply Company</p>
+          <button type="button" class="btn-disco-action btn-lesco">
+            Check Bill &rarr;
+          </button>
+        </div>
+
+        <!-- 2. MEPCO Card -->
+        <div class="disco-card card-mepco" id="disco-card-mepco" onclick="selectCompany('mepco', true)">
+          <div class="disco-logo-wrap">
+            <img src="/assets/mepco_logo_exact.png" alt="MEPCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">MEPCO</h3>
+          <p class="disco-fullname">Multan Electric Power Company</p>
+          <button type="button" class="btn-disco-action btn-mepco">
+            Check Bill &rarr;
+          </button>
+        </div>
+
+        <!-- 3. FESCO Card -->
+        <div class="disco-card card-fesco" id="disco-card-fesco" onclick="selectCompany('fesco', true)">
+          <div class="disco-logo-wrap">
+            <img src="/assets/fesco_logo_exact.png" alt="FESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">FESCO</h3>
+          <p class="disco-fullname">Faisalabad Electric Supply Company</p>
+          <button type="button" class="btn-disco-action btn-fesco">
+            Check Bill &rarr;
+          </button>
+        </div>
+
+        <!-- 4. IESCO Card -->
+        <div class="disco-card card-iesco" id="disco-card-iesco" onclick="selectCompany('iesco', true)">
+          <div class="disco-logo-wrap">
+            <img src="/assets/iesco_logo_exact.png" alt="IESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">IESCO</h3>
+          <p class="disco-fullname">Islamabad Electric Supply Company</p>
+          <button type="button" class="btn-disco-action btn-iesco">
+            Check Bill &rarr;
+          </button>
+        </div>
+
+        <!-- 5. GEPCO Card -->
+        <div class="disco-card card-gepco" id="disco-card-gepco" onclick="selectCompany('gepco', true)">
+          <div class="disco-logo-wrap">
+            <img src="/assets/gepco_logo_exact.png" alt="GEPCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">GEPCO</h3>
+          <p class="disco-fullname">Gujranwala Electric Power Company</p>
+          <button type="button" class="btn-disco-action btn-gepco">
+            Check Bill &rarr;
+          </button>
+        </div>
+
+        <!-- 6. PESCO Card -->
+        <div class="disco-card card-pesco" id="disco-card-pesco" onclick="selectCompany('pesco', true)">
+          <div class="disco-logo-wrap">
+            <img src="/assets/pesco_logo_exact.png" alt="PESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">PESCO</h3>
+          <p class="disco-fullname">Peshawar Electric Supply Company</p>
+          <button type="button" class="btn-disco-action btn-pesco">
+            Check Bill &rarr;
+          </button>
+        </div>
+
+        <!-- 7. HESCO Card -->
+        <div class="disco-card card-hesco" id="disco-card-hesco" onclick="selectCompany('hesco', true)">
+          <div class="disco-logo-wrap">
+            <img src="/assets/hesco_logo_exact.png" alt="HESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">HESCO</h3>
+          <p class="disco-fullname">Hyderabad Electric Supply Company</p>
+          <button type="button" class="btn-disco-action btn-hesco">
+            Check Bill &rarr;
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- "How It Works" Section Exactly Matching Image -->
+  <section class="how-it-works-section" id="howItWorksSection">
+    <div class="container how-it-works-container">
+      
+      <!-- Left side: Title & intro text -->
+      <div class="how-left">
+        <div class="how-icon-box">
+          <svg viewBox="0 0 24 24" fill="#0066ff">
+            <path d="M4 10h16v10H4z"/>
+            <path d="M12 2L2 9h20L12 2z"/>
+          </svg>
+        </div>
+        <div class="how-left-text">
+          <h2 class="how-main-title">How It Works</h2>
+          <p class="how-sub-title">Checking your electricity bill is simple and takes less than a minute.</p>
+        </div>
+      </div>
+
+      <!-- Right side: 4 horizontal steps connected with subtle arrows -->
+      <div class="how-steps-row">
+        
+        <!-- Step 1 -->
+        <div class="step-col">
+          <div class="step-num-circle">1</div>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <circle cx="11.5" cy="14.5" r="2.5"></circle>
+              <line x1="13.5" y1="16.5" x2="16" y2="19"></line>
+            </svg>
+          </div>
+          <h4 class="step-title">Enter Reference Number</h4>
+          <p class="step-desc">Type your 14-digit reference number (mentioned on your bill).</p>
+        </div>
+
+        <div class="step-arrow">&rarr;</div>
+
+        <!-- Step 2 -->
+        <div class="step-col">
+          <div class="step-num-circle">2</div>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <h4 class="step-title">Click Check Bill</h4>
+          <p class="step-desc">Press the check button to fetch your bill details.</p>
+        </div>
+
+        <div class="step-arrow">&rarr;</div>
+
+        <!-- Step 3 -->
+        <div class="step-col">
+          <div class="step-num-circle">3</div>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="9 15 11 17 15 13"></polyline>
+            </svg>
+          </div>
+          <h4 class="step-title">View Bill Details</h4>
+          <p class="step-desc">See your complete bill information including due date and amount.</p>
+        </div>
+
+        <div class="step-arrow">&rarr;</div>
+
+        <!-- Step 4 -->
+        <div class="step-col">
+          <div class="step-num-circle">4</div>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <h4 class="step-title">Download / Print</h4>
+          <p class="step-desc">Save or print your bill for future use.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Frequently Asked Questions (FAQ) Section -->
+  <section class="faq-section-home" id="faqSection">
+    <div class="container">
+      <div class="faq-header-center">
+        <div class="pill-badge-wrap" style="justify-content: center; margin-bottom: 12px;">
+          <span class="badge-wapda">Help Center</span>
+          <span class="badge-official"><span class="green-dot"></span> سوالات و جوابات</span>
+        </div>
+        <h2 class="hero-title" style="font-size: 32px; margin-bottom: 10px;">Frequently Asked Questions</h2>
+        <p class="hero-subtitle" style="margin-bottom: 0;">Everything you need to know about checking, verifying, paying, and printing electricity bills in Pakistan.</p>
+      </div>
+
+      <div class="faq-grid-wrap">
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item-card open">
+          <button type="button" class="faq-question-btn" onclick="toggleFaqHome(this)">
+            <div>
+              <span>How do I check my electricity bill online?</span>
+              <span class="urdu-subtext">آن لائن بجلی کا بل کیسے چیک کریں؟</span>
+            </div>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            Select your city or company from the dropdown, type your 14-digit reference number found on your bill slip, and click <strong>"Check Bill &rarr;"</strong>. Your full bill statement with payable amount, due date, payment status, and 12-month consumption history will appear immediately.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item-card">
+          <button type="button" class="faq-question-btn" onclick="toggleFaqHome(this)">
+            <div>
+              <span>How can I see if my bill is already PAID or UNPAID?</span>
+              <span class="urdu-subtext">میرا بل ادا شدہ ہے یا نہیں، یہ کیسے چیک کریں؟</span>
+            </div>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            Our system inspects the official PITC bank clearing records. If your bill has been cleared by the bank, you will see a prominent green <strong>PAID ✓ (ادا شدہ)</strong> badge with an official verified stamp. If awaiting payment, it shows <strong>UNPAID ⚠️ (غیر ادا شدہ)</strong> with the exact amount due before and after the due date.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item-card">
+          <button type="button" class="faq-question-btn" onclick="toggleFaqHome(this)">
+            <div>
+              <span>How do I print the original official bill page?</span>
+              <span class="urdu-subtext">اصل سرکاری بجلی کے بل کا پرنٹ کیسے نکالیں؟</span>
+            </div>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            Simply click the blue <strong>"🖨️ Print Original Bill"</strong> button on your bill statement. It loads the exact authentic PITC duplicate bill document with official company emblems, barcodes, meter readings, Urdu guidelines, and bank cut slips ready for printing on A4 paper or saving as PDF!
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item-card">
+          <button type="button" class="faq-question-btn" onclick="toggleFaqHome(this)">
+            <div>
+              <span>How can I pay my electricity bill online?</span>
+              <span class="urdu-subtext">آن لائن بل کن طریقوں سے جمع کروایا جا سکتا ہے؟</span>
+            </div>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            You can pay within seconds using <strong>JazzCash</strong>, <strong>Easypaisa</strong>, <strong>Nayapay</strong>, or any bank mobile app (HBL, Meezan, Alfalah, MCB, UBL, Allied). Go to Utility Bill Payment &rarr; Electricity &rarr; Select your DISCO &rarr; Enter your 14-digit reference number.
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item-card">
+          <button type="button" class="faq-question-btn" onclick="toggleFaqHome(this)">
+            <div>
+              <span>What if my reference number is not found in the selected company?</span>
+              <span class="urdu-subtext">اگر ریفرنس نمبر منتخب کردہ کمپنی میں نہ ملے؟</span>
+            </div>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            Our smart system automatically scans all other 8 Pakistani electricity distribution companies (LESCO, MEPCO, IESCO, FESCO, GEPCO, PESCO, HESCO, QESCO, SEPCO) in parallel and switches companies automatically when a match is found!
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="/faq" class="btn-bill-action primary" style="text-decoration: none; display: inline-flex;">
+          View All FAQs & Knowledge Base &rarr;
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Clean White Footer Matching Image -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      
+      <!-- Left: Logo & Subtitle -->
+      <div class="footer-left">
+        <div class="footer-brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" style="width: 20px; height: 20px;">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="footer-brand-text">
+          <span class="footer-title">Bijli Bill Checker</span>
+          <span class="footer-subtitle">All Pakistani DISCOs & WAPDA</span>
+        </div>
+      </div>
+
+      <!-- Center: Links -->
+      <div class="footer-center">
+        <a href="/" class="footer-link">Home</a>
+        <span class="footer-divider">|</span>
+        <a href="#heroSection" class="footer-link" onclick="if(document.getElementById('refNoInput')) document.getElementById('refNoInput').focus()">Bill Check</a>
+        <span class="footer-divider">|</span>
+        <a href="/faq" class="footer-link">FAQ</a>
+        <span class="footer-divider">|</span>
+        <a href="/terms" class="footer-link">Terms & Conditions</a>
+        <span class="footer-divider">|</span>
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+      </div>
+
+      <!-- Right: Made for a Better Pakistan -->
+      <div class="footer-right">
+        <span class="footer-serving-text">Made for a Better Pakistan 🇵🇰 💚</span>
+        <span class="footer-copy">&copy; 2026 Bijli Bill Checker. All rights reserved.</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toastNotification">
+    <span id="toastMessage">Copied to clipboard!</span>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

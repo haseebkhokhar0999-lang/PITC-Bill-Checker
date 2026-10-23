@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frequently Asked Questions (FAQ) - Bijli Bill Checker Pakistan</title>
+  <meta name="description" content="Frequently Asked Questions about checking and paying Pakistani electricity bills online (LESCO, MEPCO, IESCO, FESCO, GEPCO, PESCO, HESCO).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .faq-page-hero {
+      background: var(--bg-hero);
+      padding: 38px 0 26px;
+      border-bottom: 1px solid var(--border-light);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .faq-search-box {
+      max-width: 520px;
+      margin: 20px auto 0;
+      position: relative;
+      box-sizing: border-box;
+    }
+    .faq-search-input {
+      width: 100%;
+      padding: 12px 18px 12px 42px;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-pill);
+      font-size: 14.5px;
+      font-family: inherit;
+      outline: none;
+      background: var(--bg-card);
+      color: var(--text-main);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s;
+      box-sizing: border-box;
+    }
+    .faq-search-input:focus {
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+    }
+    .faq-search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 17px;
+      height: 17px;
+      color: var(--text-muted);
+    }
+    .faq-content-container {
+      max-width: 900px;
+      margin: 34px auto 60px;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    .faq-category-header {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--blue-primary);
+      margin: 28px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .faq-item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-sizing: border-box;
+    }
+    .faq-item-card:hover {
+      border-color: #cbd5e1;
+    }
+    .faq-question-btn {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 18px 20px;
+      font-family: inherit;
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      line-height: 1.35;
+      box-sizing: border-box;
+    }
+    .faq-chevron {
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+    .faq-item-card.open .faq-chevron {
+      transform: rotate(180deg);
+      color: var(--blue-primary);
+    }
+    .faq-answer-panel {
+      display: none;
+      padding: 0 20px 20px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-body);
+      border-top: 1px dashed var(--border-light);
+      margin-top: 4px;
+      padding-top: 14px;
+      box-sizing: border-box;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    .faq-item-card.open .faq-answer-panel {
+      display: block;
+    }
+    .urdu-subtext {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      font-size: 14px;
+      color: var(--text-muted);
+      direction: rtl;
+      display: block;
+      margin-top: 4px;
+      line-height: 1.8;
+    }
+    .faq-steps-ol {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    .faq-steps-ol li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .faq-page-hero { padding: 30px 0 20px; }
+      .faq-content-container { margin: 24px auto 44px; padding: 0 16px; }
+      .faq-question-btn { padding: 15px 16px; font-size: 14.5px; }
+    }
+    @media (max-width: 480px) {
+      .faq-page-hero { padding: 22px 0 16px; }
+      .faq-search-box { margin: 14px 10px 0; }
+      .faq-search-input { font-size: 13.5px; padding: 10px 14px 10px 38px; }
+      .faq-content-container { margin: 16px auto 32px; padding: 0 10px; }
+      .faq-question-btn { padding: 14px 12px; font-size: 14px; gap: 10px; }
+      .faq-answer-panel { padding: 0 14px 14px; font-size: 13.5px; }
+      .urdu-subtext { font-size: 13px; }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <!-- Top Clean White Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      
+      <!-- Brand Logo on Left -->
+      <a href="/" class="brand-link">
+        <div class="brand-icon-box">
+          <svg class="brand-bolt-svg" viewBox="0 0 24 24" fill="none">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Bijli Bill Checker</span>
+          <span class="brand-subtitle">Check Your Electricity Bill Online</span>
+        </div>
+      </a>
+
+      <!-- Center Navigation Links -->
+      <nav class="nav-links">
+        <a href="/" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          <span>Home</span>
+        </a>
+        <a href="/faq" class="nav-item active">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>FAQ</span>
+        </a>
+        <a href="/terms" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>Terms</span>
+        </a>
+        <a href="/privacy" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Privacy Policy</span>
+        </a>
+      </nav>
+
+      <!-- Right Nav Action -->
+      <div class="nav-right">
+        <a href="/" class="btn-nav-action">
+          <span>&larr;</span>
+          <span>Check Bill</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="legal-page-hero">
+    <div class="legal-hero-inner">
+      <div class="pill-badge-wrap" style="justify-content: center; margin-bottom: 12px;">
+        <span class="badge-wapda">Help &amp; Knowledge Base</span>
+        <span class="badge-official"><span class="green-dot"></span> سوالات و جوابات</span>
+      </div>
+      <h1 class="legal-hero-title">Frequently Asked Questions</h1>
+      <p class="legal-hero-subtitle">Everything you need to know about checking, verifying, paying, and printing electricity bills in Pakistan.</p>
+
+      <div class="faq-search-box">
+        <svg class="faq-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="faqSearchInput" class="faq-search-input" placeholder="Search questions (e.g. paid status, reference number, print)..." autocomplete="off">
+      </div>
+    </div>
+  </section>
+
+  <!-- Main FAQ Accordion List -->
+  <main class="faq-content-container" id="faqAccordionContainer">
+
+    <div class="faq-category-header">
+      <span>⚡</span> Checking & Finding Your Bill
+    </div>
+
+    <!-- FAQ 1 -->
+    <div class="faq-item-card open">
+      <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+        <div>
+          <span>How do I check my electricity bill online?</span>
+          <span class="urdu-subtext">آن لائن بجلی کا بل کیسے چیک کریں؟</span>
+        </div>
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer-panel">
+        <ol class="faq-steps-ol">
+          <li>Select your city from the top right dropdown or choose your electricity company (LESCO, MEPCO, IESCO, FESCO, GEPCO, PESCO, HESCO, QESCO, or SEPCO).</li>
+          <li>Enter your <strong>14-digit reference number</strong> found on your physical electricity bill slip.</li>
+          <li>Click the blue <strong>"Check Bill &rarr;"</strong> button. Your complete bill voucher will load immediately with consumer name, payable amount, due date, payment status, and consumption history.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- FAQ 2 -->
+    <div class="faq-item-card">
+      <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+        <div>
+          <span>Where is the 14-digit reference number located on the bill?</span>
+          <span class="urdu-subtext">بل پر ریفرنس نمبر کہاں لکھا ہوتا ہے؟</span>
+        </div>
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer-panel">
+        <p>The reference number is printed in the top header box of your electricity bill, usually labeled <strong>REFERENCE NO (حوالہ نمبر)</strong> right above your consumer name and address. It is a 14-digit sequence (e.g., <code>06 11353 0462901 U</code>). You only need to type the digits into our search box.</p>
+      </div>
+    </div>
+
+    <div class="faq-category-header">
+      <span>💳</span> Payment Status & Bank Verification
+    </div>
+
+    <!-- FAQ 3 -->
+    <div class="faq-item-card open">
+      <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+        <div>
+          <span>How can I tell if my bill has already been PAID?</span>
+          <span class="urdu-subtext">میرا بل ادا شدہ ہے یا نہیں، یہ کیسے چیک کریں؟</span>
+        </div>
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer-panel">
+        <p>When you check your bill on Bijli Bill Checker:</p>
+        <ul style="padding-left: 20px; margin: 8px 0;">
+          <li><strong style="color: #059669;">PAID ✓ (ادا شدہ):</strong> If the bill payment has cleared in the PITC bank clearing system, you will see a prominent green <strong>PAID</strong> badge and an official verified stamp.</li>
+          <li><strong style="color: #d97706;">UNPAID ⚠️ (غیر ادا شدہ):</strong> If the bill is awaiting payment, the status displays <strong>UNPAID</strong> with the payable amount and due date.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ 4 -->
+    <div class="faq-item-card">
+      <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+        <div>
+          <span>I paid my bill today, why does it still show "UNPAID"?</span>
+          <span class="urdu-subtext">اگر بل جمع کروا دیا ہو تو سسٹم میں اپڈیٹ ہونے میں کتنا وقت لگتا ہے؟</span>
+        </div>
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer-panel">
+        <p>When you pay via mobile apps (JazzCash, Easypaisa, Nayapay, Bank Alfalah, HBL, etc.) or at a bank branch, the transaction passes through the 1Link/NIFT settlement system to PITC databases. It normally takes <strong>24 to 48 banking hours</strong> for the PITC portal to reflect the "PAID" status. As long as you have your digital transaction ID (TID) or stamped receipt, your payment is secure.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 5 -->
+    <div class="faq-item-card">
+      <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+        <div>
+          <span>What online methods can I use to pay my electricity bill?</span>
+          <span class="urdu-subtext">آن لائن بل کن طریقوں سے جمع کروایا جا سکتا ہے؟</span>
+        </div>
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer-panel">
+        <p>You can pay your electricity bill instantly from your smartphone using:</p>
+        <ul style="padding-left: 20px; margin: 8px 0;">
+          <li><strong>JazzCash & Easypaisa Apps:</strong> Go to Bill Payment &rarr; Electricity &rarr; Select your DISCO &rarr; Enter 14-digit reference number.</li>
+          <li><strong>Bank Mobile Banking & ATMs (1Link):</strong> Any Pakistani banking app (HBL, Meezan, MCB, UBL, Alfalah, Allied, NBP) under Utility Bill Payment.</li>
+          <li><strong>Post Offices & Commercial Bank Counters:</strong> Take a printed copy of your original bill voucher.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-category-header">
+      <span>🖨️</span> Printing & Official Original Bill Copy
+    </div>
+
+    <!-- FAQ 6 -->
+    <div class="faq-item-card open">
+      <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+        <div>
+          <span>How can I print the exact ORIGINAL electricity bill copy?</span>
+          <span class="urdu-subtext">اصل سرکاری بجلی کے بل کا پرنٹ کیسے نکالیں؟</span>
+        </div>
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer-panel">
+        <p>After your bill details load, look at the action buttons toolbar:</p>
+        <ol class="faq-steps-ol">
+          <li>Click the blue <strong>"🖨️ Print Original Bill (اصل بل کا پرنٹ)"</strong> button.</li>
+          <li>This immediately generates the <strong>100% authentic official PITC bill document</strong> with official emblems, barcodes, meter reading tables, Urdu guidelines, and bank cut slips.</li>
+          <li>The standard browser print dialog opens automatically formatted for standard A4 paper. You can also save it as a PDF!</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- FAQ 7 -->
+    <div class="faq-item-card">
+      <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+        <div>
+          <span>Is the printed duplicate bill accepted by banks and post offices?</span>
+          <span class="urdu-subtext">کیا یہ پرنٹ شدہ بل بینک یا ڈاک خانے میں قبول ہوتا ہے؟</span>
+        </div>
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer-panel">
+        <p><strong>Yes, absolutely.</strong> The duplicate original bill generated by our system is retrieved directly from PITC (Power Information Technology Company) portals with genuine verification barcodes. All commercial banks, NADRA e-Sahulat franchises, Easypaisa shops, and Pakistan Post offices accept this duplicate copy for payment and official documentation.</p>
+      </div>
+    </div>
+
+    <div class="faq-category-header">
+      <span>❓</span> Common Errors & Troubleshooting
+    </div>
+
+    <!-- FAQ 8 -->
+    <div class="faq-item-card">
+      <button type="button" class="faq-question-btn" onclick="toggleFaq(this)">
+        <div>
+          <span>What if it says "Reference number not found"?</span>
+          <span class="urdu-subtext">اگر ریفرنس نمبر ناٹ فاؤنڈ آئے تو کیا کریں؟</span>
+        </div>
+        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="faq-answer-panel">
+        <p>Our intelligent system automatically searches all 9 Pakistani DISCOs in parallel if your reference number does not belong to the currently selected company. If it is still not found, double check that you have typed all 14 digits accurately without typing consumer ID or CNIC numbers by mistake.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Clean White Footer Matching Image -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      
+      <!-- Left: Logo & Subtitle -->
+      <div class="footer-left">
+        <div class="footer-brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" style="width: 20px; height: 20px;">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="footer-brand-text">
+          <span class="footer-title">Bijli Bill Checker</span>
+          <span class="footer-subtitle">All Pakistani DISCOs & WAPDA</span>
+        </div>
+      </div>
+
+      <!-- Center: Links -->
+      <div class="footer-center">
+        <a href="/" class="footer-link">Home</a>
+        <span class="footer-divider">|</span>
+        <a href="/#heroSection" class="footer-link">Bill Check</a>
+        <span class="footer-divider">|</span>
+        <a href="/faq" class="footer-link active">FAQ</a>
+        <span class="footer-divider">|</span>
+        <a href="/terms" class="footer-link">Terms & Conditions</a>
+        <span class="footer-divider">|</span>
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+      </div>
+
+      <!-- Right: Made for a Better Pakistan -->
+      <div class="footer-right">
+        <span class="footer-serving-text">Made for a Better Pakistan 🇵🇰 💚</span>
+        <span class="footer-copy">&copy; 2026 Bijli Bill Checker. All rights reserved.</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    function toggleFaq(btn) {
+      const card = btn.closest('.faq-item-card');
+      card.classList.toggle('open');
+    }
+
+    // Interactive Search
+    const searchInput = document.getElementById('faqSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.faq-item-card');
+        cards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          if (!query || text.includes(query)) {
+            card.style.display = 'block';
+            if (query) card.classList.add('open');
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
