@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "REST API for checking electricity bills from all major Pakistani DISCOs via PITC portal",
   "main": "server.js",
+  "packageManager": "pnpm@10.34.9",
   "scripts": {
     "start": "node server.js",
     "test": "node index.js",
