@@ -423,11 +423,13 @@ async function getPITCBill(refNo, companyCode, ruCode = "U") {
     // Handle specific error types
     if (
       error.code === "ECONNABORTED" ||
-      error.code === "UND_ERR_CONNECT_TIMEOUT"
+      error.code === "UND_ERR_CONNECT_TIMEOUT" ||
+      error.code === "ETIMEDOUT" ||
+      (error.message && error.message.includes("ETIMEDOUT"))
     ) {
       return {
         success: false,
-        error: "Connection timeout - PITC server may be geo-restricted or down",
+        error: "Connection timeout - PITC server is geo-blocking requests from outside Pakistan (Vercel/AWS). Please run locally or configure a Pakistani PROXY_URL.",
       };
     }
 
