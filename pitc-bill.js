@@ -295,10 +295,20 @@ async function getPITCBill(refNo, companyCode, ruCode = "U") {
     }
 
     // -------------------------------------------------------------------------
-    // STEP 1: Fetch the page to extract ViewState tokens
-    // ASP.NET WebForms requires these tokens for form submission
+    // STEP 1: Fetch the page to extract ViewState tokens (with HTTP fallback)
     // -------------------------------------------------------------------------
-    const getResponse = await axios.get(baseUrl, axiosConfig);
+    let getResponse;
+    let targetUrl = baseUrl;
+    try {
+      getResponse = await axios.get(targetUrl, axiosConfig);
+    } catch (getErr) {
+      if (targetUrl.startsWith("https://")) {
+        targetUrl = targetUrl.replace("https://", "http://");
+        getResponse = await axios.get(targetUrl, axiosConfig);
+      } else {
+        throw getErr;
+      }
+    }
 
     // -------------------------------------------------------------------------
     // STEP 2: Parse HTML and extract hidden fields required for form submission
@@ -358,7 +368,19 @@ async function getPITCBill(refNo, companyCode, ruCode = "U") {
       postConfig.proxy = false;
     }
 
-    const postResponse = await axios.post(baseUrl, formData.toString(), postConfig);
+    postConfig.headers.Referer = targetUrl;
+    let postResponse;
+    try {
+      postResponse = await axios.post(targetUrl, formData.toString(), postConfig);
+    } catch (postErr) {
+      if (targetUrl.startsWith("https://")) {
+        targetUrl = targetUrl.replace("https://", "http://");
+        postConfig.headers.Referer = targetUrl;
+        postResponse = await axios.post(targetUrl, formData.toString(), postConfig);
+      } else {
+        throw postErr;
+      }
+    }
 
     // -------------------------------------------------------------------------
     // STEP 4: Parse the response and check for errors or maintenance
