@@ -10,7 +10,7 @@
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -28,7 +28,7 @@
           </svg>
         </div>
         <div class="brand-text">
-          <span class="brand-title">Bijli Bill Checker</span>
+          <span class="brand-title" data-i18n="brandTitle">Bijli Bill Checker</span>
           <span class="brand-subtitle">HESCO Hyderabad Electricity Bill</span>
         </div>
       </a>
@@ -39,7 +39,7 @@
           <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
             <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
           </svg>
-          <span>Home</span>
+          <span data-i18n="navHome">Home</span>
         </a>
         <a href="#heroSection" class="nav-item active">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -56,7 +56,7 @@
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
           </svg>
-          <span>Articles</span>
+          <span data-i18n="navArticles">Articles</span>
         </a>
         <a href="#otherDiscosSection" class="nav-item">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -71,6 +71,13 @@
 
       <!-- Right Controls: Theme Toggle & All Cities Dropdown -->
       <div class="nav-right">
+                <!-- English / Urdu Language Toggle Button -->
+        <button type="button" class="lang-toggle-btn" id="langToggleBtn" aria-label="Toggle English and Urdu Language" title="اردو / English">
+          <span class="lang-text-en active">EN</span>
+          <span class="lang-sep">|</span>
+          <span class="lang-text-ur">اردو</span>
+        </button>
+
         <!-- Theme Toggle -->
         <button type="button" class="theme-icon-btn" id="themeToggleBtn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
           <svg class="sun-moon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -582,21 +589,21 @@
 
       <!-- Center: Links -->
       <div class="footer-center">
-        <a href="/" class="footer-link">Home</a>
+        <a href="/" class="footer-link" data-i18n="footerHome">Home</a>
         <span class="footer-divider">|</span>
         <a href="#heroSection" class="footer-link" onclick="if(document.getElementById('refNoInput')) document.getElementById('refNoInput').focus()">Check Bill</a>
         <span class="footer-divider">|</span>
-        <a href="/faq" class="footer-link">FAQ</a>
+        <a href="/faq" class="footer-link" data-i18n="footerFaq">FAQ</a>
         <span class="footer-divider">|</span>
         <a href="/terms" class="footer-link">Terms &amp; Conditions</a>
         <span class="footer-divider">|</span>
-        <a href="/privacy" class="footer-link">Privacy Policy</a>
+        <a href="/privacy" class="footer-link" data-i18n="footerPrivacy">Privacy Policy</a>
       </div>
 
       <!-- Right: Serving text -->
       <div class="footer-right">
-        <span class="footer-serving-text">Made for a Better Pakistan 🇵🇰 💚</span>
-        <span class="footer-copy">&copy; 2026 Bijli Bill Checker. All rights reserved.</span>
+        <span class="footer-serving-text" data-i18n="footerServing">Made for a Better Pakistan 🇵🇰 💚</span>
+        <span class="footer-copy" data-i18n="footerCopy">&copy; 2026 Bijli Bill Checker. All rights reserved.</span>
       </div>
 
     </div>

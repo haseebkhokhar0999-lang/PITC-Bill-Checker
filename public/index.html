@@ -7,10 +7,10 @@
   <meta name="description" content="Check your electricity bill online for all Pakistani DISCOs (LESCO, MEPCO, FESCO, IESCO, GEPCO, PESCO, HESCO). Fast, secure and easy — all in one place.">
   <meta name="keywords" content="Bijli Bill Checker, electricity bill online, lesco bill, mepco bill, iesco bill, fesco bill, gepco bill, hesco bill, pesco bill">
 
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <!-- Google Fonts: Plus Jakarta Sans & Urdu Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -28,8 +28,8 @@
           </svg>
         </div>
         <div class="brand-text">
-          <span class="brand-title">Bijli Bill Checker</span>
-          <span class="brand-subtitle">Check Your Electricity Bill Online</span>
+          <span class="brand-title" data-i18n="brandTitle">Bijli Bill Checker</span>
+          <span class="brand-subtitle" data-i18n="brandSubtitle">Check Your Electricity Bill Online</span>
         </div>
       </a>
 
@@ -39,9 +39,9 @@
           <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
             <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
           </svg>
-          <span>Home</span>
+          <span data-i18n="navHome">Home</span>
         </a>
-        <a href="#heroSection" class="nav-item" onclick="if(document.getElementById('refNoInput')) document.getElementById('refNoInput').focus()">
+        <a href="#discoCardsSection" class="nav-item">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
@@ -49,7 +49,7 @@
             <line x1="16" y1="17" x2="8" y2="17"></line>
             <polyline points="10 9 9 9 8 9"></polyline>
           </svg>
-          <span>Bill Check</span>
+          <span data-i18n="navBillCheck">Bill Check</span>
         </a>
         <a href="#howItWorksSection" class="nav-item">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -57,7 +57,7 @@
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
-          <span>How It Works</span>
+          <span data-i18n="navHowItWorks">How It Works</span>
         </a>
         <a href="#faqSection" class="nav-item">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -65,18 +65,25 @@
             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
-          <span>FAQ</span>
+          <span data-i18n="navFaq">FAQ</span>
         </a>
         <a href="/terms" class="nav-item">
-          <span>Terms</span>
+          <span data-i18n="navTerms">Terms</span>
         </a>
         <a href="/privacy" class="nav-item">
-          <span>Privacy</span>
+          <span data-i18n="navPrivacy">Privacy</span>
         </a>
       </nav>
 
-      <!-- Right Controls: Theme Toggle & All Cities Dropdown -->
+      <!-- Right Controls: Language Toggle, Theme Toggle & All Cities Dropdown -->
       <div class="nav-right">
+        <!-- English / Urdu Language Toggle Button -->
+        <button type="button" class="lang-toggle-btn" id="langToggleBtn" aria-label="Toggle English and Urdu Language" title="اردو / English">
+          <span class="lang-text-en active">EN</span>
+          <span class="lang-sep">|</span>
+          <span class="lang-text-ur">اردو</span>
+        </button>
+
         <!-- Sun/Moon Theme Toggle -->
         <button type="button" class="theme-icon-btn" id="themeToggleBtn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
           <svg class="sun-moon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -131,79 +138,38 @@
             <svg class="badge-bolt-icon" viewBox="0 0 24 24" fill="currentColor">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
-            WAPDA & DISCOs
+            <span data-i18n="badgeWapda">WAPDA & DISCOs</span>
           </span>
           <span class="badge-official">
             <span class="green-dot"></span>
-            Official Bill Checking
+            <span data-i18n="badgeOfficial">Official Bill Checking</span>
           </span>
         </div>
 
         <!-- Main Title -->
-        <h1 class="hero-title">
+        <h1 class="hero-title" data-i18n="heroTitle">
           Electricity Bill <span class="highlight-blue">Check Online</span>
         </h1>
 
         <!-- Subheading -->
-        <p class="hero-subtitle">
+        <p class="hero-subtitle" data-i18n="heroSubtitle">
           Enter your reference number to check your electricity bill instantly.<br>
           Fast, secure and easy — all in one place.
         </p>
 
-        <!-- Search Input Bar with Integrated Company Selector -->
-        <form class="search-bar-wrap" id="billSearchForm">
-          <div class="search-input-inner">
-            
-            <!-- Company Selector Dropdown -->
-            <div class="search-company-badge">
-              <span class="company-badge-icon">⚡</span>
-              <select id="companySelectDropdown" class="company-inline-select" aria-label="Select Electricity Distribution Company">
-                <option value="lesco" selected>LESCO (Lahore)</option>
-                <option value="mepco">MEPCO (Multan)</option>
-                <option value="iesco">IESCO (Islamabad)</option>
-                <option value="fesco">FESCO (Faisalabad)</option>
-                <option value="gepco">GEPCO (Gujranwala)</option>
-                <option value="pesco">PESCO (Peshawar)</option>
-                <option value="hesco">HESCO (Hyderabad)</option>
-                <option value="qesco">QESCO (Quetta)</option>
-                <option value="sepco">SEPCO (Sukkur)</option>
-              </select>
-            </div>
-
-            <!-- Input Field -->
-            <input 
-              type="text" 
-              id="refNoInput" 
-              class="search-input-field" 
-              placeholder="Enter Reference Number (e.g. 14-digit)" 
-              maxlength="14"
-              value="06113530462901"
-              autocomplete="off"
-            />
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" class="btn-check-bill" id="btnSubmitBill">
-            <svg class="btn-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <span id="btnSubmitText">Check Bill</span>
-            <span class="btn-arrow">&rarr;</span>
-          </button>
-        </form>
-
-        <!-- Popular Providers Pills Row -->
+        <!-- Popular Providers Pills Row (Direct Links to DISCO Bill Check Pages) -->
         <div class="popular-providers-row">
-          <span class="popular-label">Popular Providers:</span>
+          <span class="popular-label" data-i18n="popularProviders">Popular Providers:</span>
           <div class="provider-pills-list">
-            <button type="button" class="provider-pill active" data-disco="lesco" onclick="selectCompany('lesco')">LESCO</button>
-            <button type="button" class="provider-pill" data-disco="mepco" onclick="selectCompany('mepco')">MEPCO</button>
-            <button type="button" class="provider-pill" data-disco="fesco" onclick="selectCompany('fesco')">FESCO</button>
-            <button type="button" class="provider-pill" data-disco="iesco" onclick="selectCompany('iesco')">IESCO</button>
-            <button type="button" class="provider-pill" data-disco="gepco" onclick="selectCompany('gepco')">GEPCO</button>
-            <button type="button" class="provider-pill" data-disco="pesco" onclick="selectCompany('pesco')">PESCO</button>
-            <button type="button" class="provider-pill" data-disco="hesco" onclick="selectCompany('hesco')">HESCO</button>
+            <a href="/lesco-bill" class="provider-pill">LESCO</a>
+            <a href="/mepco-bill" class="provider-pill">MEPCO</a>
+            <a href="/fesco-bill" class="provider-pill">FESCO</a>
+            <a href="/iesco-bill" class="provider-pill">IESCO</a>
+            <a href="/gepco-bill" class="provider-pill">GEPCO</a>
+            <a href="/pesco-bill" class="provider-pill">PESCO</a>
+            <a href="/hesco-bill" class="provider-pill">HESCO</a>
+            <a href="/sepco-bill" class="provider-pill">SEPCO</a>
+            <a href="/qesco-bill" class="provider-pill">QESCO</a>
           </div>
         </div>
 
@@ -246,8 +212,8 @@
             </svg>
           </div>
           <div class="why-text">
-            <h3 class="why-title">Why Check Your Bill Online?</h3>
-            <p class="why-desc">Get your electricity bill details in seconds. No waiting, no hassle.</p>
+            <h3 class="why-title" data-i18n="whyTitle">Why Check Your Bill Online?</h3>
+            <p class="why-desc" data-i18n="whyDesc">Get your electricity bill details in seconds. No waiting, no hassle.</p>
           </div>
         </div>
 
@@ -261,8 +227,8 @@
               </svg>
             </div>
             <div>
-              <h4 class="feat-title">Fast & Easy</h4>
-              <p class="feat-desc">Get your bill in seconds</p>
+              <h4 class="feat-title" data-i18n="featFastTitle">Fast & Easy</h4>
+              <p class="feat-desc" data-i18n="featFastDesc">Get your bill in seconds</p>
             </div>
           </div>
 
@@ -274,8 +240,8 @@
               </svg>
             </div>
             <div>
-              <h4 class="feat-title">100% Secure</h4>
-              <p class="feat-desc">Your data is safe with us</p>
+              <h4 class="feat-title" data-i18n="featSecureTitle">100% Secure</h4>
+              <p class="feat-desc" data-i18n="featSecureDesc">Your data is safe with us</p>
             </div>
           </div>
 
@@ -287,8 +253,8 @@
               </svg>
             </div>
             <div>
-              <h4 class="feat-title">24/7 Access</h4>
-              <p class="feat-desc">Check anytime, anywhere</p>
+              <h4 class="feat-title" data-i18n="featAccessTitle">24/7 Access</h4>
+              <p class="feat-desc" data-i18n="featAccessDesc">Check anytime, anywhere</p>
             </div>
           </div>
 
@@ -298,13 +264,13 @@
     </div>
   </section>
 
-  <!-- DISCO Cards Section (7 Cards Exactly Matching Image) -->
+  <!-- DISCO Cards Section (All 9 Distribution Companies) -->
   <section class="disco-cards-section" id="discoCardsSection">
     <div class="container">
       <div class="disco-cards-grid">
         
         <!-- 1. LESCO Card -->
-        <a href="/lesco-bill" class="disco-card card-lesco" id="disco-card-lesco">
+        <a href="/lesco-bill" class="disco-card card-lesco" id="disco-card-lesco" data-disco="lesco">
           <div class="disco-logo-wrap">
             <img src="/assets/lesco_logo_exact.png" alt="LESCO Logo" class="disco-logo-img">
           </div>
@@ -316,7 +282,7 @@
         </a>
 
         <!-- 2. MEPCO Card -->
-        <a href="/mepco-bill" class="disco-card card-mepco" id="disco-card-mepco">
+        <a href="/mepco-bill" class="disco-card card-mepco" id="disco-card-mepco" data-disco="mepco">
           <div class="disco-logo-wrap">
             <img src="/assets/mepco_logo_exact.png" alt="MEPCO Logo" class="disco-logo-img">
           </div>
@@ -328,7 +294,7 @@
         </a>
 
         <!-- 3. FESCO Card -->
-        <a href="/fesco-bill" class="disco-card card-fesco" id="disco-card-fesco">
+        <a href="/fesco-bill" class="disco-card card-fesco" id="disco-card-fesco" data-disco="fesco">
           <div class="disco-logo-wrap">
             <img src="/assets/fesco_logo_exact.png" alt="FESCO Logo" class="disco-logo-img">
           </div>
@@ -340,7 +306,7 @@
         </a>
 
         <!-- 4. IESCO Card -->
-        <a href="/iesco-bill" class="disco-card card-iesco" id="disco-card-iesco">
+        <a href="/iesco-bill" class="disco-card card-iesco" id="disco-card-iesco" data-disco="iesco">
           <div class="disco-logo-wrap">
             <img src="/assets/iesco_logo_exact.png" alt="IESCO Logo" class="disco-logo-img">
           </div>
@@ -352,7 +318,7 @@
         </a>
 
         <!-- 5. GEPCO Card -->
-        <a href="/gepco-bill" class="disco-card card-gepco" id="disco-card-gepco">
+        <a href="/gepco-bill" class="disco-card card-gepco" id="disco-card-gepco" data-disco="gepco">
           <div class="disco-logo-wrap">
             <img src="/assets/gepco_logo_exact.png" alt="GEPCO Logo" class="disco-logo-img">
           </div>
@@ -364,7 +330,7 @@
         </a>
 
         <!-- 6. PESCO Card -->
-        <a href="/pesco-bill" class="disco-card card-pesco" id="disco-card-pesco">
+        <a href="/pesco-bill" class="disco-card card-pesco" id="disco-card-pesco" data-disco="pesco">
           <div class="disco-logo-wrap">
             <img src="/assets/pesco_logo_exact.png" alt="PESCO Logo" class="disco-logo-img">
           </div>
@@ -376,13 +342,37 @@
         </a>
 
         <!-- 7. HESCO Card -->
-        <a href="/hesco-bill" class="disco-card card-hesco" id="disco-card-hesco">
+        <a href="/hesco-bill" class="disco-card card-hesco" id="disco-card-hesco" data-disco="hesco">
           <div class="disco-logo-wrap">
             <img src="/assets/hesco_logo_exact.png" alt="HESCO Logo" class="disco-logo-img">
           </div>
           <h3 class="disco-title">HESCO</h3>
           <p class="disco-fullname">Hyderabad Electric Supply Company</p>
           <span class="btn-disco-action btn-hesco">
+            Check Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 8. SEPCO Card -->
+        <a href="/sepco-bill" class="disco-card card-sepco" id="disco-card-sepco" data-disco="sepco">
+          <div class="disco-logo-wrap" style="background: #fff7ed; border: 1px solid #fed7aa;">
+            <span style="font-size: 20px;">⚡</span>
+          </div>
+          <h3 class="disco-title">SEPCO</h3>
+          <p class="disco-fullname">Sukkur Electric Power Company</p>
+          <span class="btn-disco-action btn-sepco">
+            Check Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 9. QESCO Card -->
+        <a href="/qesco-bill" class="disco-card card-qesco" id="disco-card-qesco" data-disco="qesco">
+          <div class="disco-logo-wrap" style="background: #f0fdf4; border: 1px solid #bbf7d0;">
+            <span style="font-size: 20px;">⚡</span>
+          </div>
+          <h3 class="disco-title">QESCO</h3>
+          <p class="disco-fullname">Quetta Electric Supply Company</p>
+          <span class="btn-disco-action btn-qesco">
             Check Bill &rarr;
           </span>
         </a>
@@ -404,8 +394,8 @@
           </svg>
         </div>
         <div class="how-left-text">
-          <h2 class="how-main-title">How It Works</h2>
-          <p class="how-sub-title">Checking your electricity bill is simple and takes less than a minute.</p>
+          <h2 class="how-main-title" data-i18n="howMainTitle">How It Works</h2>
+          <p class="how-sub-title" data-i18n="howSubTitle">Checking your electricity bill is simple and takes less than a minute.</p>
         </div>
       </div>
 
@@ -422,8 +412,8 @@
               <line x1="13.5" y1="16.5" x2="16" y2="19"></line>
             </svg>
           </div>
-          <h4 class="step-title">Enter Reference Number</h4>
-          <p class="step-desc">Type your 14-digit reference number (mentioned on your bill).</p>
+          <h4 class="step-title" data-i18n="step1Title">Enter Reference Number</h4>
+          <p class="step-desc" data-i18n="step1Desc">Type your 14-digit reference number (mentioned on your bill).</p>
         </div>
 
         <div class="step-arrow">&rarr;</div>
@@ -437,8 +427,8 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </div>
-          <h4 class="step-title">Click Check Bill</h4>
-          <p class="step-desc">Press the check button to fetch your bill details.</p>
+          <h4 class="step-title" data-i18n="step2Title">Click Check Bill</h4>
+          <p class="step-desc" data-i18n="step2Desc">Press the check button to fetch your bill details.</p>
         </div>
 
         <div class="step-arrow">&rarr;</div>
@@ -452,8 +442,8 @@
               <polyline points="9 15 11 17 15 13"></polyline>
             </svg>
           </div>
-          <h4 class="step-title">View Bill Details</h4>
-          <p class="step-desc">See your complete bill information including due date and amount.</p>
+          <h4 class="step-title" data-i18n="step3Title">View Bill Details</h4>
+          <p class="step-desc" data-i18n="step3Desc">See your complete bill information including due date and amount.</p>
         </div>
 
         <div class="step-arrow">&rarr;</div>
@@ -468,8 +458,8 @@
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
           </div>
-          <h4 class="step-title">Download / Print</h4>
-          <p class="step-desc">Save or print your bill for future use.</p>
+          <h4 class="step-title" data-i18n="step4Title">Download / Print</h4>
+          <p class="step-desc" data-i18n="step4Desc">Save or print your bill for future use.</p>
         </div>
 
       </div>
@@ -594,28 +584,28 @@
           </svg>
         </div>
         <div class="footer-brand-text">
-          <span class="footer-title">Bijli Bill Checker</span>
-          <span class="footer-subtitle">All Pakistani DISCOs & WAPDA</span>
+          <span class="footer-title" data-i18n="footerTitle">Bijli Bill Checker</span>
+          <span class="footer-subtitle" data-i18n="footerSubtitle">All Pakistani DISCOs & WAPDA</span>
         </div>
       </div>
 
       <!-- Center: Links -->
       <div class="footer-center">
-        <a href="/" class="footer-link">Home</a>
+        <a href="/" class="footer-link" data-i18n="footerHome">Home</a>
         <span class="footer-divider">|</span>
-        <a href="#heroSection" class="footer-link" onclick="if(document.getElementById('refNoInput')) document.getElementById('refNoInput').focus()">Bill Check</a>
+        <a href="#discoCardsSection" class="footer-link" data-i18n="footerBillCheck">Bill Check</a>
         <span class="footer-divider">|</span>
-        <a href="/faq" class="footer-link">FAQ</a>
+        <a href="/faq" class="footer-link" data-i18n="footerFaq">FAQ</a>
         <span class="footer-divider">|</span>
-        <a href="/terms" class="footer-link">Terms & Conditions</a>
+        <a href="/terms" class="footer-link" data-i18n="footerTerms">Terms & Conditions</a>
         <span class="footer-divider">|</span>
-        <a href="/privacy" class="footer-link">Privacy Policy</a>
+        <a href="/privacy" class="footer-link" data-i18n="footerPrivacy">Privacy Policy</a>
       </div>
 
       <!-- Right: Made for a Better Pakistan -->
       <div class="footer-right">
-        <span class="footer-serving-text">Made for a Better Pakistan 🇵🇰 💚</span>
-        <span class="footer-copy">&copy; 2026 Bijli Bill Checker. All rights reserved.</span>
+        <span class="footer-serving-text" data-i18n="footerServing">Made for a Better Pakistan 🇵🇰 💚</span>
+        <span class="footer-copy" data-i18n="footerCopy">&copy; 2026 Bijli Bill Checker. All rights reserved.</span>
       </div>
 
     </div>

@@ -222,6 +222,46 @@ body {
   height: 16px;
 }
 
+/* Language Toggle Button (EN | اردو) */
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-card);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.lang-toggle-btn:hover {
+  border-color: var(--blue-primary);
+  color: var(--text-main);
+}
+
+.lang-toggle-btn .lang-text-en,
+.lang-toggle-btn .lang-text-ur {
+  transition: color 0.15s, font-weight 0.15s;
+}
+
+.lang-toggle-btn .lang-text-en.active,
+.lang-toggle-btn .lang-text-ur.active {
+  color: var(--blue-primary);
+  font-weight: 800;
+}
+
+.lang-toggle-btn .lang-sep {
+  color: #cbd5e1;
+  font-weight: 400;
+  font-size: 11px;
+}
+
 /* Pakistan All Cities Dropdown in Navbar */
 .city-selector-dropdown-wrap {
   position: relative;
@@ -591,6 +631,9 @@ body {
   padding: 3px 11px;
   cursor: pointer;
   transition: all 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
 .provider-pill:hover,
@@ -725,8 +768,8 @@ body {
 
 .disco-cards-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 12px;
 }
 
 .disco-card {
@@ -2517,3 +2560,101 @@ body[data-theme="dark"] .disco-callout-box {
     font-size: 17px;
   }
 }
+
+/* ==========================================================================
+   12. Urdu Language & RTL Support
+   ========================================================================== */
+html[dir="rtl"],
+body[data-lang="ur"] {
+  font-family: 'Noto Sans Arabic', 'Noto Nastaliq Urdu', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  text-align: right;
+}
+
+html[dir="rtl"] .brand-link {
+  flex-direction: row;
+}
+
+html[dir="rtl"] .nav-links {
+  direction: rtl;
+}
+
+html[dir="rtl"] .nav-right {
+  direction: ltr; /* keep icons and buttons orderly */
+}
+
+html[dir="rtl"] .hero-left {
+  text-align: right;
+}
+
+html[dir="rtl"] .pill-badge-wrap {
+  justify-content: flex-start;
+}
+
+html[dir="rtl"] .popular-providers-row {
+  justify-content: flex-start;
+}
+
+html[dir="rtl"] .why-left {
+  border-right: none;
+  border-left: 1px solid var(--border-light);
+  padding-right: 0;
+  padding-left: 20px;
+}
+
+html[dir="rtl"] .how-left {
+  border-right: none;
+  border-left: 1px solid var(--border-light);
+  padding-right: 0;
+  padding-left: 20px;
+}
+
+html[dir="rtl"] .how-steps-row {
+  direction: rtl;
+}
+
+html[dir="rtl"] .step-arrow {
+  transform: rotate(180deg);
+}
+
+html[dir="rtl"] .faq-question-btn {
+  text-align: right;
+}
+
+html[dir="rtl"] .footer-container {
+  direction: rtl;
+}
+
+html[dir="rtl"] .footer-left {
+  text-align: right;
+}
+
+html[dir="rtl"] .footer-right {
+  text-align: left;
+}
+
+html[dir="rtl"] .disco-article-card {
+  text-align: right;
+}
+
+html[dir="rtl"] .disco-callout-box {
+  border-left: none;
+  border-right: 4px solid var(--blue-primary);
+  border-radius: 10px 0 0 10px;
+}
+
+html[dir="rtl"] .btn-arrow {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 1024px) {
+  html[dir="rtl"] .hero-left {
+    align-items: center;
+    text-align: center;
+  }
+  html[dir="rtl"] .pill-badge-wrap,
+  html[dir="rtl"] .popular-providers-row {
+    justify-content: center;
+  }
+}
+

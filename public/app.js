@@ -69,12 +69,168 @@ const DISCOS = [
   { code: 'sepco', name: 'SEPCO', fullName: 'Sukkur Electric Power Company', defaultCity: 'Sukkur', sampleRef: '23112340123401' }
 ];
 
+// Urdu DISCO Translations Registry
+const DISCO_NAMES_URDU = {
+  lesco: { name: 'لیسکو', fullName: 'لاہور الیکٹرک سپلائی کمپنی', city: 'لاہور' },
+  mepco: { name: 'میپکو', fullName: 'ملتان الیکٹرک پاور کمپنی', city: 'ملتان' },
+  fesco: { name: 'فیسکو', fullName: 'فیصل آباد الیکٹرک سپلائی کمپنی', city: 'فیصل آباد' },
+  iesco: { name: 'آئیسکو', fullName: 'اسلام آباد الیکٹرک سپلائی کمپنی', city: 'اسلام آباد' },
+  gepco: { name: 'گیپکو', fullName: 'گوجرانوالہ الیکٹرک پاور کمپنی', city: 'گوجرانوالہ' },
+  pesco: { name: 'پیسکو', fullName: 'پشاور الیکٹرک سپلائی کمپنی', city: 'پشاور' },
+  hesco: { name: 'حیسکو', fullName: 'حیدرآباد الیکٹرک سپلائی کمپنی', city: 'حیدرآباد' },
+  qesco: { name: 'کیسکو', fullName: 'کوئٹہ الیکٹرک سپلائی کمپنی', city: 'کوئٹہ' },
+  sepco: { name: 'سیپکو', fullName: 'سکھر الیکٹرک پاور کمپنی', city: 'سکھر' }
+};
+
+// UI Translations Dictionary (English & Urdu)
+const TRANSLATIONS = {
+  en: {
+    // Header
+    brandTitle: "Bijli Bill Checker",
+    brandSubtitle: "Check Your Electricity Bill Online",
+    navHome: "Home",
+    navBillCheck: "Bill Check",
+    navHowItWorks: "How It Works",
+    navFaq: "FAQ",
+    navTerms: "Terms",
+    navPrivacy: "Privacy",
+    navArticles: "Articles",
+    searchCityPlaceholder: "Search your city...",
+
+    // Homepage Hero
+    badgeWapda: "WAPDA & DISCOs",
+    badgeOfficial: "Official Bill Checking",
+    heroTitle: 'Electricity Bill <span class="highlight-blue">Check Online</span>',
+    heroSubtitle: "Enter your reference number to check your electricity bill instantly.<br>Fast, secure and easy — all in one place.",
+    popularProviders: "Popular Providers:",
+
+    // DISCO Action Buttons
+    checkBillAction: "Check Bill &rarr;",
+
+    // Why Section
+    whyTitle: "Why Check Your Bill Online?",
+    whyDesc: "Get your electricity bill details in seconds. No waiting, no hassle.",
+    featFastTitle: "Fast & Easy",
+    featFastDesc: "Get your bill in seconds",
+    featSecureTitle: "100% Secure",
+    featSecureDesc: "Your data is safe with us",
+    featAccessTitle: "24/7 Access",
+    featAccessDesc: "Check anytime, anywhere",
+
+    // How It Works
+    howMainTitle: "How It Works",
+    howSubTitle: "Checking your electricity bill is simple and takes less than a minute.",
+    step1Title: "Enter Reference Number",
+    step1Desc: "Type your 14-digit reference number (mentioned on your bill).",
+    step2Title: "Click Check Bill",
+    step2Desc: "Press the check button to fetch your bill details.",
+    step3Title: "View Bill Details",
+    step3Desc: "See your complete bill information including due date and amount.",
+    step4Title: "Download / Print",
+    step4Desc: "Save or print your bill for future use.",
+
+    // FAQ Section
+    faqBadge: "Help Center",
+    faqBadgeUrdu: "سوالات و جوابات",
+    faqTitle: "Frequently Asked Questions",
+    faqSubtitle: "Everything you need to know about checking, verifying, paying, and printing electricity bills in Pakistan.",
+    faqViewAll: "View All FAQs & Knowledge Base &rarr;",
+
+    // Footer
+    footerTitle: "Bijli Bill Checker",
+    footerSubtitle: "All Pakistani DISCOs & WAPDA",
+    footerServing: "Made for a Better Pakistan 🇵🇰 💚",
+    footerCopy: "© 2026 Bijli Bill Checker. All rights reserved.",
+    footerHome: "Home",
+    footerBillCheck: "Bill Check",
+    footerFaq: "FAQ",
+    footerTerms: "Terms & Conditions",
+    footerPrivacy: "Privacy Policy",
+
+    // DISCO Dedicated Pages
+    refInputPlaceholder: "Enter Reference Number (e.g. 14-digit)",
+    btnCheckBill: "Check Bill",
+    otherDiscosTitle: "Check Other Electricity Distribution Companies",
+    otherDiscosDesc: "Quickly access bill checking for any other Pakistani electric supply company:"
+  },
+  ur: {
+    // Header
+    brandTitle: "بجلی بل چیکر",
+    brandSubtitle: "آن لائن بجلی کا بل چیک کریں",
+    navHome: "ہوم",
+    navBillCheck: "بل چیک",
+    navHowItWorks: "طریقہ کار",
+    navFaq: "سوالات",
+    navTerms: "شرائط",
+    navPrivacy: "پرائیویسی",
+    navArticles: "مضامین",
+    searchCityPlaceholder: "اپنا شہر تلاش کریں...",
+
+    // Homepage Hero
+    badgeWapda: "واپڈا اور ڈسکوز",
+    badgeOfficial: "سرکاری بل تصدیق",
+    heroTitle: 'بجلی کا بل <span class="highlight-blue">آن لائن چیک کریں</span>',
+    heroSubtitle: "فوری طور پر بجلی کا بل چیک کرنے کے لیے اپنی کمپنی منتخب کریں۔<br>تیز، محفوظ اور آسان — سب ایک ہی جگہ۔",
+    popularProviders: "مقبول کمپنیاں:",
+
+    // DISCO Action Buttons
+    checkBillAction: "بل چیک کریں &larr;",
+
+    // Why Section
+    whyTitle: "آن لائن بل کیوں چیک کریں؟",
+    whyDesc: "سیکنڈوں میں اپنے بجلی کے بل کی تفصیلات حاصل کریں۔ بغیر انتظار، بغیر کسی پریشانی کے۔",
+    featFastTitle: "تیز اور آسان",
+    featFastDesc: "چند سیکنڈز میں اپنا بل حاصل کریں",
+    featSecureTitle: "100٪ محفوظ",
+    featSecureDesc: "آپ کا ڈیٹا ہمارے پاس محفوظ ہے",
+    featAccessTitle: "24/7 دستیابی",
+    featAccessDesc: "کسی بھی وقت، کہیں بھی چیک کریں",
+
+    // How It Works
+    howMainTitle: "یہ کیسے کام کرتا ہے",
+    howSubTitle: "اپنا بجلی کا بل چیک کرنا انتہائی آسان ہے اور ایک منٹ سے بھی کم وقت لگتا ہے۔",
+    step1Title: "ریفرنس نمبر درج کریں",
+    step1Desc: "اپنا 14 ہندسوں کا ریفرنس نمبر درج کریں (جو بل پر لکھا ہوتا ہے)۔",
+    step2Title: "بل چیک پر کلک کریں",
+    step2Desc: "بل کی تفصیلات حاصل کرنے کے لیے بٹن دبائیں۔",
+    step3Title: "بل کی تفصیلات دیکھیں",
+    step3Desc: "آخری تاریخ اور ادا شدہ رقم سمیت مکمل معلومات دیکھیں۔",
+    step4Title: "ڈاؤن لوڈ / پرنٹ",
+    step4Desc: "مستقبل کے لیے اپنا بل محفوظ کریں یا پرنٹ نکالیں۔",
+
+    // FAQ Section
+    faqBadge: "امدادی مرکز",
+    faqBadgeUrdu: "سوالات و جوابات",
+    faqTitle: "اکثر پوچھے جانے والے سوالات",
+    faqSubtitle: "پاکستان میں بجلی کے بل چیک کرنے، تصدیق کرنے اور ادا کرنے کی تمام تفصیلات۔",
+    faqViewAll: "تمام سوالات و معلومات دیکھیں &larr;",
+
+    // Footer
+    footerTitle: "بجلی بل چیکر",
+    footerSubtitle: "تمام پاکستانی ڈسکوز اور واپڈا",
+    footerServing: "بہتر پاکستان کے لیے 🇵🇰 💚",
+    footerCopy: "© 2026 بجلی بل چیکر۔ جملہ حقوق محفوظ ہیں۔",
+    footerHome: "ہوم",
+    footerBillCheck: "بل چیک",
+    footerFaq: "سوالات",
+    footerTerms: "شرائط و ضوابط",
+    footerPrivacy: "پرائیویسی پالیسی",
+
+    // DISCO Dedicated Pages
+    refInputPlaceholder: "14 ہندسوں کا ریفرنس نمبر درج کریں",
+    btnCheckBill: "بل چیک کریں",
+    otherDiscosTitle: "دیگر بجلی کی کمپنیوں کے بل دیکھیں",
+    otherDiscosDesc: "پاکستان کی کسی بھی دوسری بجلی تقسیم کار کمپنی کا بل چیک کرنے کے لیے منتخب کریں:"
+  }
+};
+
 // Application State
 const state = {
   selectedCompany: localStorage.getItem('bijli_company') || 'lesco',
   selectedCity: localStorage.getItem('bijli_city') || 'Lahore',
   currentBill: null,
-  theme: localStorage.getItem('bijli_theme') || 'light'
+  theme: localStorage.getItem('bijli_theme') || 'light',
+  lang: localStorage.getItem('bijli_lang') || 'en'
 };
 
 // DOM References
@@ -87,6 +243,7 @@ const alertContainer = document.getElementById('alertContainer');
 const resultsArea = document.getElementById('resultsArea');
 const billResultSection = document.getElementById('billResultSection');
 const themeToggleBtn = document.getElementById('themeToggleBtn');
+const langToggleBtn = document.getElementById('langToggleBtn');
 
 // City Dropdown DOM Elements
 const cityDropdownWrap = document.getElementById('cityDropdownWrap');
@@ -107,13 +264,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Apply theme
   applyTheme(state.theme);
 
-  // 2. Initialize and render city dropdown
+  // 2. Initialize and apply language
+  applyLanguage(state.lang);
+
+  // 3. Language toggle listener
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', () => {
+      const newLang = state.lang === 'ur' ? 'en' : 'ur';
+      applyLanguage(newLang);
+    });
+  }
+
+  // 4. Initialize and render city dropdown
   initCityDropdown();
 
-  // 3. Set initial active company & city
+  // 5. Set initial active company & city
   selectCompany(state.selectedCompany, false);
 
-  // 4. Synchronize company select dropdown in search bar
+  // 6. Synchronize company select dropdown in search bar
   if (companySelectDropdown) {
     companySelectDropdown.value = state.selectedCompany;
     companySelectDropdown.addEventListener('change', (e) => {
@@ -121,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. Input formatting (removes invalid chars, allows digits and optional U/R suffix)
+  // 7. Input formatting (removes invalid chars, allows digits and optional U/R suffix)
   if (refInput) {
     refInput.addEventListener('input', (e) => {
       let val = e.target.value.replace(/[^0-9a-zA-Z]/g, '').toUpperCase();
@@ -130,12 +298,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Form submit listener
+  // 8. Form submit listener
   if (billForm) {
     billForm.addEventListener('submit', handleBillSubmit);
   }
 
-  // 7. Theme toggle listener
+  // 9. Theme toggle listener
   if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', () => {
       const newTheme = state.theme === 'light' ? 'dark' : 'light';
@@ -143,6 +311,97 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// Language Management Function
+function applyLanguage(lang) {
+  state.lang = lang;
+  localStorage.setItem('bijli_lang', lang);
+  const isUr = lang === 'ur';
+
+  // 1. Update HTML attributes for RTL/LTR & language
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', isUr ? 'rtl' : 'ltr');
+  document.body.setAttribute('data-lang', lang);
+
+  // 2. Update all Language Toggle Buttons UI
+  document.querySelectorAll('.lang-toggle-btn').forEach(btn => {
+    const enText = btn.querySelector('.lang-text-en');
+    const urText = btn.querySelector('.lang-text-ur');
+    if (enText && urText) {
+      if (isUr) {
+        enText.classList.remove('active');
+        urText.classList.add('active');
+      } else {
+        enText.classList.add('active');
+        urText.classList.remove('active');
+      }
+    }
+  });
+
+  // 3. Update Elements with data-i18n
+  const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) {
+      if (dict[key].includes('<') && dict[key].includes('>')) {
+        el.innerHTML = dict[key];
+      } else {
+        el.textContent = dict[key];
+      }
+    }
+  });
+
+  // 4. Update Elements with data-i18n-placeholder
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) {
+      el.placeholder = dict[key];
+    }
+  });
+
+  // 5. Update Elements with data-en & data-ur attributes
+  document.querySelectorAll('[data-en][data-ur]').forEach(el => {
+    el.textContent = isUr ? el.getAttribute('data-ur') : el.getAttribute('data-en');
+  });
+
+  // 6. Update DISCO Cards Action Buttons
+  document.querySelectorAll('.btn-disco-action').forEach(btn => {
+    btn.innerHTML = isUr ? 'بل چیک کریں &larr;' : 'Check Bill &rarr;';
+  });
+
+  // 7. Update DISCO Cards Fullnames
+  document.querySelectorAll('.disco-card').forEach(card => {
+    const disco = card.getAttribute('data-disco') || (card.id ? card.id.replace('disco-card-', '') : '');
+    const fullnameEl = card.querySelector('.disco-fullname');
+    if (fullnameEl && DISCO_NAMES_URDU[disco]) {
+      if (isUr) {
+        if (!fullnameEl.getAttribute('data-orig-en')) {
+          fullnameEl.setAttribute('data-orig-en', fullnameEl.textContent);
+        }
+        fullnameEl.textContent = DISCO_NAMES_URDU[disco].fullName;
+      } else if (fullnameEl.getAttribute('data-orig-en')) {
+        fullnameEl.textContent = fullnameEl.getAttribute('data-orig-en');
+      }
+    }
+  });
+
+  // 8. Update Input Placeholders and Submit Button on DISCO Form Pages
+  if (refInput) {
+    refInput.placeholder = isUr ? '14 ہندسوں کا ریفرنس نمبر درج کریں' : 'Enter Reference Number (e.g. 14-digit)';
+  }
+  if (citySearchInput) {
+    citySearchInput.placeholder = isUr ? 'اپنا شہر تلاش کریں...' : 'Search your city...';
+  }
+  if (btnSubmitText) {
+    const disco = state.selectedCompany || 'lesco';
+    if (isUr) {
+      const urName = DISCO_NAMES_URDU[disco] ? DISCO_NAMES_URDU[disco].name : disco.toUpperCase();
+      btnSubmitText.textContent = `${urName} کا بل چیک کریں`;
+    } else {
+      btnSubmitText.textContent = `Check ${disco.toUpperCase()} Bill`;
+    }
+  }
+}
 
 // Theme Management
 function applyTheme(theme) {
@@ -254,7 +513,12 @@ function selectCompany(code, shouldScroll = false) {
 
   // 2. Update Submit Button Text
   if (btnSubmitText) {
-    btnSubmitText.textContent = `Check ${code.toUpperCase()} Bill`;
+    if (state.lang === 'ur') {
+      const urName = DISCO_NAMES_URDU[code] ? DISCO_NAMES_URDU[code].name : code.toUpperCase();
+      btnSubmitText.textContent = `${urName} کا بل چیک کریں`;
+    } else {
+      btnSubmitText.textContent = `Check ${code.toUpperCase()} Bill`;
+    }
   }
 
   // 3. Update Popular Providers Pills
