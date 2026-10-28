@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QESCO Bill Check Online - Quetta Electricity Bill</title>
+  <meta name="description" content="Check your QESCO bill online, download duplicate copy, verify paid/unpaid payment status, and view due date with surcharge for Quetta Electric Supply Company.">
+  <meta name="keywords" content="QESCO bill, qesco bill check online, qesco duplicate bill, quetta electric supply company, qesco online bill check, qesco reference number">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body data-disco="qesco">
+
+  <!-- Top Clean White Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      
+      <!-- Brand Logo on Left -->
+      <a href="/" class="brand-link">
+        <div class="brand-icon-box">
+          <svg class="brand-bolt-svg" viewBox="0 0 24 24" fill="none">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Bijli Bill Checker</span>
+          <span class="brand-subtitle">QESCO Quetta Electricity Bill</span>
+        </div>
+      </a>
+
+      <!-- Center Navigation Links -->
+      <nav class="nav-links">
+        <a href="/" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+          <span>Home</span>
+        </a>
+        <a href="#heroSection" class="nav-item active">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>QESCO Bill</span>
+        </a>
+        <a href="#articlesSection" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>Articles</span>
+        </a>
+        <a href="#otherDiscosSection" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span>Other DISCOs</span>
+        </a>
+        <a href="/faq" class="nav-item">
+          <span>FAQ</span>
+        </a>
+      </nav>
+
+      <!-- Right Controls: Theme Toggle & All Cities Dropdown -->
+      <div class="nav-right">
+        <!-- Theme Toggle -->
+        <button type="button" class="theme-icon-btn" id="themeToggleBtn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+          <svg class="sun-moon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- City Selector Dropdown -->
+        <div class="city-selector-dropdown-wrap" id="cityDropdownWrap">
+          <button type="button" class="city-selector-btn" id="cityDropdownBtn" aria-expanded="false" aria-label="Select City in Pakistan">
+            <span class="flag-box">🇵🇰</span>
+            <span class="selected-city-text" id="selectedCityText">Quetta</span>
+            <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          
+          <div class="city-menu-popover" id="cityMenuPopover">
+            <div class="city-search-box">
+              <input type="text" id="citySearchInput" placeholder="Search your city..." autocomplete="off">
+            </div>
+            <div class="city-options-list" id="cityOptionsList"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section: ONLY QESCO's Bill Check Form -->
+  <section class="hero-section" id="heroSection">
+    <div class="hero-container">
+      
+      <!-- Left Column: Search & Headline -->
+      <div class="hero-left">
+        
+        <!-- Badge -->
+        <div class="pill-badge-wrap">
+          <span class="badge-wapda">
+            <svg class="badge-bolt-icon" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            QESCO &bull; Balochistan
+          </span>
+          <span class="badge-official">
+            <span class="green-dot"></span>
+            Official Bill Checking
+          </span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="hero-title">
+          QESCO Bill <span class="highlight-blue">Check Online</span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="hero-subtitle">
+          Enter your 14-digit reference number to check and download your QESCO electricity bill online.<br>
+          Fast, secure and easy — view payment status, payable amount &amp; due date.
+        </p>
+
+        <!-- Search Input Bar with Only QESCO pre-selected -->
+        <form class="search-bar-wrap" id="billSearchForm">
+          <div class="search-input-inner">
+            
+            <!-- Company Pre-Selected Badge -->
+            <div class="search-company-badge" style="cursor: default;" title="Quetta Electric Supply Company">
+              <span class="company-badge-icon">⚡</span>
+              <span style="font-weight: 700; font-size: 13.5px; color: var(--text-main); margin-right: 4px;">QESCO</span>
+              <input type="hidden" id="companySelectDropdown" value="qesco">
+            </div>
+
+            <!-- Input Field -->
+            <input 
+              type="text" 
+              id="refNoInput" 
+              class="search-input-field" 
+              placeholder="Enter 14-digit Reference Number (e.g. 29112340123401)" 
+              maxlength="14"
+              value=""
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-check-bill" id="btnSubmitBill">
+            <svg class="btn-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span id="btnSubmitText">Check QESCO Bill</span>
+            <span class="btn-arrow">&rarr;</span>
+          </button>
+        </form>
+
+        <p style="margin-top: 10px; font-size: 12px; color: var(--text-muted);">
+          📍 <strong>Coverage Areas:</strong> Quetta, Gwadar, Khuzdar, Turbat, Sibi, Loralai, Zhob, Kalat, Chaman, Pishin, Jaffarabad.
+        </p>
+
+      </div>
+
+      <!-- Right Column: 3D Illustration -->
+      <div class="hero-right">
+        <div class="hero-img-stage">
+          <img 
+            src="/assets/hero-illustration-exact.png" 
+            alt="QESCO Bill Check Online 3D Illustration" 
+            class="hero-illustration-img"
+          />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Notification Alert Banner -->
+  <div class="container" id="alertContainer"></div>
+
+  <!-- Real-time Bill Result Section (Revealed when bill checked) -->
+  <section class="bill-result-section" id="billResultSection" style="display: none;">
+    <div class="container" id="resultsArea">
+      <!-- Populated dynamically by JavaScript -->
+    </div>
+  </section>
+
+  <!-- "Why Check Your Bill Online?" Feature Bar -->
+  <section class="why-section" id="whySection">
+    <div class="container">
+      <div class="why-card-bar">
+        
+        <div class="why-left">
+          <div class="why-icon-circle">
+            <svg viewBox="0 0 24 24" fill="#0066ff">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <div class="why-text">
+            <h3 class="why-title">Why Check Your QESCO Bill Online?</h3>
+            <p class="why-desc">Get your Balochistan electricity bill details in seconds with official PITC database clearance.</p>
+          </div>
+        </div>
+
+        <div class="why-right">
+          <div class="feature-item">
+            <div class="feat-icon-box">
+              <svg viewBox="0 0 24 24" fill="#0066ff">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <div>
+              <h4 class="feat-title">Instant Verification</h4>
+              <p class="feat-desc">Live bank payment record check</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feat-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h4 class="feat-title">100% Authentic</h4>
+              <p class="feat-desc">Official PITC duplicate copy</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feat-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h4 class="feat-title">Free Download</h4>
+              <p class="feat-desc">Print &amp; save PDF anytime</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BELOW: Only QESCO Articles Section -->
+  <section class="disco-articles-section" id="articlesSection">
+    <div class="container disco-articles-container">
+      
+      <div style="text-align: center; margin-bottom: 32px;">
+        <div class="pill-badge-wrap" style="justify-content: center; margin-bottom: 12px;">
+          <span class="badge-wapda">QESCO Guidelines</span>
+          <span class="badge-official"><span class="green-dot"></span> رہنمائی اور تفصیلات</span>
+        </div>
+        <h2 style="font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">
+          Complete QESCO Electricity Bill Guide
+        </h2>
+        <p style="font-size: 14.5px; color: var(--text-muted); max-width: 650px; margin: 0 auto;">
+          Everything you need to know about checking, downloading, verifying payment status, due dates, and surcharges for Quetta Electric Supply Company (QESCO).
+        </p>
+      </div>
+
+      <!-- Article 1: QESCO bill check karne ka tarika -->
+      <article class="disco-article-card" id="article-tarika">
+        <div class="disco-article-header">
+          <div class="disco-article-icon">🔍</div>
+          <div>
+            <h3 class="disco-article-title">
+              1. QESCO Bill Check Karne Ka Tarika
+              <span class="urdu-sub">آن لائن کیسکو بجلی بل چیک کرنے کا آسان اور مکمل طریقہ</span>
+            </h3>
+          </div>
+        </div>
+        
+        <p class="disco-article-p">
+          Quetta Electric Supply Company (QESCO) صوبہ بلوچستان کے تمام اضلاع بشمول کوئٹہ، گوادر، خضدار، تربت، سبی، لورالائی، ژوب اور چمن میں بجلی فراہم کرنے والی واحد سرکاری تقسیم کار کمپنی ہے۔ اگر آپ کو کاغذی بل نہیں ملا تو آپ اپنے 14 ہندسوں کے ریفرنس نمبر سے آن لائن بل دیکھ سکتے ہیں۔
+        </p>
+
+        <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 14px 0 8px;">آن لائن بل چیک کرنے کے آسان مراحل (Step-by-Step Guide):</h4>
+        <ul class="disco-steps-list">
+          <li class="disco-step-item">
+            <span class="disco-step-badge">1</span>
+            <div><strong>14 ہندسوں کا ریفرنس نمبر تلاش کریں:</strong> اپنے پرانے کیسکو بل پر 14 ہندسوں کا Reference Number (مثلاً 29 11234 0123401) دیکھیں۔</div>
+          </li>
+          <li class="disco-step-item">
+            <span class="disco-step-badge">2</span>
+            <div><strong>نمبر درج کریں:</strong> اوپر سرچ فیلڈ میں اپنا 14 ہندسوں کا ریفرنس نمبر لکھیں۔</div>
+          </li>
+          <li class="disco-step-item">
+            <span class="disco-step-badge">3</span>
+            <div><strong>"Check QESCO Bill" پر کلک کریں:</strong> PITC سرور سے آپ کا بلنگ ریکارڈ فوراً لوڈ ہو جائے گا۔</div>
+          </li>
+          <li class="disco-step-item">
+            <span class="disco-step-badge">4</span>
+            <div><strong>بل کی معلومات دیکھیں:</strong> واجب الادا رقم، آخری تاریخ اور یونٹس کا ریکارڈ ملاحظہ کریں۔</div>
+          </li>
+        </ul>
+
+        <div class="disco-callout-box">
+          💡 <strong>ضروری نوٹ:</strong> بلوچستان کے دور دراز علاقوں میں کاغذی بل کی ترسیل میں تاخیر کی صورت میں آن لائن بل سب سے تیز اور محفوظ ترین حل ہے۔
+        </div>
+      </article>
+
+      <!-- Article 2: QESCO duplicate bill download -->
+      <article class="disco-article-card" id="article-duplicate">
+        <div class="disco-article-header">
+          <div class="disco-article-icon">📄</div>
+          <div>
+            <h3 class="disco-article-title">
+              2. QESCO Duplicate Bill Download &amp; Print
+              <span class="urdu-sub">کیسکو ڈپلیکیٹ بل ڈاؤن لوڈ اور پرنٹ کرنے کا طریقہ</span>
+            </h3>
+          </div>
+        </div>
+
+        <p class="disco-article-p">
+          اگر آپ کو بینک کاؤنٹر، نادرا ای سہولت یا ڈاکخانے میں بل جمع کروانے کے لیے بل کی ہارڈ کاپی چاہیے، تو آپ PITC کے باضابطہ سرور سے اصل کیسکو ڈپلیکیٹ بل (QESCO Duplicate Bill) ڈاؤن لوڈ اور پرنٹ کر سکتے ہیں۔
+        </p>
+
+        <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 14px 0 8px;">ڈپلیکیٹ کاپی پرنٹ یا محفوظ کرنے کا طریقہ:</h4>
+        <ul class="disco-steps-list">
+          <li class="disco-step-item">
+            <span class="disco-step-badge">1</span>
+            <div>اوپر 14 ہندسوں کا ریفرنس نمبر درج کر کے بل کی اسٹیٹمنٹ لائیں۔</div>
+          </li>
+          <li class="disco-step-item">
+            <span class="disco-step-badge">2</span>
+            <div>اسٹیٹمنٹ کے نیچے موجود نیلے رنگ کے <strong>"🖨️ Print Original Bill"</strong> کے بٹن پر کلک کریں۔</div>
+          </li>
+          <li class="disco-step-item">
+            <span class="disco-step-badge">3</span>
+            <div>کیسکو کا اصل بارکوڈ اور بینک رسید والا سرکاری چالان کھلے گا۔</div>
+          </li>
+          <li class="disco-step-item">
+            <span class="disco-step-badge">4</span>
+            <div>پرنٹ ڈائیلاگ سے Save as PDF کر کے محفوظ کریں یا پرنٹ نکال لیں۔</div>
+          </li>
+        </ul>
+      </article>
+
+      <!-- Article 3: QESCO bill payment status (paid / unpaid) -->
+      <article class="disco-article-card" id="article-status">
+        <div class="disco-article-header">
+          <div class="disco-article-icon">💳</div>
+          <div>
+            <h3 class="disco-article-title">
+              3. QESCO Bill Payment Status (Paid / Unpaid)
+              <span class="urdu-sub">کیسکو بل کی ادائیگی کی آن لائن تصدیق (ادا شدہ یا غیر ادا شدہ بل)</span>
+            </h3>
+          </div>
+        </div>
+
+        <p class="disco-article-p">
+          ہماری ویب سائٹ PITC کے مرکزی ڈیٹا بیس سے لائیو منسلک ہے۔ جب آپ بل چیک کرتے ہیں تو سسٹم فوری تصدیق کر کے بتاتا ہے کہ آیا بل کی رقم بینک سے کلیئر ہو چکی ہے یا نہیں۔
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0;">
+          <div style="border: 1px solid #bbf7d0; background: #f0fdf4; border-radius: 10px; padding: 14px;">
+            <div style="font-weight: 800; color: #16a34a; font-size: 15px; margin-bottom: 4px;">
+              ✓ PAID (ادا شدہ)
+            </div>
+            <p style="font-size: 13px; color: #166534; line-height: 1.5; margin: 0;">
+              سبز نشان تصدیق کرتا ہے کہ بل کی رقم کیسکو کو موصول ہو چکی ہے اور کوئی رقم بقایا نہیں ہے۔
+            </p>
+          </div>
+          
+          <div style="border: 1px solid #fed7aa; background: #fff7ed; border-radius: 10px; padding: 14px;">
+            <div style="font-weight: 800; color: #ea580c; font-size: 15px; margin-bottom: 4px;">
+              ⚠️ UNPAID (غیر ادا شدہ)
+            </div>
+            <p style="font-size: 13px; color: #9a3412; line-height: 1.5; margin: 0;">
+              نارنجی نشان کا مطلب ہے کہ بل ابھی غیر ادا شدہ ہے اور ڈیو ڈیٹ سے قبل ادا کرنا لازمی ہے۔
+            </p>
+          </div>
+        </div>
+
+        <div class="disco-callout-box">
+          ⚡ <strong>آن لائن بل کی ادائیگی:</strong> بلوچستان کے صارفین JazzCash، Easypaisa، Nayapay یا کسی بھی کمرشل بینک کی موبائل ایپ سے باآسانی بل جمع کروا سکتے ہیں۔
+        </div>
+      </article>
+
+      <!-- Article 4: QESCO bill due date aur surcharge -->
+      <article class="disco-article-card" id="article-duedate">
+        <div class="disco-article-header">
+          <div class="disco-article-icon">📅</div>
+          <div>
+            <h3 class="disco-article-title">
+              4. QESCO Bill Due Date, Surcharge aur Installment
+              <span class="urdu-sub">بل جمع کرانے کی آخری تاریخ، لیٹ فیس اور اقساط کی سہولت</span>
+            </h3>
+          </div>
+        </div>
+
+        <p class="disco-article-p">
+          کیسکو بل میں ڈیو ڈیٹ کے اندر رقم اور ڈیو ڈیٹ گزرنے کے بعد لاگو ہونے والے لیٹ پیمنٹ سرچارج کے ساتھ کل رقم واضح طور پر درج ہوتی ہے۔
+        </p>
+
+        <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 14px 0 8px;">لیٹ پیمنٹ سرچارج (Late Payment Surcharge):</h4>
+        <p class="disco-article-p">
+          مقررہ تاریخ کے بعد بل جمع کرانے پر نیپرا قوانین کے مطابق لیٹ فیس لگائی جاتی ہے۔ اضافی بوجھ سے بچنے کے لیے ہمیشہ وقت پر بل جمع کروائیں۔
+        </p>
+
+        <h4 style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 14px 0 8px;">کیسکو بل کی اقساط (Installment) کروانے کا طریقہ:</h4>
+        <p class="disco-article-p">
+          زیادہ بل آنے کی صورت میں کیسکو صارفین کو 2 سے 3 اقساط کروانے کی سہولت فراہم کرتا ہے:
+        </p>
+        <ul class="disco-steps-list">
+          <li class="disco-step-item">
+            <span class="disco-step-badge">•</span>
+            <div><strong>کیسکو سب ڈویژن آفس جائیں:</strong> اپنے بل پر درج متعلقہ SDO دفتر یا ریونیو آفس تشریف لے جائیں۔</div>
+          </li>
+          <li class="disco-step-item">
+            <span class="disco-step-badge">•</span>
+            <div><strong>اقساط کی درخواست دیں:</strong> بل کی رقم کے مطابق مجاز افسر اقساط کی منظوری دے گا۔</div>
+          </li>
+          <li class="disco-step-item">
+            <span class="disco-step-badge">•</span>
+            <div><strong>کمپیوٹرائزڈ واؤچر حاصل کریں:</strong> نیا چالان حاصل کر کے بینک میں پہلی قسط ادا کریں۔</div>
+          </li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- At the bottom: Links to the other 8 DISCO pages -->
+  <section class="disco-other-section" id="otherDiscosSection">
+    <div class="container">
+      <div style="text-align: center;">
+        <div class="pill-badge-wrap" style="justify-content: center; margin-bottom: 10px;">
+          <span class="badge-wapda">All Pakistan WAPDA DISCOs</span>
+          <span class="badge-official"><span class="green-dot"></span> دیگر بجلی کمپنیاں</span>
+        </div>
+        <h2 style="font-size: 26px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">
+          Check Bills for Other Electricity Companies (DISCOs)
+        </h2>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 0;">
+          Select any electricity distribution company below to check or download duplicate electricity bills online.
+        </p>
+      </div>
+
+      <div class="disco-other-grid">
+        
+        <!-- 1. LESCO -->
+        <a href="/lesco-bill" class="disco-card card-lesco">
+          <div class="disco-logo-wrap">
+            <img src="/assets/lesco_logo_exact.png" alt="LESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">LESCO</h3>
+          <p class="disco-fullname">Lahore Electric Supply Company</p>
+          <span class="btn-disco-action btn-lesco">
+            Check LESCO Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 2. MEPCO -->
+        <a href="/mepco-bill" class="disco-card card-mepco">
+          <div class="disco-logo-wrap">
+            <img src="/assets/mepco_logo_exact.png" alt="MEPCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">MEPCO</h3>
+          <p class="disco-fullname">Multan Electric Power Company</p>
+          <span class="btn-disco-action btn-mepco">
+            Check MEPCO Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 3. FESCO -->
+        <a href="/fesco-bill" class="disco-card card-fesco">
+          <div class="disco-logo-wrap">
+            <img src="/assets/fesco_logo_exact.png" alt="FESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">FESCO</h3>
+          <p class="disco-fullname">Faisalabad Electric Supply Company</p>
+          <span class="btn-disco-action btn-fesco">
+            Check FESCO Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 4. IESCO -->
+        <a href="/iesco-bill" class="disco-card card-iesco">
+          <div class="disco-logo-wrap">
+            <img src="/assets/iesco_logo_exact.png" alt="IESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">IESCO</h3>
+          <p class="disco-fullname">Islamabad Electric Supply Company</p>
+          <span class="btn-disco-action btn-iesco">
+            Check IESCO Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 5. GEPCO -->
+        <a href="/gepco-bill" class="disco-card card-gepco">
+          <div class="disco-logo-wrap">
+            <img src="/assets/gepco_logo_exact.png" alt="GEPCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">GEPCO</h3>
+          <p class="disco-fullname">Gujranwala Electric Power Company</p>
+          <span class="btn-disco-action btn-gepco">
+            Check GEPCO Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 6. PESCO -->
+        <a href="/pesco-bill" class="disco-card card-pesco">
+          <div class="disco-logo-wrap">
+            <img src="/assets/pesco_logo_exact.png" alt="PESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">PESCO</h3>
+          <p class="disco-fullname">Peshawar Electric Supply Company</p>
+          <span class="btn-disco-action btn-pesco">
+            Check PESCO Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 7. HESCO -->
+        <a href="/hesco-bill" class="disco-card card-hesco">
+          <div class="disco-logo-wrap">
+            <img src="/assets/hesco_logo_exact.png" alt="HESCO Logo" class="disco-logo-img">
+          </div>
+          <h3 class="disco-title">HESCO</h3>
+          <p class="disco-fullname">Hyderabad Electric Supply Company</p>
+          <span class="btn-disco-action btn-hesco">
+            Check HESCO Bill &rarr;
+          </span>
+        </a>
+
+        <!-- 8. SEPCO -->
+        <a href="/sepco-bill" class="disco-card card-sepco">
+          <div class="disco-logo-wrap" style="background: #fff7ed; border: 1px solid #fed7aa;">
+            <span style="font-size: 20px;">⚡</span>
+          </div>
+          <h3 class="disco-title">SEPCO</h3>
+          <p class="disco-fullname">Sukkur Electric Power Company</p>
+          <span class="btn-disco-action btn-sepco">
+            Check SEPCO Bill &rarr;
+          </span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Clean White Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      
+      <!-- Left: Logo & Subtitle -->
+      <div class="footer-left">
+        <div class="footer-brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" style="width: 20px; height: 20px;">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="footer-brand-text">
+          <span class="footer-title">Bijli Bill Checker</span>
+          <span class="footer-subtitle">QESCO &bull; Quetta Electric Supply Company</span>
+        </div>
+      </div>
+
+      <!-- Center: Links -->
+      <div class="footer-center">
+        <a href="/" class="footer-link">Home</a>
+        <span class="footer-divider">|</span>
+        <a href="#heroSection" class="footer-link" onclick="if(document.getElementById('refNoInput')) document.getElementById('refNoInput').focus()">Check Bill</a>
+        <span class="footer-divider">|</span>
+        <a href="/faq" class="footer-link">FAQ</a>
+        <span class="footer-divider">|</span>
+        <a href="/terms" class="footer-link">Terms &amp; Conditions</a>
+        <span class="footer-divider">|</span>
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+      </div>
+
+      <!-- Right: Serving text -->
+      <div class="footer-right">
+        <span class="footer-serving-text">Made for a Better Pakistan 🇵🇰 💚</span>
+        <span class="footer-copy">&copy; 2026 Bijli Bill Checker. All rights reserved.</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toastNotification">
+    <span id="toastMessage">Copied to clipboard!</span>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

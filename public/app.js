@@ -98,6 +98,12 @@ const cityOptionsList = document.getElementById('cityOptionsList');
 
 // Document Ready Initialization
 document.addEventListener('DOMContentLoaded', () => {
+  // Check if dedicated DISCO page
+  const pageDisco = document.body.dataset.disco;
+  if (pageDisco) {
+    state.selectedCompany = pageDisco;
+  }
+
   // 1. Apply theme
   applyTheme(state.theme);
 

@@ -305,6 +305,25 @@ app.get("/faq", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "faq.html"));
 });
 
+// Dedicated DISCO Pages
+const discoPages = [
+  "mepco-bill",
+  "lesco-bill",
+  "fesco-bill",
+  "iesco-bill",
+  "gepco-bill",
+  "pesco-bill",
+  "hesco-bill",
+  "sepco-bill",
+  "qesco-bill",
+];
+
+discoPages.forEach((page) => {
+  app.get(`/${page}`, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", `${page}.html`));
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
