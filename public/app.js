@@ -69,6 +69,28 @@ const DISCOS = [
   { code: 'sepco', name: 'SEPCO', fullName: 'Sukkur Electric Power Company', defaultCity: 'Sukkur', sampleRef: '23112340123401' }
 ];
 
+// Exact Mapping: Electricity Company (DISCO) -> City
+const DISCO_CITY_MAP = {
+  LESCO: 'Lahore',
+  MEPCO: 'Multan',
+  FESCO: 'Faisalabad',
+  IESCO: 'Islamabad',
+  GEPCO: 'Gujranwala',
+  PESCO: 'Peshawar',
+  HESCO: 'Hyderabad',
+  SEPCO: 'Sukkur',
+  QESCO: 'Quetta',
+  lesco: 'Lahore',
+  mepco: 'Multan',
+  fesco: 'Faisalabad',
+  iesco: 'Islamabad',
+  gepco: 'Gujranwala',
+  pesco: 'Peshawar',
+  hesco: 'Hyderabad',
+  sepco: 'Sukkur',
+  qesco: 'Quetta'
+};
+
 // Urdu DISCO Translations Registry
 const DISCO_NAMES_URDU = {
   lesco: { name: 'لیسکو', fullName: 'لاہور الیکٹرک سپلائی کمپنی', city: 'لاہور' },
@@ -281,13 +303,54 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. Set initial active company & city
   selectCompany(state.selectedCompany, false);
 
-  // 6. Synchronize company select dropdown in search bar
+  // 6. Synchronize company select dropdown in search bar & handle changes anywhere
   if (companySelectDropdown) {
     companySelectDropdown.value = state.selectedCompany;
-    companySelectDropdown.addEventListener('change', (e) => {
+    const handleCompanyChange = (e) => {
       selectCompany(e.target.value, false);
-    });
+    };
+    companySelectDropdown.addEventListener('change', handleCompanyChange);
+    companySelectDropdown.addEventListener('input', handleCompanyChange);
   }
+
+  // Handle dropdown changes for any company select elements across the site
+  document.addEventListener('change', (e) => {
+    if (e.target && (e.target.id === 'companySelectDropdown' || 
+                     e.target.name === 'company' || 
+                     (e.target.classList && (
+                       e.target.classList.contains('company-select') ||
+                       e.target.classList.contains('company-dropdown') ||
+                       e.target.classList.contains('company-inline-select')
+                     )))) {
+      selectCompany(e.target.value, false);
+    }
+  });
+
+  // Whenever user clicks Popular Providers chips or DISCO cards anywhere on the site
+  document.addEventListener('click', (e) => {
+    const pill = e.target.closest('.provider-pill');
+    if (pill) {
+      const disco = (pill.dataset.disco || 
+                     (pill.getAttribute('href') ? pill.getAttribute('href').replace(/^\/|-bill$/g, '') : '') ||
+                     pill.textContent).trim().toLowerCase();
+      if (DISCO_CITY_MAP[disco]) {
+        selectCompany(disco, false);
+      }
+      return;
+    }
+
+    const card = e.target.closest('.disco-card');
+    if (card) {
+      const disco = (card.getAttribute('data-disco') || 
+                     (card.id ? card.id.replace('disco-card-', '') : '') ||
+                     (card.getAttribute('href') ? card.getAttribute('href').replace(/^\/|-bill$/g, '') : '') ||
+                     (card.querySelector('.disco-title') ? card.querySelector('.disco-title').textContent : '')).trim().toLowerCase();
+      if (DISCO_CITY_MAP[disco]) {
+        selectCompany(disco, false);
+      }
+      return;
+    }
+  });
 
   // 7. Input formatting (removes invalid chars, allows digits and optional U/R suffix)
   if (refInput) {
@@ -503,54 +566,60 @@ function selectCity(cityName, discoCode) {
 
 // Master Function: Select Company & Synchronize Entire UI
 function selectCompany(code, shouldScroll = false) {
-  state.selectedCompany = code;
-  localStorage.setItem('bijli_company', code);
+  if (!code) return;
+  const normalizedCode = String(code).toLowerCase().trim();
+  state.selectedCompany = normalizedCode;
+  localStorage.setItem('bijli_company', normalizedCode);
 
   // 1. Update Company Select Dropdown in Search Bar
   if (companySelectDropdown) {
-    companySelectDropdown.value = code;
+    companySelectDropdown.value = normalizedCode;
   }
+  document.querySelectorAll('select#companySelectDropdown, select[name="company"], select.company-select, select.company-inline-select').forEach(sel => {
+    sel.value = normalizedCode;
+  });
 
   // 2. Update Submit Button Text
   if (btnSubmitText) {
     if (state.lang === 'ur') {
-      const urName = DISCO_NAMES_URDU[code] ? DISCO_NAMES_URDU[code].name : code.toUpperCase();
+      const urName = DISCO_NAMES_URDU[normalizedCode] ? DISCO_NAMES_URDU[normalizedCode].name : normalizedCode.toUpperCase();
       btnSubmitText.textContent = `${urName} کا بل چیک کریں`;
     } else {
-      btnSubmitText.textContent = `Check ${code.toUpperCase()} Bill`;
+      btnSubmitText.textContent = `Check ${normalizedCode.toUpperCase()} Bill`;
     }
   }
 
   // 3. Update Popular Providers Pills
   document.querySelectorAll('.provider-pill').forEach(pill => {
-    const disco = pill.dataset.disco || pill.textContent.trim().toLowerCase();
-    if (disco === code) {
+    const disco = (pill.dataset.disco || 
+                   (pill.getAttribute('href') ? pill.getAttribute('href').replace(/^\/|-bill$/g, '') : '') ||
+                   pill.textContent).trim().toLowerCase();
+    if (disco === normalizedCode) {
       pill.classList.add('active');
     } else {
       pill.classList.remove('active');
     }
   });
 
-  // 4. Update 7 DISCO Cards Highlight
+  // 4. Update DISCO Cards Highlight
   document.querySelectorAll('.disco-card').forEach(card => {
-    card.classList.remove('active');
+    const disco = (card.getAttribute('data-disco') || 
+                   (card.id ? card.id.replace('disco-card-', '') : '') ||
+                   (card.getAttribute('href') ? card.getAttribute('href').replace(/^\/|-bill$/g, '') : '')).trim().toLowerCase();
+    if (disco === normalizedCode) {
+      card.classList.add('active');
+    } else {
+      card.classList.remove('active');
+    }
   });
-  const activeCard = document.getElementById(`disco-card-${code}`);
-  if (activeCard) {
-    activeCard.classList.add('active');
-  }
 
-  // 5. Update City in Header if not already matched
-  const discoObj = DISCOS.find(d => d.code === code);
-  if (discoObj) {
-    // If current selected city does not belong to this disco, update to default city of this disco
-    const currentCityMatch = PAKISTAN_CITIES.find(c => c.city === state.selectedCity && c.disco === code);
-    if (!currentCityMatch) {
-      state.selectedCity = discoObj.defaultCity;
-      localStorage.setItem('bijli_city', discoObj.defaultCity);
-      if (selectedCityText) {
-        selectedCityText.textContent = discoObj.defaultCity;
-      }
+  // 5. Automatically update header city selector to that company's city from exact mapping
+  const mappedCity = DISCO_CITY_MAP[normalizedCode] || DISCO_CITY_MAP[normalizedCode.toUpperCase()];
+  if (mappedCity) {
+    state.selectedCity = mappedCity;
+    localStorage.setItem('bijli_city', mappedCity);
+    if (selectedCityText) {
+      selectedCityText.textContent = mappedCity;
     }
   }
 
@@ -953,4 +1022,11 @@ function showToast(message) {
       toast.classList.remove('show');
     }, 2500);
   }
+}
+
+// Global exports for tests and external scripts
+if (typeof window !== 'undefined') {
+  window.DISCO_CITY_MAP = DISCO_CITY_MAP;
+  window.selectCompany = selectCompany;
+  window.selectCity = selectCity;
 }
