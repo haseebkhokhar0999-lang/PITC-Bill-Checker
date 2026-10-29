@@ -301,11 +301,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initCityDropdown();
 
   // 5. Set initial active company & city
-  selectCompany(state.selectedCompany, false);
+  if (pageDisco) {
+    selectCompany(state.selectedCompany, false);
+  } else {
+    // Homepage initial load: NO card or chip must be pre-selected
+    state.selectedCompany = null;
+    document.querySelectorAll('.provider-pill').forEach(pill => pill.classList.remove('active'));
+    document.querySelectorAll('.disco-card').forEach(card => card.classList.remove('active'));
+  }
 
   // 6. Synchronize company select dropdown in search bar & handle changes anywhere
   if (companySelectDropdown) {
-    companySelectDropdown.value = state.selectedCompany;
+    if (state.selectedCompany) {
+      companySelectDropdown.value = state.selectedCompany;
+    }
     const handleCompanyChange = (e) => {
       selectCompany(e.target.value, false);
     };
