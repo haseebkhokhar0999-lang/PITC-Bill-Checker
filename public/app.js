@@ -473,6 +473,14 @@ function applyLanguage(lang) {
       btnSubmitText.textContent = `Check ${disco.toUpperCase()} Bill`;
     }
   }
+
+  // 9. Update DISCO Articles Language Visibility (English & Urdu)
+  document.querySelectorAll('.disco-article-lang-en').forEach(el => {
+    el.style.display = isUr ? 'none' : 'block';
+  });
+  document.querySelectorAll('.disco-article-lang-ur').forEach(el => {
+    el.style.display = isUr ? 'block' : 'none';
+  });
 }
 
 // Theme Management

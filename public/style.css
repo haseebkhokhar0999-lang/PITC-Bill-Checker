@@ -2658,3 +2658,28 @@ html[dir="rtl"] .btn-arrow {
   }
 }
 
+/* ==========================================================================
+   13. Dual-Language Articles Switching (English & Urdu)
+   ========================================================================== */
+body[data-lang="ur"] .disco-article-lang-en,
+html[dir="rtl"] .disco-article-lang-en {
+  display: none !important;
+}
+
+body:not([data-lang="ur"]) .disco-article-lang-ur,
+body[data-lang="en"] .disco-article-lang-ur,
+html[dir="ltr"] .disco-article-lang-ur {
+  display: none !important;
+}
+
+body[data-lang="ur"] .disco-article-lang-ur,
+html[dir="rtl"] .disco-article-lang-ur {
+  display: block;
+}
+
+body:not([data-lang="ur"]) .disco-article-lang-en,
+body[data-lang="en"] .disco-article-lang-en,
+html[dir="ltr"] .disco-article-lang-en {
+  display: block;
+}
+
