@@ -833,9 +833,9 @@ body {
   margin-bottom: 10px;
   flex-shrink: 0;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  padding: 4px;
+  padding: 2px;
   box-sizing: border-box;
 }
 
@@ -2523,9 +2523,9 @@ body[data-theme="dark"] .disco-logo-wrap {
     margin-bottom: 10px;
     flex-shrink: 0;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    padding: 4px;
+    padding: 2px;
     box-sizing: border-box;
   }
 
