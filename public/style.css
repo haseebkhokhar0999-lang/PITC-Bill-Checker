@@ -67,6 +67,9 @@ body[data-theme="dark"] {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
 body {
@@ -77,12 +80,17 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.25s, color 0.25s;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
 .container {
   max-width: 1180px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================
@@ -771,21 +779,23 @@ body {
    4. DISCO Cards Row (All 9 Distribution Companies)
    ========================================================================== */
 .disco-cards-section {
-  padding: 12px 0 32px;
+  padding: 16px 0 36px;
 }
 
 .disco-cards-grid {
   display: grid;
   grid-template-columns: repeat(9, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
   align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .disco-card {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: 14px;
-  padding: 16px 8px 14px;
+  padding: 18px 8px 16px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -866,8 +876,8 @@ body {
 .btn-disco-action {
   width: 100%;
   border-radius: var(--radius-pill);
-  padding: 7px 6px;
-  font-size: 11px;
+  padding: 8px 6px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.1px;
   border: 1px solid transparent;
@@ -2250,14 +2260,140 @@ body[data-theme="dark"] .disco-logo-wrap {
 
 /* Mobile Devices (<= 640px) */
 @media (max-width: 640px) {
+  .navbar {
+    height: 60px;
+  }
+
+  .nav-container {
+    padding: 0 14px;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .brand-link {
+    gap: 8px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .brand-icon-box {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .brand-bolt-svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .brand-text {
+    min-width: 0;
+  }
+
+  .brand-title {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .nav-right {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .lang-toggle-btn {
+    padding: 5px 8px;
+    font-size: 11.5px;
+    min-height: 34px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  .theme-icon-btn {
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    flex-shrink: 0;
+  }
+
+  .city-selector-btn {
+    padding: 5px 8px;
+    font-size: 11.5px;
+    min-height: 34px;
+    gap: 4px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  .selected-city-text {
+    max-width: 58px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .city-menu-popover {
+    width: min(290px, calc(100vw - 24px));
+    right: 0;
+  }
+
+  /* Hero Section on Mobile */
+  .hero-section {
+    padding: 24px 0 20px;
+  }
+
+  .hero-container {
+    padding: 0 16px;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hero-left {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-title {
+    font-size: 26px;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+    margin-bottom: 10px;
+  }
+
+  .hero-subtitle {
+    font-size: 13.5px;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    max-width: 100%;
+  }
+
+  /* Search Bar Wrapper on Mobile */
   .search-bar-wrap {
     flex-direction: column;
     align-items: stretch;
-    padding: 10px;
-    gap: 10px;
-    border-radius: 16px;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 14px;
+    width: 100%;
     max-width: 100%;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
   }
 
   .search-input-inner {
@@ -2273,97 +2409,387 @@ body[data-theme="dark"] .disco-logo-wrap {
   .search-company-badge {
     padding: 4px 7px;
     font-size: 11.5px;
+    flex-shrink: 0;
   }
 
   .company-inline-select {
-    font-size: 12px;
-    max-width: 115px;
+    font-size: 14px;
+    max-width: 120px;
   }
 
   .search-input-field {
-    font-size: 14px;
-    padding: 2px 0;
+    font-size: 16px;
+    padding: 3px 0;
+    width: 100%;
   }
 
-  /* Target only hero check bill submit button */
   #billSearchForm .btn-check-bill {
     width: 100%;
+    min-height: 44px;
     justify-content: center;
-    padding: 13px 18px;
-    font-size: 14.5px;
+    padding: 12px 18px;
+    font-size: 14px;
     border-radius: 10px;
   }
 
-  .hero-title {
-    font-size: 26px;
+  /* Popular Providers Row - Wrap cleanly */
+  .popular-providers-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin-top: 4px;
   }
 
-  .hero-subtitle {
+  .popular-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.2px;
+  }
+
+  .provider-pills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .provider-pill {
+    padding: 6px 14px;
+    font-size: 12.5px;
+    font-weight: 700;
+    min-height: 38px;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .hero-right {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .hero-img-stage {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .hero-illustration-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* DISCO Cards Section - Single Column Stack on Mobile */
+  .disco-cards-section {
+    padding: 14px 0 28px;
+  }
+
+  .disco-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .disco-card {
+    width: 100%;
+    padding: 18px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    border-radius: 14px;
+    box-sizing: border-box;
+    box-shadow: var(--shadow-card);
+    height: auto;
+    min-height: 195px;
+  }
+
+  .disco-logo-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    padding: 4px;
+    box-sizing: border-box;
+  }
+
+  .disco-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0 0 4px 0;
+    line-height: 1.25;
+    letter-spacing: -0.2px;
+    text-align: center;
+  }
+
+  .disco-fullname {
     font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    line-height: 1.4;
+    min-height: 24px;
+    margin: 0 0 14px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-grow: 1;
+    word-break: normal;
+    padding: 0 2px;
+  }
+
+  .btn-disco-action {
+    width: 100%;
+    max-width: 280px;
+    min-height: 44px;
+    border-radius: var(--radius-pill);
+    padding: 11px 20px;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: auto;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    line-height: 1.3;
+  }
+
+  /* Why Section on Mobile */
+  .why-section {
+    padding: 10px 0 20px;
+  }
+
+  .why-card-bar {
+    flex-direction: column;
+    padding: 18px 16px;
+    gap: 16px;
+    border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .why-left {
+    width: 100%;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .why-title {
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .why-desc {
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  .why-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .feature-item {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .feat-title {
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+
+  .feat-desc {
+    font-size: 12px;
+  }
+
+  /* How It Works on Mobile */
+  .how-it-works-section {
+    padding: 10px 0 24px;
+  }
+
+  .how-it-works-container {
+    flex-direction: column;
+    padding: 18px 16px;
+    gap: 18px;
+    border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .how-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+    padding-right: 0;
+    padding-bottom: 14px;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .how-main-title {
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .how-sub-title {
+    font-size: 12px;
+  }
+
+  .how-steps-row {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .step-col {
+    width: 100%;
+  }
+
+  .step-title {
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+
+  .step-desc {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .step-arrow {
+    display: none;
+  }
+
+  /* FAQ Accordion on Mobile */
+  .faq-section-home {
+    padding: 28px 0 36px;
+  }
+
+  .faq-header-center {
+    margin-bottom: 20px;
+    padding: 0 10px;
+  }
+
+  .faq-question-btn {
+    padding: 14px 16px;
+    font-size: 14px;
+    gap: 12px;
+  }
+
+  .faq-answer-panel {
+    padding: 0 16px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* Footer on Mobile */
+  .site-footer {
+    padding: 22px 0 18px;
+  }
+
+  .footer-container {
+    padding: 0 16px;
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .footer-left {
+    justify-content: center;
+  }
+
+  .footer-center {
+    justify-content: center;
+    gap: 6px 12px;
+    flex-wrap: wrap;
+  }
+
+  .footer-right {
+    align-items: center;
   }
 }
 
-/* Small SmartPhones (<= 480px) */
+/* Small SmartPhones (<= 480px, including 390px iPhone & Android screens) */
 @media (max-width: 480px) {
   .navbar {
     height: 58px;
   }
+
   .nav-container {
     padding: 0 12px;
+    gap: 6px;
   }
+
   .brand-icon-box {
     width: 32px;
     height: 32px;
     border-radius: 7px;
   }
+
   .brand-bolt-svg {
     width: 18px;
     height: 18px;
   }
+
   .brand-title {
-    font-size: 14.5px;
+    font-size: 14px;
     letter-spacing: -0.2px;
   }
+
   .brand-subtitle {
     display: none;
   }
-  .btn-nav-action {
-    padding: 6px 11px;
-    font-size: 11.5px;
-    gap: 4px;
+
+  .nav-right {
+    gap: 5px;
   }
-  .selected-city-text {
-    max-width: 70px;
+
+  .lang-toggle-btn {
+    padding: 4px 7px;
+    font-size: 11px;
+    min-height: 32px;
   }
+
+  .theme-icon-btn {
+    width: 30px;
+    height: 30px;
+    min-height: 30px;
+  }
+
   .city-selector-btn {
-    padding: 5px 8px;
-    font-size: 12px;
+    padding: 4px 7px;
+    font-size: 11px;
+    min-height: 32px;
+    gap: 3px;
   }
-  .disco-cards-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-  .disco-card {
-    padding: 12px 4px 10px;
-  }
-  .disco-logo-wrap {
-    width: 38px;
-    height: 38px;
-    padding: 3px;
-    margin-bottom: 8px;
-  }
-  .disco-title {
-    font-size: 13px;
-  }
-  .disco-fullname {
-    font-size: 9px;
-    line-height: 1.3;
-    min-height: 36px;
-    margin-bottom: 10px;
-  }
-  .btn-disco-action {
-    font-size: 9.5px;
-    padding: 5px 4px;
+
+  .selected-city-text {
+    max-width: 52px;
   }
 
   /* Legal Pages on Mobile */
@@ -2411,40 +2837,27 @@ body[data-theme="dark"] .disco-logo-wrap {
     margin: 14px 0;
     border-radius: 0 8px 8px 0;
   }
-
-  /* Footer on Mobile */
-  .footer-container {
-    padding: 0 12px;
-    gap: 14px;
-  }
-  .footer-title {
-    font-size: 14px;
-  }
-  .footer-subtitle {
-    font-size: 10.5px;
-  }
-  .footer-link {
-    font-size: 12px;
-  }
-  .footer-serving-text {
-    font-size: 11px;
-  }
-  .footer-copy {
-    font-size: 10.5px;
-  }
 }
 
 /* Extra Small Mobile (<= 360px - iPhone SE, Galaxy Fold, etc.) */
 @media (max-width: 360px) {
   .nav-container {
     padding: 0 8px;
+    gap: 4px;
   }
   .brand-title {
     font-size: 13px;
   }
-  .btn-nav-action {
-    padding: 5px 8px;
-    font-size: 11px;
+  .selected-city-text {
+    max-width: 42px;
+  }
+  .lang-toggle-btn {
+    padding: 4px 5px;
+    font-size: 10.5px;
+  }
+  .city-selector-btn {
+    padding: 4px 5px;
+    font-size: 10.5px;
   }
   .legal-card {
     padding: 14px 10px;
@@ -2710,6 +3123,19 @@ html[dir="rtl"] .btn-arrow {
   html[dir="rtl"] .pill-badge-wrap,
   html[dir="rtl"] .popular-providers-row {
     justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  html[dir="rtl"] .hero-left {
+    align-items: flex-start;
+    text-align: right;
+  }
+  html[dir="rtl"] .popular-providers-row {
+    align-items: flex-start;
+  }
+  html[dir="rtl"] .why-right {
+    align-items: flex-start;
   }
 }
 
