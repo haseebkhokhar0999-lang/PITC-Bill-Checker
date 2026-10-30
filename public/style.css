@@ -397,7 +397,7 @@ body {
    ========================================================================== */
 .hero-section {
   background: var(--bg-hero);
-  padding: 40px 0 36px;
+  padding: 44px 0 36px;
   position: relative;
   overflow: hidden;
 }
@@ -409,12 +409,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 36px;
 }
 
 .hero-left {
   flex: 1.1;
-  max-width: 590px;
+  max-width: 580px;
 }
 
 /* Two-Tone Pill Badge: ⚡ WAPDA & DISCOs | 🟢 Official Bill Checking */
@@ -467,10 +467,10 @@ body {
 .hero-title {
   font-size: 44px;
   font-weight: 800;
-  line-height: 1.18;
-  letter-spacing: -0.6px;
+  line-height: 1.16;
+  letter-spacing: -0.7px;
   color: var(--text-main);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .highlight-blue {
@@ -479,10 +479,12 @@ body {
 
 /* Subtitle */
 .hero-subtitle {
-  font-size: 14.5px;
+  font-size: 15px;
+  font-weight: 400;
   color: var(--text-body);
-  line-height: 1.55;
-  margin-bottom: 22px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 520px;
 }
 
 /* Search Bar Wrapper */
@@ -605,35 +607,39 @@ body {
 .popular-providers-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
+  padding-top: 2px;
 }
 
 .popular-label {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-muted);
+  letter-spacing: 0.2px;
 }
 
 .provider-pills-list {
   display: flex;
-  gap: 6px;
+  gap: 7px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .provider-pill {
   background: #f0f9ff;
   border: 1px solid var(--blue-border);
   color: var(--blue-text);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   border-radius: var(--radius-pill);
-  padding: 3px 11px;
+  padding: 4px 12px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  line-height: 1.4;
 }
 
 .provider-pill:hover,
@@ -641,6 +647,8 @@ body {
   background: var(--blue-primary);
   color: #ffffff;
   border-color: var(--blue-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 102, 255, 0.2);
 }
 
 /* Hero Right 3D Illustration Stage */
@@ -760,32 +768,37 @@ body {
 }
 
 /* ==========================================================================
-   4. DISCO Cards Row (7 Cards Exact Match)
+   4. DISCO Cards Row (All 9 Distribution Companies)
    ========================================================================== */
 .disco-cards-section {
-  padding: 10px 0 24px;
+  padding: 12px 0 32px;
 }
 
 .disco-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
 }
 
 .disco-card {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: 14px;
-  padding: 18px 10px 14px;
+  padding: 16px 8px 14px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   box-shadow: var(--shadow-card);
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
 }
 
 .disco-card:hover {
@@ -800,47 +813,80 @@ body {
 }
 
 .disco-logo-wrap {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  padding: 4px;
+  box-sizing: border-box;
 }
 
 .disco-logo-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block;
 }
 
 .disco-title {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--text-main);
-  margin-bottom: 2px;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+  flex-shrink: 0;
+  text-align: center;
 }
 
 .disco-fullname {
   font-size: 10.5px;
+  font-weight: 500;
   color: var(--text-muted);
   line-height: 1.35;
-  margin-bottom: 14px;
-  min-height: 28px;
+  margin: 0 0 14px 0;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-grow: 1;
+  word-break: normal;
+  padding: 0 2px;
 }
 
 .btn-disco-action {
   width: 100%;
   border-radius: var(--radius-pill);
-  padding: 6px 8px;
+  padding: 7px 6px;
   font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.1px;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
   text-align: center;
+  margin-top: auto;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  line-height: 1.3;
+}
+
+body[data-theme="dark"] .disco-logo-wrap {
+  background: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Custom Soft Pastel Colors for each card matching reference image */
@@ -2079,7 +2125,8 @@ body {
     justify-content: center;
   }
   .disco-cards-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
   }
   .why-card-bar {
     flex-direction: column;
@@ -2118,7 +2165,7 @@ body {
     font-size: 30px;
   }
   .disco-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
   .how-steps-row {
@@ -2293,22 +2340,30 @@ body {
     font-size: 12px;
   }
   .disco-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
   }
   .disco-card {
-    padding: 12px 6px 10px;
+    padding: 12px 4px 10px;
+  }
+  .disco-logo-wrap {
+    width: 38px;
+    height: 38px;
+    padding: 3px;
+    margin-bottom: 8px;
   }
   .disco-title {
     font-size: 13px;
   }
   .disco-fullname {
     font-size: 9px;
-    min-height: 24px;
+    line-height: 1.3;
+    min-height: 36px;
+    margin-bottom: 10px;
   }
   .btn-disco-action {
-    font-size: 10px;
-    padding: 5px 6px;
+    font-size: 9.5px;
+    padding: 5px 4px;
   }
 
   /* Legal Pages on Mobile */
