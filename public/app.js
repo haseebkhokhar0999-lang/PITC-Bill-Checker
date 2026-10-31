@@ -123,7 +123,7 @@ const TRANSLATIONS = {
     badgeWapda: "WAPDA & DISCOs",
     badgeOfficial: "Official Bill Checking",
     heroTitle: 'Electricity Bill <span class="highlight-blue">Check Online</span>',
-    heroSubtitle: "Enter your reference number to check your electricity bill instantly.<br>Fast, secure and easy — all in one place.",
+    heroSubtitle: "Click your electricity company below to check your bill.<br>Fast, secure and easy — all in one place.",
     popularProviders: "Popular Providers:",
 
     // DISCO Action Buttons
@@ -142,14 +142,14 @@ const TRANSLATIONS = {
     // How It Works
     howMainTitle: "How It Works",
     howSubTitle: "Checking your electricity bill is simple and takes less than a minute.",
-    step1Title: "Enter Reference Number",
-    step1Desc: "Type your 14-digit reference number (mentioned on your bill).",
-    step2Title: "Click Check Bill",
-    step2Desc: "Press the check button to fetch your bill details.",
+    step1Title: "Click Your DISCO Card/Chip",
+    step1Desc: "Click your DISCO card/chip (LESCO, MEPCO, FESCO, etc.).",
+    step2Title: "Enter Reference Number",
+    step2Desc: "On that DISCO's own page, enter your 14-digit reference number.",
     step3Title: "View Bill Details",
-    step3Desc: "See your complete bill information including due date and amount.",
+    step3Desc: "View your bill details.",
     step4Title: "Download / Print",
-    step4Desc: "Save or print your bill for future use.",
+    step4Desc: "Download / Print.",
 
     // FAQ Section
     faqBadge: "Help Center",
@@ -192,7 +192,7 @@ const TRANSLATIONS = {
     badgeWapda: "واپڈا اور ڈسکوز",
     badgeOfficial: "سرکاری بل تصدیق",
     heroTitle: 'بجلی کا بل <span class="highlight-blue">آن لائن چیک کریں</span>',
-    heroSubtitle: "فوری طور پر بجلی کا بل چیک کرنے کے لیے اپنی کمپنی منتخب کریں۔<br>تیز، محفوظ اور آسان — سب ایک ہی جگہ۔",
+    heroSubtitle: "اپنا بل چیک کرنے کے لیے نیچے دی گئی اپنی بجلی کمپنی پر کلک کریں۔<br>تیز، محفوظ اور آسان — سب ایک ہی جگہ۔",
     popularProviders: "مقبول کمپنیاں:",
 
     // DISCO Action Buttons
@@ -211,14 +211,14 @@ const TRANSLATIONS = {
     // How It Works
     howMainTitle: "یہ کیسے کام کرتا ہے",
     howSubTitle: "اپنا بجلی کا بل چیک کرنا انتہائی آسان ہے اور ایک منٹ سے بھی کم وقت لگتا ہے۔",
-    step1Title: "ریفرنس نمبر درج کریں",
-    step1Desc: "اپنا 14 ہندسوں کا ریفرنس نمبر درج کریں (جو بل پر لکھا ہوتا ہے)۔",
-    step2Title: "بل چیک پر کلک کریں",
-    step2Desc: "بل کی تفصیلات حاصل کرنے کے لیے بٹن دبائیں۔",
+    step1Title: "اپنی کمپنی کے کارڈ/چپ پر کلک کریں",
+    step1Desc: "اپنی کمپنی کے کارڈ یا چپ پر کلک کریں (LESCO، MEPCO، FESCO وغیرہ)۔",
+    step2Title: "ریفرنس نمبر درج کریں",
+    step2Desc: "اس کمپنی کے اپنے صفحے پر اپنا 14 ہندسوں کا ریفرنس نمبر درج کریں۔",
     step3Title: "بل کی تفصیلات دیکھیں",
-    step3Desc: "آخری تاریخ اور ادا شدہ رقم سمیت مکمل معلومات دیکھیں۔",
+    step3Desc: "اپنے بجلی بل کی مکمل تفصیلات دیکھیں۔",
     step4Title: "ڈاؤن لوڈ / پرنٹ",
-    step4Desc: "مستقبل کے لیے اپنا بل محفوظ کریں یا پرنٹ نکالیں۔",
+    step4Desc: "ڈاؤن لوڈ / پرنٹ کریں۔",
 
     // FAQ Section
     faqBadge: "امدادی مرکز",
