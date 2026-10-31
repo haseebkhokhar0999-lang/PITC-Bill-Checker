@@ -121,7 +121,7 @@ const TRANSLATIONS = {
 
     // Homepage Hero
     badgeWapda: "WAPDA & DISCOs",
-    badgeOfficial: "Official Bill Checking",
+    badgeOfficial: "Bill Checking",
     heroTitle: 'Electricity Bill <span class="highlight-blue">Check Online</span>',
     heroSubtitle: "Click your electricity company below to check your bill.<br>Fast, secure and easy — all in one place.",
     popularProviders: "Popular Providers:",
@@ -190,7 +190,7 @@ const TRANSLATIONS = {
 
     // Homepage Hero
     badgeWapda: "واپڈا اور ڈسکوز",
-    badgeOfficial: "سرکاری بل تصدیق",
+    badgeOfficial: "بل تصدیق",
     heroTitle: 'بجلی کا بل <span class="highlight-blue">آن لائن چیک کریں</span>',
     heroSubtitle: "اپنا بل چیک کرنے کے لیے نیچے دی گئی اپنی بجلی کمپنی پر کلک کریں۔<br>تیز، محفوظ اور آسان — سب ایک ہی جگہ۔",
     popularProviders: "مقبول کمپنیاں:",
@@ -813,7 +813,7 @@ function renderBillResult(res) {
         </div>
         <div class="status-banner-desc">
           ${isPaid 
-            ? `Official electricity billing records confirm this bill is <strong>PAID</strong>. ${payment.paymentDate ? `Payment Cleared: <strong>${payment.paymentDate}</strong> &bull; ` : ''}${payment.amountPaid ? `Paid Amount: <strong>Rs. ${Number(payment.amountPaid).toLocaleString()}</strong> &bull; ` : ''}Verified via PITC Live Database Feed.`
+            ? `Electricity billing records confirm this bill is <strong>PAID</strong>. ${payment.paymentDate ? `Payment Cleared: <strong>${payment.paymentDate}</strong> &bull; ` : ''}${payment.amountPaid ? `Paid Amount: <strong>Rs. ${Number(payment.amountPaid).toLocaleString()}</strong> &bull; ` : ''}Verified via PITC Live Database Feed.`
             : `Payable within due date: <strong>${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : '-'}</strong> &bull; Due Date: <strong>${bill.dueDate || 'N/A'}</strong>.<br><span style="display: inline-block; margin-top: 4px; font-size: 11.5px; opacity: 0.9;">⚡ <em>اگر آپ نے حال ہی میں بینک، ایزی پیسہ یا جاز کیش سے بل جمع کرایا ہے تو سنٹرل ریکارڈ میں اپڈیٹ ہونے میں 24 سے 48 گھنٹے لگ سکتے ہیں۔</em></span>`
           }
         </div>
@@ -861,7 +861,7 @@ function renderBillResult(res) {
             <span class="id-number">${consumer.customerId || '-'}</span>
           </div>
           <div style="font-size: 11.5px; color: ${isPaid ? '#059669' : '#0066ff'}; font-weight: 700; margin-top: 4px;">
-            ${isPaid ? '✓ Official Bank Stamped Paid' : '⚡ Official PITC Live Record'}
+            ${isPaid ? '✓ Bank Verified Paid' : '⚡ PITC Live Record'}
           </div>
         </div>
       </div>
@@ -945,16 +945,16 @@ function renderBillResult(res) {
 
       <!-- Bottom Action Tools -->
       <div class="bill-actions-bar">
-        <!-- 1. Print Original Official Bill (Opens official 1:1 bill layout) -->
+        <!-- 1. Print Duplicate Bill (Opens 1:1 bill layout) -->
         <button type="button" class="btn-bill-action original-print" onclick="printOriginalBill()">
           <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           Print Original Bill (اصل بل کا پرنٹ)
         </button>
 
-        <!-- 2. View Official Full Bill in New Tab -->
+        <!-- 2. View Full Bill in New Tab -->
         <button type="button" class="btn-bill-action view-original" onclick="viewOriginalBill()">
           <svg style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          View Official Bill (مکمل اصل بل)
+          View Duplicate Bill (مکمل بل)
         </button>
 
         <!-- 3. WhatsApp Share -->
@@ -968,7 +968,7 @@ function renderBillResult(res) {
   `;
 }
 
-// Print Original Official Bill (Opens official 1:1 PITC bill document and triggers print)
+// Print Duplicate Bill (Opens 1:1 PITC bill document and triggers print)
 function printOriginalBill() {
   if (!state.currentBill) return;
   const ref = state.currentBill.refNo;
@@ -978,7 +978,7 @@ function printOriginalBill() {
   window.open(url, '_blank', 'width=950,height=850,menubar=no,toolbar=no');
 }
 
-// View Official Full Bill in New Tab
+// View Full Bill in New Tab
 function viewOriginalBill() {
   if (!state.currentBill) return;
   const ref = state.currentBill.refNo;
