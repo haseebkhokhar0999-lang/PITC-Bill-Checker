@@ -305,6 +305,14 @@ app.get("/faq", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "faq.html"));
 });
 
+app.get("/about", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "about.html"));
+});
+
+app.get("/contact", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "contact.html"));
+});
+
 // Dedicated DISCO Pages
 const discoPages = [
   "mepco-bill",

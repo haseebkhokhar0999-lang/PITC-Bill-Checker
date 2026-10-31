@@ -168,6 +168,8 @@ const TRANSLATIONS = {
     footerFaq: "FAQ",
     footerTerms: "Terms & Conditions",
     footerPrivacy: "Privacy Policy",
+    footerAbout: "About Us",
+    footerContact: "Contact",
 
     // DISCO Dedicated Pages
     refInputPlaceholder: "Enter Reference Number (e.g. 14-digit)",
@@ -237,6 +239,8 @@ const TRANSLATIONS = {
     footerFaq: "سوالات",
     footerTerms: "شرائط و ضوابط",
     footerPrivacy: "پرائیویسی پالیسی",
+    footerAbout: "ہمارے بارے میں",
+    footerContact: "رابطہ",
 
     // DISCO Dedicated Pages
     refInputPlaceholder: "14 ہندسوں کا ریفرنس نمبر درج کریں",
