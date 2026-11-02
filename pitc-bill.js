@@ -932,7 +932,7 @@ function formatOriginalBillHtml(rawHtml, companyName = 'Electricity Distribution
     <div class="original-bill-toolbar noprint">
       <div class="toolbar-left">
         <a href="/" class="toolbar-back-btn">&larr; Back to App</a>
-        <span class="toolbar-title">${companyName} Official Electricity Bill</span>
+        <span class="toolbar-title">${companyName} Duplicate Electricity Bill</span>
         <span class="toolbar-status ${isPaid ? 'paid' : 'unpaid'}">
           ${isPaid ? '✓ PAID (ادا شدہ)' : '⚠️ UNPAID (غیر ادا شدہ)'}
         </span>
