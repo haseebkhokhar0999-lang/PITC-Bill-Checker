@@ -136,43 +136,39 @@
           Fast, secure and easy — view payment status, payable amount &amp; due date.
         </p>
 
-                <!-- Bill-Check Button-Only Area -->
-        <div class="pitc-embed-area" style="margin: 18px 0 16px;">
-          
-          <!-- Clear Label Stating Bill is Shown from PITC's Original Portal -->
-          <div class="pitc-portal-label" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding: 10px 14px; background: var(--bg-card, #ffffff); border: 1px solid var(--border-card, #e2e8f0); border-radius: var(--radius-sm, 10px); box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #16a34a;"></span>
-              <span style="font-size: 13.5px; font-weight: 700; color: var(--text-main, #1e293b);">Original PITC Portal</span>
+        <!-- Search Input Bar with Only MEPCO pre-selected -->
+        <form class="search-bar-wrap" id="billSearchForm">
+          <div class="search-input-inner">
+            
+            <!-- Company Pre-Selected Badge -->
+            <div class="search-company-badge" style="cursor: default;" title="Multan Electric Power Company">
+              <span class="company-badge-icon">⚡</span>
+              <span style="font-weight: 700; font-size: 13.5px; color: var(--text-main); margin-right: 4px;">MEPCO</span>
+              <input type="hidden" id="companySelectDropdown" value="mepco">
             </div>
-            <span style="font-size: 12px; color: var(--text-muted, #64748b); font-weight: 500;">
-              Bill is shown from PITC's original portal
-            </span>
+
+            <!-- Input Field -->
+            <input 
+              type="text" 
+              id="refNoInput" 
+              class="search-input-field" 
+              placeholder="Enter 14-digit Reference Number (e.g. 15112310123401)" 
+              maxlength="14"
+              value=""
+              autocomplete="off"
+            />
           </div>
 
-          <!-- Clearly Visible Button -->
-          <div class="pitc-fallback-container" style="text-align: center;">
-            <a 
-              href="https://bill.pitc.com.pk/mepcobill" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="btn-pitc-fallback"
-              style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 13px 20px; background: var(--primary, #0066ff); color: #ffffff; font-size: 15px; font-weight: 700; border-radius: var(--radius-pill, 9999px); text-decoration: none; box-shadow: 0 4px 14px rgba(0, 102, 255, 0.25); transition: background-color 0.2s, transform 0.15s;"
-            >
-              <svg style="width: 18px; height: 18px; flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-              <span>Check Bill on Original MEPCO Website</span>
-              <span style="font-size: 16px;">&rarr;</span>
-            </a>
-            <p style="margin-top: 8px; font-size: 11.5px; color: var(--text-muted, #64748b);">
-              Click the button to open the original PITC portal in a new tab.
-            </p>
-          </div>
-
-        </div>
+          <!-- Submit Button -->
+          <button type="submit" class="btn-check-bill" id="btnSubmitBill">
+            <svg class="btn-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span id="btnSubmitText">Check MEPCO Bill</span>
+            <span class="btn-arrow">&rarr;</span>
+          </button>
+        </form>
 
         <p style="margin-top: 10px; font-size: 12px; color: var(--text-muted);">
           📍 <strong>Coverage Areas:</strong> Multan, Bahawalpur, Sahiwal, DG Khan, Rahim Yar Khan, Muzaffargarh, Vehari, Khanewal, Lodhran, Pakpattan, Bahawalnagar.
