@@ -148,8 +148,8 @@ const TRANSLATIONS = {
     step2Desc: "On that DISCO's own page, enter your 14-digit reference number.",
     step3Title: "View Bill Details",
     step3Desc: "View your bill details.",
-    step4Title: "Download / Print",
-    step4Desc: "Download / Print.",
+    step4Title: "Print Original Bill (اصل بل کا پرنٹ)",
+    step4Desc: "Print Original Bill (اصل بل کا پرنٹ).",
 
     // FAQ Section
     faqBadge: "Help Center",
@@ -219,8 +219,8 @@ const TRANSLATIONS = {
     step2Desc: "اس کمپنی کے اپنے صفحے پر اپنا 14 ہندسوں کا ریفرنس نمبر درج کریں۔",
     step3Title: "بل کی تفصیلات دیکھیں",
     step3Desc: "اپنے بجلی بل کی مکمل تفصیلات دیکھیں۔",
-    step4Title: "ڈاؤن لوڈ / پرنٹ",
-    step4Desc: "ڈاؤن لوڈ / پرنٹ کریں۔",
+    step4Title: "Print Original Bill (اصل بل کا پرنٹ)",
+    step4Desc: "Print Original Bill (اصل بل کا پرنٹ)۔",
 
     // FAQ Section
     faqBadge: "امدادی مرکز",
