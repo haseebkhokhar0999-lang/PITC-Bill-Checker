@@ -1,4 +1,18 @@
 const path = require("path");
+const fs = require("fs");
+
+// Load environment variables from .env file if available
+const envPath = path.join(__dirname, ".env");
+try {
+  require("dotenv").config({ path: envPath });
+} catch (_) {
+  if (fs.existsSync(envPath) && typeof process.loadEnvFile === "function") {
+    try {
+      process.loadEnvFile(envPath);
+    } catch (_) {}
+  }
+}
+
 const express = require("express");
 const {
   getPITCBill,

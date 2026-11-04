@@ -1,6 +1,44 @@
+const path = require("path");
+const fs = require("fs");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const { HttpsProxyAgent } = require("https-proxy-agent");
+
+// Load environment variables from .env file if available
+const envPath = path.join(__dirname, ".env");
+try {
+  require("dotenv").config({ path: envPath });
+} catch (_) {
+  if (fs.existsSync(envPath) && typeof process.loadEnvFile === "function") {
+    try {
+      process.loadEnvFile(envPath);
+    } catch (_) {}
+  }
+}
+
+/**
+ * Normalizes proxy URL to standard format:
+ * Supports host:port:user:pass as well as http://user:pass@host:port
+ */
+function normalizeProxyUrl(proxy) {
+  if (!proxy) return null;
+  proxy = String(proxy).trim();
+  if (!proxy) return null;
+
+  // Format: host:port:username:password
+  const parts = proxy.split(":");
+  if (parts.length === 4 && !proxy.includes("://")) {
+    const [host, port, user, pass] = parts;
+    return `http://${encodeURIComponent(user)}:${encodeURIComponent(pass)}@${host}:${port}`;
+  }
+
+  // Missing protocol prefix
+  if (!proxy.includes("://")) {
+    return `http://${proxy}`;
+  }
+
+  return proxy;
+}
 
 /**
  * Supported electricity companies in Pakistan
@@ -77,13 +115,19 @@ async function getCCMSCookie() {
     return cachedCCMSCookie;
   }
   try {
-    const res = await axios.get("https://ccms.pitc.com.pk/complaint", {
+    const config = {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
       timeout: 5000,
-    });
+    };
+    const proxyUrl = normalizeProxyUrl(process.env.PROXY_URL);
+    if (proxyUrl) {
+      config.httpsAgent = new HttpsProxyAgent(proxyUrl);
+      config.proxy = false;
+    }
+    const res = await axios.get("https://ccms.pitc.com.pk/complaint", config);
     const setCookie = res.headers["set-cookie"];
     if (setCookie && setCookie.length > 0) {
       cachedCCMSCookie = setCookie.map((c) => c.split(";")[0]).join("; ");
@@ -114,18 +158,24 @@ async function verifyPaymentStatus(refNo, billData, $result) {
   try {
     const cookie = await getCCMSCookie();
     const cleanRef = String(refNo).replace(/[^0-9]/g, "");
+    const config = {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        Referer: "https://ccms.pitc.com.pk/complaint",
+        "X-Requested-With": "XMLHttpRequest",
+        Cookie: cookie || "",
+      },
+      timeout: 5000,
+    };
+    const proxyUrl = normalizeProxyUrl(process.env.PROXY_URL);
+    if (proxyUrl) {
+      config.httpsAgent = new HttpsProxyAgent(proxyUrl);
+      config.proxy = false;
+    }
     const res = await axios.get(
       `https://ccms.pitc.com.pk/api/details/bill?reference=${cleanRef}`,
-      {
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-          Referer: "https://ccms.pitc.com.pk/complaint",
-          "X-Requested-With": "XMLHttpRequest",
-          Cookie: cookie || "",
-        },
-        timeout: 5000,
-      }
+      config
     );
 
     if (res.data && res.data.bill && res.data.bill.basicInfo) {
@@ -279,7 +329,7 @@ async function getPITCBill(refNo, companyCode, ruCode = "U") {
     // Configure proxy if PROXY_URL environment variable is set
     // This helps bypass geo-restrictions when deploying outside Pakistan
     // -------------------------------------------------------------------------
-    const proxyUrl = process.env.PROXY_URL;
+    const proxyUrl = normalizeProxyUrl(process.env.PROXY_URL);
     const axiosConfig = {
       timeout: 30000,
       headers: {
