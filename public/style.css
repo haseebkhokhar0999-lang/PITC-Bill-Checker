@@ -1541,24 +1541,26 @@ body[data-theme="dark"] .units-display {
   color: #60a5fa;
 }
 
-/* 5. Bill History Table (5 Columns: Month, Status Code, Units, Bill Amount, Payment Amount) */
+/* 5. Bill History Table (Two Side-by-Side Groups of 6 Months Each) */
 .bill-history-table-container {
   overflow-x: auto;
   border-radius: 8px;
   border: 1px solid var(--border-light);
+  background: var(--bg-card);
 }
 
-.bill-history-table {
+.bill-history-dual-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 11.5px;
   text-align: left;
+  white-space: nowrap;
 }
 
-.bill-history-table th {
-  background: var(--bg-card);
-  padding: 10px 12px;
-  font-size: 11px;
+.bill-history-dual-table th {
+  background: var(--bg-subtle);
+  padding: 8px 8px;
+  font-size: 10.5px;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -1566,51 +1568,85 @@ body[data-theme="dark"] .units-display {
   letter-spacing: 0.3px;
 }
 
-.bill-history-table th:nth-child(2),
-.bill-history-table td.col-status-code {
-  text-align: center;
-}
-
-.bill-history-table th:nth-child(3),
-.bill-history-table td.col-units {
-  text-align: right;
-  font-family: var(--font-mono);
-}
-
-.bill-history-table th:nth-child(4),
-.bill-history-table td.col-amount {
-  text-align: right;
-  font-family: var(--font-mono);
-  font-weight: 600;
-}
-
-.bill-history-table th:nth-child(5),
-.bill-history-table td.col-payment {
-  text-align: right;
-  font-family: var(--font-mono);
-  font-weight: 600;
-}
-
-.bill-history-table td {
-  padding: 9px 12px;
+.bill-history-dual-table td {
+  padding: 7px 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   color: var(--text-main);
 }
 
-body[data-theme="dark"] .bill-history-table td {
+body[data-theme="dark"] .bill-history-dual-table td {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.status-code-tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
+.bill-history-dual-table th.col-month,
+.bill-history-dual-table td.col-month {
+  font-weight: 700;
+}
+
+.bill-history-dual-table th.col-status,
+.bill-history-dual-table td.col-status {
+  text-align: center;
   font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 800;
-  background: var(--bg-subtle);
+  font-weight: 700;
+}
+
+.bill-history-dual-table th.col-units,
+.bill-history-dual-table td.col-units {
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.bill-history-dual-table th.col-bill,
+.bill-history-dual-table td.col-bill {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.bill-history-dual-table th.col-payment,
+.bill-history-dual-table td.col-payment {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.bill-history-dual-table th.col-divider-left,
+.bill-history-dual-table td.col-divider-left {
+  border-left: 2px solid var(--border-light);
+}
+
+/* Below the table: Deferred Amount and Outstanding Balance lines */
+.bill-history-summary-lines {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: var(--bg-card);
   border: 1px solid var(--border-light);
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.history-summary-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-summary-lbl {
+  color: var(--text-muted);
+}
+
+.history-summary-val {
+  font-family: var(--font-mono);
   color: var(--text-main);
+  font-size: 13px;
+  font-weight: 800;
+  min-height: 18px;
 }
 
 .history-empty-note {

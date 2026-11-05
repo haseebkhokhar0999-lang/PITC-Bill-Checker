@@ -783,7 +783,7 @@ function renderBillResult(res) {
   const logoSrc = `/assets/${companyCode}_logo_exact.png`;
 
   const formatRs = (val) => {
-    if (!val && val !== 0) return '-';
+    if (!val && val !== 0) return '';
     const num = Number(String(val).replace(/,/g, ''));
     return isNaN(num) ? `Rs. ${val}` : `Rs. ${num.toLocaleString()}`;
   };
@@ -800,43 +800,90 @@ function renderBillResult(res) {
     </div>
   `;
 
-  // 12-Month History table:
-  // - remove wrong "Current" tag — no history row for a past month may be tagged "Current"
-  // - list same 12 months in same order as duplicate bill
-  // - use duplicate bill's 5 columns: month, status code, units, bill amount, payment amount
-  // - use ONLY data already fetched from PITC; if payment amount is not provided by PITC, show payment status for that row instead of inventing a number
+  // 1. BILL HISTORY table — SAME-TO-SAME as duplicate bill:
+  // - Show 12 months in two side-by-side groups of 6 months each
+  // - Columns in each group, in this order: MONTH, STATUS, UNITS, BILL (RS.), PAYMENT (RS.)
+  // - STATUS must show the duplicate bill's status codes, not a PAID/UNPAID badge
+  // - Below the table, show Deferred Amount and Outstanding Balance lines exactly like duplicate bill
+  // - REMOVE the "Current" option completely — no row, tag, label, or option named "Current" may appear anywhere in history
+  // - Use ONLY data already fetched from PITC; if PITC data does not provide a value for a cell, leave that cell blank rather than inventing it
   let historyTableHtml = '';
   if (history && history.length > 0) {
+    const group1 = history.slice(0, 6);
+    const group2 = history.slice(6, 12);
+    const maxRows = Math.max(group1.length, group2.length, 6);
+
+    const renderCellVal = (val) => {
+      if (val === undefined || val === null || val === '') return '';
+      return String(val);
+    };
+
+    const renderNumVal = (val) => {
+      if (val === undefined || val === null || val === '' || val === 0 || val === '0') return '';
+      const num = Number(String(val).replace(/,/g, ''));
+      return isNaN(num) ? String(val) : num.toLocaleString();
+    };
+
+    let rowsHtml = '';
+    for (let i = 0; i < maxRows; i++) {
+      const h1 = group1[i];
+      const h2 = group2[i];
+
+      rowsHtml += `
+        <tr>
+          <td class="col-month">${h1 ? renderCellVal(h1.month) : ''}</td>
+          <td class="col-status">${h1 ? renderCellVal(h1.status) : ''}</td>
+          <td class="col-units">${h1 ? renderNumVal(h1.units) : ''}</td>
+          <td class="col-bill">${h1 ? renderNumVal(h1.billAmount) : ''}</td>
+          <td class="col-payment">${h1 ? renderNumVal(h1.paymentAmount) : ''}</td>
+
+          <td class="col-month col-divider-left">${h2 ? renderCellVal(h2.month) : ''}</td>
+          <td class="col-status">${h2 ? renderCellVal(h2.status) : ''}</td>
+          <td class="col-units">${h2 ? renderNumVal(h2.units) : ''}</td>
+          <td class="col-bill">${h2 ? renderNumVal(h2.billAmount) : ''}</td>
+          <td class="col-payment">${h2 ? renderNumVal(h2.paymentAmount) : ''}</td>
+        </tr>
+      `;
+    }
+
+    const deferredRaw = data.charges?.deferredAmount || data.billDetails?.deferredAmount || data.deferredAmount || '';
+    const deferredVal = deferredRaw ? (isNaN(Number(String(deferredRaw).replace(/,/g, ''))) ? deferredRaw : Number(String(deferredRaw).replace(/,/g, '')).toLocaleString()) : '';
+
+    const outstandingRaw = data.charges?.outstandingBalance || data.charges?.arrears || data.outstandingBalance || '';
+    const outstandingVal = outstandingRaw ? (isNaN(Number(String(outstandingRaw).replace(/,/g, ''))) ? outstandingRaw : Number(String(outstandingRaw).replace(/,/g, '')).toLocaleString()) : '';
+
     historyTableHtml = `
       <div class="bill-history-table-container">
-        <table class="bill-history-table">
+        <table class="bill-history-dual-table">
           <thead>
             <tr>
-              <th>Month</th>
-              <th>Status Code</th>
-              <th>Units</th>
-              <th>Bill Amount</th>
-              <th>Payment Amount</th>
+              <th class="col-month">MONTH</th>
+              <th class="col-status">STATUS</th>
+              <th class="col-units">UNITS</th>
+              <th class="col-bill">BILL (RS.)</th>
+              <th class="col-payment">PAYMENT (RS.)</th>
+
+              <th class="col-month col-divider-left">MONTH</th>
+              <th class="col-status">STATUS</th>
+              <th class="col-units">UNITS</th>
+              <th class="col-bill">BILL (RS.)</th>
+              <th class="col-payment">PAYMENT (RS.)</th>
             </tr>
           </thead>
           <tbody>
-            ${history.map((h) => {
-              const statusCode = h.status || '-';
-              const paymentDisplay = (h.paymentAmount && Number(h.paymentAmount) > 0)
-                ? formatRs(h.paymentAmount)
-                : (h.status || '-');
-              return `
-                <tr>
-                  <td class="col-month"><strong>${h.month || '-'}</strong></td>
-                  <td class="col-status-code"><span class="status-code-tag">${statusCode}</span></td>
-                  <td class="col-units">${h.units !== undefined && h.units !== null ? Number(h.units).toLocaleString() : '-'}</td>
-                  <td class="col-amount">${h.billAmount ? formatRs(h.billAmount) : '-'}</td>
-                  <td class="col-payment">${paymentDisplay}</td>
-                </tr>
-              `;
-            }).join('')}
+            ${rowsHtml}
           </tbody>
         </table>
+      </div>
+      <div class="bill-history-summary-lines">
+        <div class="history-summary-line">
+          <span class="history-summary-lbl">Deferred Amount:</span>
+          <span class="history-summary-val">${deferredVal}</span>
+        </div>
+        <div class="history-summary-line">
+          <span class="history-summary-lbl">Outstanding Balance:</span>
+          <span class="history-summary-val">${outstandingVal}</span>
+        </div>
       </div>
     `;
   } else {
@@ -907,19 +954,19 @@ function renderBillResult(res) {
         <div class="bill-doc-top-summary-grid">
           <div class="summary-box">
             <div class="s-label">BILL MONTH</div>
-            <div class="s-val month-val">${bill.billMonth || '-'}</div>
+            <div class="s-val month-val">${bill.billMonth || ''}</div>
           </div>
           <div class="summary-box">
             <div class="s-label">DUE DATE</div>
-            <div class="s-val due-val">${bill.dueDate || 'N/A'}</div>
+            <div class="s-val due-val">${bill.dueDate || ''}</div>
           </div>
           <div class="summary-box ${isPaid ? 's-paid' : 's-within'}">
             <div class="s-label">${isPaid ? 'AMOUNT PAID' : 'PAYABLE WITHIN DUE DATE'}</div>
-            <div class="s-val within-val">${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : '-'}</div>
+            <div class="s-val within-val">${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : ''}</div>
           </div>
           <div class="summary-box s-after">
             <div class="s-label">PAYABLE AFTER DUE DATE</div>
-            <div class="s-val after-val">${isPaid ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : (charges.amountAfterDueDate ? formatRs(charges.amountAfterDueDate) : '-')}</div>
+            <div class="s-val after-val">${isPaid ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : (charges.amountAfterDueDate ? formatRs(charges.amountAfterDueDate) : '')}</div>
           </div>
         </div>
       </div>
@@ -932,19 +979,19 @@ function renderBillResult(res) {
         <div class="bill-doc-grid-2col">
           <table class="bill-doc-table">
             <tbody>
-              <tr><th>Consumer Name:</th><td><strong>${consumer.name || consumer.nameAndAddress || '-'}</strong></td></tr>
-              <tr><th>Address:</th><td>${consumer.address || consumer.nameAndAddress || '-'}</td></tr>
-              <tr><th>Feeder:</th><td>${consumer.feeder || '-'}</td></tr>
-              <tr><th>Sub Division:</th><td>${consumer.subDivision || '-'}</td></tr>
+              <tr><th>Consumer Name:</th><td><strong>${consumer.name || consumer.nameAndAddress || ''}</strong></td></tr>
+              <tr><th>Address:</th><td>${consumer.address || consumer.nameAndAddress || ''}</td></tr>
+              <tr><th>Feeder:</th><td>${consumer.feeder || ''}</td></tr>
+              <tr><th>Sub Division:</th><td>${consumer.subDivision || ''}</td></tr>
               <tr><th>Reference Number:</th><td><strong class="highlight-mono">${res.refNo}</strong></td></tr>
             </tbody>
           </table>
           <table class="bill-doc-table">
             <tbody>
-              <tr><th>Consumer ID:</th><td><strong class="highlight-mono">${consumer.customerId || '-'}</strong></td></tr>
-              <tr><th>Connection Category:</th><td>${consumer.category || '-'}</td></tr>
-              <tr><th>Tariff:</th><td>${bill.tariff || consumer.tariffCategory || '-'}</td></tr>
-              <tr><th>Sanctioned Load:</th><td>${consumer.sanctionedLoad ? consumer.sanctionedLoad + (String(consumer.sanctionedLoad).toLowerCase().includes('kw') ? '' : ' kW') : '-'}</td></tr>
+              <tr><th>Consumer ID:</th><td><strong class="highlight-mono">${consumer.customerId || ''}</strong></td></tr>
+              <tr><th>Connection Category:</th><td>${consumer.category || ''}</td></tr>
+              <tr><th>Tariff:</th><td>${bill.tariff || consumer.tariffCategory || ''}</td></tr>
+              <tr><th>Sanctioned Load:</th><td>${consumer.sanctionedLoad ? consumer.sanctionedLoad + (String(consumer.sanctionedLoad).toLowerCase().includes('kw') ? '' : ' kW') : ''}</td></tr>
             </tbody>
           </table>
         </div>
@@ -958,16 +1005,16 @@ function renderBillResult(res) {
         <div class="bill-doc-grid-2col">
           <table class="bill-doc-table">
             <tbody>
-              <tr><th>Meter Number:</th><td><strong class="highlight-mono">${bill.meterNo || '-'}</strong></td></tr>
-              <tr><th>Previous Reading:</th><td class="num">${bill.previousReading || '-'}</td></tr>
-              <tr><th>Present Reading:</th><td class="num">${bill.presentReading || '-'}</td></tr>
-              <tr class="highlight-units-row"><th>Units Consumed:</th><td><strong class="units-display">${bill.unitsConsumed || '0'} <small>kWh</small></strong></td></tr>
+              <tr><th>Meter Number:</th><td><strong class="highlight-mono">${bill.meterNo || ''}</strong></td></tr>
+              <tr><th>Previous Reading:</th><td class="num">${bill.previousReading || ''}</td></tr>
+              <tr><th>Present Reading:</th><td class="num">${bill.presentReading || ''}</td></tr>
+              <tr class="highlight-units-row"><th>Units Consumed:</th><td><strong class="units-display">${bill.unitsConsumed ? bill.unitsConsumed + ' kWh' : ''}</strong></td></tr>
             </tbody>
           </table>
           <table class="bill-doc-table">
             <tbody>
-              <tr><th>Reading Date:</th><td>${bill.readingDate || '-'}</td></tr>
-              <tr><th>Issue Date:</th><td>${bill.issueDate || '-'}</td></tr>
+              <tr><th>Reading Date:</th><td>${bill.readingDate || ''}</td></tr>
+              <tr><th>Issue Date:</th><td>${bill.issueDate || ''}</td></tr>
               ${bill.multiplyingFactor ? `<tr><th>Multiplying Factor (MF):</th><td>${bill.multiplyingFactor}</td></tr>` : ''}
             </tbody>
           </table>
@@ -992,7 +1039,7 @@ function renderBillResult(res) {
           <table class="bill-doc-table">
             <tbody>
               <tr><th>Current Month Bill:</th><td class="num">${formatRs(charges.currentBill)}</td></tr>
-              <tr><th>Arrears / Previous Dues:</th><td class="num ${charges.arrears && charges.arrears !== '0' ? 'arrears-val' : ''}">${formatRs(charges.arrears || '0')}</td></tr>
+              <tr><th>Arrears / Previous Dues:</th><td class="num ${charges.arrears && charges.arrears !== '0' ? 'arrears-val' : ''}">${formatRs(charges.arrears)}</td></tr>
               ${charges.installment && charges.installment !== '0' ? `<tr><th>Installment:</th><td class="num">${formatRs(charges.installment)}</td></tr>` : ''}
               ${charges.lateSurcharge && charges.lateSurcharge !== '0' ? `<tr><th>Late Payment Surcharge:</th><td class="num">${formatRs(charges.lateSurcharge)}</td></tr>` : ''}
               <tr class="total-row"><th>Grand Total Payable:</th><td class="num total-val">${formatRs(charges.payableWithinDueDate || charges.totalAmount)}</td></tr>
@@ -1001,7 +1048,7 @@ function renderBillResult(res) {
         </div>
       </div>
 
-      <!-- 5. BILL HISTORY: a TABLE of the 12-month history (month, status code, units, bill amount, payment amount) — table, NOT a bar chart -->
+      <!-- 5. BILL HISTORY: side-by-side groups of 6 months each with Deferred Amount and Outstanding Balance lines -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
           <span>BILL HISTORY</span>
@@ -1036,17 +1083,17 @@ function renderBillResult(res) {
         <div class="bank-copy-body-grid">
           <table class="bill-doc-table bank-table">
             <tbody>
-              <tr><th>Consumer ID:</th><td><strong class="highlight-mono">${consumer.customerId || '-'}</strong></td></tr>
+              <tr><th>Consumer ID:</th><td><strong class="highlight-mono">${consumer.customerId || ''}</strong></td></tr>
               <tr><th>Reference Number:</th><td><strong class="highlight-mono">${res.refNo}</strong></td></tr>
-              <tr><th>Bill Month:</th><td><strong>${bill.billMonth || '-'}</strong></td></tr>
-              <tr><th>Units Consumed:</th><td><strong>${bill.unitsConsumed || '0'} kWh</strong></td></tr>
+              <tr><th>Bill Month:</th><td><strong>${bill.billMonth || ''}</strong></td></tr>
+              <tr><th>Units Consumed:</th><td><strong>${bill.unitsConsumed ? bill.unitsConsumed + ' kWh' : ''}</strong></td></tr>
             </tbody>
           </table>
           <table class="bill-doc-table bank-table">
             <tbody>
-              <tr><th>Due Date:</th><td><strong class="due-text">${bill.dueDate || 'N/A'}</strong></td></tr>
-              <tr><th>Payable Within Due Date:</th><td><strong class="num within-text">${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : '-'}</strong></td></tr>
-              <tr><th>Payable After Due Date:</th><td><strong class="num after-text">${isPaid ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : (charges.amountAfterDueDate ? formatRs(charges.amountAfterDueDate) : '-')}</strong></td></tr>
+              <tr><th>Due Date:</th><td><strong class="due-text">${bill.dueDate || ''}</strong></td></tr>
+              <tr><th>Payable Within Due Date:</th><td><strong class="num within-text">${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : ''}</strong></td></tr>
+              <tr><th>Payable After Due Date:</th><td><strong class="num after-text">${isPaid ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : (charges.amountAfterDueDate ? formatRs(charges.amountAfterDueDate) : '')}</strong></td></tr>
             </tbody>
           </table>
         </div>
