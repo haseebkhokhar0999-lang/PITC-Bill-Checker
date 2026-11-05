@@ -763,7 +763,80 @@ function clearAlert() {
 }
 
 // Render Bill Details Result Voucher in Original PITC Bill Document Layout
-function renderBillResult(res) {
+// Resize handler for embedded original PITC duplicate bill document iframe
+function resizeOriginalBillIframe(iframe) {
+  try {
+    if (iframe.contentWindow && iframe.contentWindow.document && iframe.contentWindow.document.body) {
+      const h = iframe.contentWindow.document.body.scrollHeight;
+      if (h > 400) {
+        iframe.style.height = (h + 40) + 'px';
+      }
+    }
+  } catch (e) {
+    iframe.style.height = '1350px';
+  }
+}
+
+// Main Bill Result: Shows the ORIGINAL PITC duplicate bill document itself
+async function renderBillResult(res) {
+  const ref = res.refNo || state.currentBill?.refNo;
+  const comp = (res.company || state.selectedCompany || 'lesco').toLowerCase();
+  const isPaid = res.data?.paymentStatus?.isPaid ? 'true' : 'false';
+  const duplicateBillUrl = `/api/original-bill?refNo=${encodeURIComponent(ref)}&company=${encodeURIComponent(comp)}&forcePaid=${isPaid}`;
+
+  resultsArea.innerHTML = `
+    <div class="original-bill-loading" id="originalBillLoading">
+      <div style="width: 28px; height: 28px; border: 3px solid var(--border-light); border-top-color: var(--blue-primary); border-radius: 50%; animation: spin 0.7s linear infinite;"></div>
+      <div style="font-size: 14px; font-weight: 600; color: var(--text-main);">Loading original PITC duplicate bill document...</div>
+    </div>
+  `;
+
+  try {
+    // Fetch duplicate bill document using the site's own duplicate-bill route
+    const docRes = await fetch(duplicateBillUrl, { method: 'GET' });
+    if (!docRes.ok) {
+      throw new Error(`Original bill endpoint returned status ${docRes.status}`);
+    }
+
+    // Display the original PITC duplicate bill document
+    resultsArea.innerHTML = `
+      <div class="original-bill-result-wrap" id="originalBillResultWrap">
+        <div class="original-bill-top-controls">
+          <div class="original-bill-header-info">
+            <span class="badge-status ${isPaid === 'true' ? 'paid' : 'unpaid'}">
+              ${isPaid === 'true' ? 'PAID' : 'UNPAID'}
+            </span>
+            <span class="original-bill-heading">Original Electricity Consumer Bill</span>
+          </div>
+          <div class="bill-actions-bar">
+            <button type="button" class="btn-bill-action original-print" onclick="printOriginalBill()">
+              <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              Print Original Bill (اصل بل کا پرنٹ)
+            </button>
+            <button type="button" class="btn-bill-action view-original" onclick="viewOriginalBill()">
+              <svg style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              View Duplicate Bill in New Tab (مکمل بل)
+            </button>
+            <button type="button" class="btn-bill-action whatsapp" onclick="shareWhatsApp()">
+              <svg style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              Share on WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <div class="original-bill-frame-wrapper">
+          <iframe id="pitcDuplicateBillFrame" src="${duplicateBillUrl}" title="Original PITC Duplicate Bill Document" class="original-pitc-bill-frame" onload="resizeOriginalBillIframe(this)"></iframe>
+        </div>
+      </div>
+    `;
+  } catch (err) {
+    console.warn('Original duplicate bill document fetch failed, using fallback display:', err);
+    renderFallbackHtmlBill(res, 'Original duplicate bill document could not be loaded. Displaying bill details below.');
+  }
+}
+
+// Fallback HTML Bill Display (shown if original duplicate bill document cannot be loaded)
+function renderFallbackHtmlBill(res, note) {
   const data = res.data || {};
   const consumer = data.consumerDetails || {};
   const bill = data.billDetails || {};
@@ -788,7 +861,14 @@ function renderBillResult(res) {
     return isNaN(num) ? `Rs. ${val}` : `Rs. ${num.toLocaleString()}`;
   };
 
-  // Top Bar: reads "Duplicate Electricity Bill" with badge reading only "UNPAID" (or "PAID"), with no extra "Payment Due" line in the top banner
+  const fallbackNoteHtml = note ? `
+    <div class="original-bill-fallback-note">
+      <svg style="width: 18px; height: 18px; flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      <span><strong>Notice:</strong> ${note}</span>
+    </div>
+  ` : '';
+
+  // Top Bar: reads "Duplicate Electricity Bill" with badge reading only "UNPAID" (or "PAID")
   const statusBannerHtml = `
     <div class="payment-status-banner ${isPaid ? 'paid' : 'unpaid'}" id="paymentStatusBanner">
       <div class="status-banner-badge">
@@ -800,13 +880,7 @@ function renderBillResult(res) {
     </div>
   `;
 
-  // 1. BILL HISTORY table — SAME-TO-SAME as duplicate bill:
-  // - Show 12 months in two side-by-side groups of 6 months each
-  // - Columns in each group, in this order: MONTH, STATUS, UNITS, BILL (RS.), PAYMENT (RS.)
-  // - STATUS must show the duplicate bill's status codes, not a PAID/UNPAID badge
-  // - Below the table, show Deferred Amount and Outstanding Balance lines exactly like duplicate bill
-  // - REMOVE the "Current" option completely — no row, tag, label, or option named "Current" may appear anywhere in history
-  // - Use ONLY data already fetched from PITC; if PITC data does not provide a value for a cell, leave that cell blank rather than inventing it
+  // 12-Month History table
   let historyTableHtml = '';
   if (history && history.length > 0) {
     const group1 = history.slice(0, 6);
@@ -894,8 +968,7 @@ function renderBillResult(res) {
     `;
   }
 
-  // Barcode / QR Code Area for Bank Copy:
-  // ONLY if PITC data supplies that image or value; otherwise leave that element out.
+  // Barcode / QR Code Area for Bank Copy
   let barcodeHtml = '';
   if (bill.barcodeText || bill.barcode || data.barcode || data.barcodeText) {
     const codeVal = bill.barcodeText || bill.barcode || data.barcode || data.barcodeText;
@@ -915,11 +988,11 @@ function renderBillResult(res) {
   }
 
   resultsArea.innerHTML = `
+    ${fallbackNoteHtml}
     ${statusBannerHtml}
 
     <div class="bill-card-wrapper" id="printableBillArea">
       
-      <!-- Authentic PAID Stamp watermark (Shown if bill is paid) -->
       ${isPaid ? `
         <div class="voucher-paid-stamp" id="voucherPaidStamp">
           <span>PAID</span>
@@ -927,7 +1000,7 @@ function renderBillResult(res) {
         </div>
       ` : ''}
 
-      <!-- 1. HEADER: DISCO logo, DISCO name, slogan "YOUR BETTER SERVICE – OUR PRIDE", title "ELECTRICITY CONSUMER BILL", Top Summary Boxes, badge reading only "UNPAID" / "PAID" -->
+      <!-- 1. HEADER -->
       <div class="bill-doc-header-wrap">
         <div class="bill-doc-header-top">
           <div class="bill-doc-disco-left">
@@ -950,7 +1023,6 @@ function renderBillResult(res) {
           </div>
         </div>
 
-        <!-- Top Summary Boxes: Bill Month, Due Date, Payable Within Due Date, Payable After Due Date -->
         <div class="bill-doc-top-summary-grid">
           <div class="summary-box">
             <div class="s-label">BILL MONTH</div>
@@ -971,7 +1043,7 @@ function renderBillResult(res) {
         </div>
       </div>
 
-      <!-- 2. CONSUMER DETAIL: consumer name, address, feeder, sub-division, reference number, consumer ID, connection category, tariff, and sanctioned load -->
+      <!-- 2. CONSUMER DETAIL -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
           <span>CONSUMER DETAIL</span>
@@ -997,7 +1069,7 @@ function renderBillResult(res) {
         </div>
       </div>
 
-      <!-- 3. METER INFO: meter number, previous reading, present reading, and units consumed, with reading date and issue date -->
+      <!-- 3. METER INFO -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
           <span>METER INFO</span>
@@ -1021,7 +1093,7 @@ function renderBillResult(res) {
         </div>
       </div>
 
-      <!-- 4. BILL CHARGES BREAKDOWN: electricity charges, tariff subsidies, net electricity charges, fuel price adjustment (FPA), government taxes, current month bill, arrears / previous dues, and grand total payable -->
+      <!-- 4. BILL CHARGES BREAKDOWN -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
           <span>BILL CHARGES BREAKDOWN</span>
@@ -1048,7 +1120,7 @@ function renderBillResult(res) {
         </div>
       </div>
 
-      <!-- 5. BILL HISTORY: side-by-side groups of 6 months each with Deferred Amount and Outstanding Balance lines -->
+      <!-- 5. BILL HISTORY -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
           <span>BILL HISTORY</span>
@@ -1056,7 +1128,7 @@ function renderBillResult(res) {
         ${historyTableHtml}
       </div>
 
-      <!-- 6. Below the main bill, a BANK-USE COPY block repeating the same bill data (DISCO name and logo, "ELECTRICITY CONSUMER BILL", consumer ID, reference number, bill month, due date, payable within due date, payable after due date, units) with a barcode area and a bank stamp area -->
+      <!-- 6. BANK-USE COPY -->
       <div class="bill-tear-line">
         <span>✂ TEAR HERE &bull; BANK-USE COPY ✂</span>
       </div>
@@ -1123,19 +1195,14 @@ function renderBillResult(res) {
 
       <!-- Bottom Action Tools -->
       <div class="bill-actions-bar">
-        <!-- 1. Print Original Bill (Opens 1:1 bill layout) -->
         <button type="button" class="btn-bill-action original-print" onclick="printOriginalBill()">
           <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           Print Original Bill (اصل بل کا پرنٹ)
         </button>
-
-        <!-- 2. View Full Bill in New Tab -->
         <button type="button" class="btn-bill-action view-original" onclick="viewOriginalBill()">
           <svg style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          View Duplicate Bill (مکمل بل)
+          View Duplicate Bill in New Tab (مکمل بل)
         </button>
-
-        <!-- 3. WhatsApp Share -->
         <button type="button" class="btn-bill-action whatsapp" onclick="shareWhatsApp()">
           <svg style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
           Share on WhatsApp

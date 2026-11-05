@@ -1238,6 +1238,106 @@ body[data-theme="dark"] .disco-logo-wrap {
 }
 
 /* ==========================================================================
+   Original PITC Duplicate Bill Document Result Display
+   ========================================================================== */
+.original-bill-loading {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.original-bill-result-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.original-bill-top-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 12px 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.original-bill-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.original-bill-heading {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+.original-bill-frame-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.original-pitc-bill-frame {
+  width: 100%;
+  min-height: 1200px;
+  height: 1350px;
+  border: none;
+  background: #ffffff;
+  display: block;
+}
+
+.original-bill-fallback-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fffbeb;
+  border: 1.5px solid #fde68a;
+  color: #92400e;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  margin-bottom: 16px;
+}
+
+body[data-theme="dark"] .original-bill-fallback-note {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fcd34d;
+}
+
+@media (max-width: 768px) {
+  .original-bill-top-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .original-pitc-bill-frame {
+    min-width: 760px;
+  }
+}
+
+/* ==========================================================================
    PITC Authentic Bill Document Presentation
    ========================================================================== */
 /* 1. Header & Top Summary Boxes */
