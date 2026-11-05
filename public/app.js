@@ -762,7 +762,7 @@ function clearAlert() {
   if (alertContainer) alertContainer.innerHTML = '';
 }
 
-// Render Bill Details Result Voucher
+// Render Bill Details Result Voucher in Original PITC Bill Document Layout
 function renderBillResult(res) {
   const data = res.data || {};
   const consumer = data.consumerDetails || {};
@@ -771,6 +771,16 @@ function renderBillResult(res) {
   const history = data.history || [];
   const payment = data.paymentStatus || {};
   const isPaid = Boolean(payment.isPaid);
+
+  const companyCode = (res.company || state.selectedCompany || 'lesco').toLowerCase();
+  const discoObj = DISCOS.find(d => d.code === companyCode) || {
+    code: companyCode,
+    name: companyCode.toUpperCase(),
+    fullName: res.companyName || (companyCode.toUpperCase() + ' Electric Power Company')
+  };
+  const discoShort = discoObj.name;
+  const discoFull = res.companyName || discoObj.fullName;
+  const logoSrc = `/assets/${companyCode}_logo_exact.png`;
 
   const formatRs = (val) => {
     if (!val && val !== 0) return '-';
@@ -838,118 +848,153 @@ function renderBillResult(res) {
         </div>
       ` : ''}
 
-      <!-- Card Header -->
-      <div class="bill-card-header">
-        <div>
-          <div class="bill-disco-pill">
-            <span class="disco-dot"></span>
-            <span>${(res.companyName || res.company || 'DISCO').toUpperCase()}</span>
+      <!-- 1. DISCO Name and Logo at Top -->
+      <div class="bill-doc-header">
+        <div class="bill-doc-disco-left">
+          <div class="bill-doc-logo-wrap">
+            <img src="${logoSrc}" alt="${discoShort} Logo" class="bill-doc-logo-img">
           </div>
-          <h2 class="bill-consumer-title">${consumer.name || 'Electricity Bill Statement'}</h2>
-          <div class="bill-meta-tags">
-            <span class="badge-ref" onclick="copyToClipboard('${res.refNo}', 'Reference Number copied!')" title="Click to copy">
-              REF: ${res.refNo} 📋
-            </span>
-            ${bill.billMonth ? `<span class="badge-month">${bill.billMonth}</span>` : ''}
-            ${consumer.category ? `<span class="badge-category">${consumer.category}</span>` : ''}
-            <span class="badge-status ${isPaid ? 'paid' : 'unpaid'}" id="billStatusBadge">
-              ${isPaid ? '✓ PAID (ادا شدہ)' : '⚠️ UNPAID / DUE (غیر ادا شدہ)'}
-            </span>
+          <div class="bill-doc-disco-info">
+            <h2 class="bill-doc-disco-name">${discoFull.toUpperCase()}</h2>
+            <div class="bill-doc-sub">${discoShort} &bull; ELECTRICITY CONSUMER BILL &bull; بجلی کا بل</div>
           </div>
-          <div class="bill-address-text">${consumer.address || ''}</div>
         </div>
-
-        <div class="bill-header-right">
-          <div class="consumer-id-box">
-            <span class="id-label">Consumer ID</span>
-            <span class="id-number">${consumer.customerId || '-'}</span>
-          </div>
-          <div style="font-size: 11.5px; color: ${isPaid ? '#059669' : '#0066ff'}; font-weight: 700; margin-top: 4px;">
-            ${isPaid ? '✓ Bank Verified Paid' : '⚡ PITC Live Record'}
+        <div class="bill-doc-header-right">
+          <span class="badge-status ${isPaid ? 'paid' : 'unpaid'}" id="billStatusBadge">
+            ${isPaid ? '✓ PAID (ادا شدہ)' : '⚠️ UNPAID / DUE (غیر ادا شدہ)'}
+          </span>
+          <div class="bill-doc-ref-pill" onclick="copyToClipboard('${res.refNo}', 'Reference Number copied!')" title="Click to copy">
+            REF: <strong>${res.refNo}</strong> 📋
           </div>
         </div>
       </div>
 
-      <!-- 3 Key Metric KPI Blocks -->
-      <div class="bill-kpi-grid">
-        <div class="kpi-box due-within">
-          <div class="kpi-top">
-            <span class="kpi-title">${isPaid ? 'Amount Paid' : 'Payable Within Due Date'}</span>
-          </div>
-          <div class="kpi-val" style="${isPaid ? 'color: #059669;' : ''}">${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : '-'}</div>
-          <div class="kpi-footer">
-            <span>${isPaid ? 'Status:' : 'Due Date:'}</span>
-            <strong class="highlight-date" style="${isPaid ? 'color: #059669;' : ''}">${isPaid ? 'PAID ✓ (ادا شدہ)' : (bill.dueDate || 'N/A')}</strong>
-          </div>
+      <!-- 2. Consumer Name, Reference Number and Consumer ID -->
+      <div class="bill-doc-section">
+        <div class="bill-doc-sec-title">
+          <span>Consumer Information (صارف کی تفصیلات)</span>
         </div>
-
-        <div class="kpi-box due-after">
-          <div class="kpi-top">
-            <span class="kpi-title">${isPaid ? 'Late Surcharge' : 'Payable After Due Date'}</span>
-          </div>
-          <div class="kpi-val">${isPaid ? 'Rs. 0' : (charges.amountAfterDueDate ? formatRs(charges.amountAfterDueDate) : '-')}</div>
-          <div class="kpi-footer">
-            <span>${isPaid ? 'Penalty Waived:' : 'Late Surcharge:'}</span>
-            <strong>${isPaid ? 'Cleared ✓' : '+ ' + (charges.lateSurcharge ? formatRs(charges.lateSurcharge) : 'Rs. 0')}</strong>
-          </div>
-        </div>
-
-        <div class="kpi-box">
-          <div class="kpi-top">
-            <span class="kpi-title">Units Consumed</span>
-          </div>
-          <div class="kpi-val">${bill.unitsConsumed || '0'} <span style="font-size: 16px; font-weight: 600; color: var(--text-muted);">kWh</span></div>
-          <div class="kpi-footer">
-            <span>Meter: <strong>${bill.meterNo || 'Standard'}</strong></span>
-            <span>Tariff: <strong>${bill.tariff || 'A-1A'}</strong></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Details Split Table -->
-      <div class="bill-details-grid">
-        <div class="details-pane">
-          <div class="pane-header">
-            <h4>Billing & Meter Details</h4>
-          </div>
-          <table class="detail-table">
+        <div class="bill-doc-grid-2col">
+          <table class="bill-doc-table">
             <tbody>
-              <tr><td>Consumer Name:</td><td>${consumer.name || '-'}</td></tr>
-              <tr><td>Connection Category:</td><td>${consumer.category || 'Domestic'}</td></tr>
-              <tr><td>Tariff Code:</td><td>${bill.tariff || '-'}</td></tr>
-              <tr><td>Sanctioned Load:</td><td>${consumer.sanctionedLoad ? consumer.sanctionedLoad + ' kW' : '-'}</td></tr>
-              <tr><td>Feeder / Sub-Division:</td><td>${consumer.subDivision || consumer.feeder || '-'}</td></tr>
-              <tr><td>Previous Reading:</td><td>${bill.previousReading || '-'}</td></tr>
-              <tr><td>Present Reading:</td><td>${bill.presentReading || '-'}</td></tr>
-              <tr><td>Issue / Reading Date:</td><td>${bill.issueDate || '-'} / ${bill.readingDate || '-'}</td></tr>
+              <tr><th>Consumer Name:</th><td><strong>${consumer.name || consumer.nameAndAddress || '-'}</strong></td></tr>
+              ${consumer.address ? `<tr><th>Address:</th><td>${consumer.address}</td></tr>` : ''}
+              ${consumer.feeder ? `<tr><th>Feeder:</th><td>${consumer.feeder}</td></tr>` : ''}
+              ${consumer.subDivision ? `<tr><th>Sub Division:</th><td>${consumer.subDivision}</td></tr>` : ''}
             </tbody>
           </table>
-        </div>
-
-        <div class="details-pane">
-          <div class="pane-header">
-            <h4>Charges & Taxes Breakdown</h4>
-          </div>
-          <table class="detail-table">
+          <table class="bill-doc-table">
             <tbody>
-              <tr><td>Electricity Charges:</td><td>${formatRs(charges.electricityCharges)}</td></tr>
-              <tr><td>Tariff Subsidies:</td><td style="color: #059669;">${charges.subsidies ? '- ' + formatRs(charges.subsidies) : 'Rs. 0'}</td></tr>
-              <tr><td>Net Electricity Charges:</td><td>${formatRs(charges.netElectricityCharges)}</td></tr>
-              <tr><td>Fuel Price Adjustment (FPA):</td><td>${formatRs(charges.fpa)}</td></tr>
-              <tr><td>Government Taxes:</td><td>${formatRs(charges.taxes)}</td></tr>
-              <tr><td>Current Month Bill:</td><td>${formatRs(charges.currentBill)}</td></tr>
-              <tr><td>Arrears / Previous Dues:</td><td>${formatRs(charges.arrears || '0')}</td></tr>
+              <tr><th>Reference Number:</th><td><strong class="highlight-mono">${res.refNo}</strong></td></tr>
+              <tr><th>Consumer ID:</th><td><strong class="highlight-mono">${consumer.customerId || '-'}</strong></td></tr>
+              ${consumer.category ? `<tr><th>Connection Category:</th><td>${consumer.category}</td></tr>` : ''}
+              ${bill.tariff || consumer.tariffCategory ? `<tr><th>Tariff:</th><td>${bill.tariff || consumer.tariffCategory || '-'}</td></tr>` : ''}
+              ${consumer.sanctionedLoad ? `<tr><th>Sanctioned Load:</th><td>${consumer.sanctionedLoad} kW</td></tr>` : ''}
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Historical Consumption Bar Chart -->
+      <!-- 3. Billing Month, Meter Reading and Units Consumed -->
+      <div class="bill-doc-section">
+        <div class="bill-doc-sec-title">
+          <span>Meter Reading & Consumption (میٹر ریڈنگ اور استعمال شدہ یونٹس)</span>
+        </div>
+        <div class="bill-doc-metrics-row">
+          <div class="bill-doc-metric-box">
+            <div class="metric-lbl">Bill Month</div>
+            <div class="metric-val month-tag">${bill.billMonth || '-'}</div>
+          </div>
+          <div class="bill-doc-metric-box">
+            <div class="metric-lbl">Meter Number</div>
+            <div class="metric-val mono">${bill.meterNo || '-'}</div>
+          </div>
+          <div class="bill-doc-metric-box">
+            <div class="metric-lbl">Previous Reading</div>
+            <div class="metric-val mono">${bill.previousReading || '-'}</div>
+          </div>
+          <div class="bill-doc-metric-box">
+            <div class="metric-lbl">Present Reading</div>
+            <div class="metric-val mono">${bill.presentReading || '-'}</div>
+          </div>
+          <div class="bill-doc-metric-box highlight-units">
+            <div class="metric-lbl">Units Consumed</div>
+            <div class="metric-val units">${bill.unitsConsumed || '0'} <small>kWh</small></div>
+          </div>
+        </div>
+        ${(bill.readingDate || bill.issueDate || bill.multiplyingFactor) ? `
+          <div class="bill-doc-sub-dates">
+            ${bill.readingDate ? `<span>Reading Date: <strong>${bill.readingDate}</strong></span>` : ''}
+            ${bill.issueDate ? `<span>Issue Date: <strong>${bill.issueDate}</strong></span>` : ''}
+            ${bill.multiplyingFactor ? `<span>MF: <strong>${bill.multiplyingFactor}</strong></span>` : ''}
+          </div>
+        ` : ''}
+      </div>
+
+      <!-- 4. Payable Amount Within Due Date, After Due Date, Due Date & Late Surcharge -->
+      <div class="bill-doc-section bill-doc-payment-summary">
+        <div class="bill-doc-sec-title">
+          <span>Payable Amount & Due Date (قابلِ ادائیگی رقم اور آخری تاریخ)</span>
+        </div>
+        <div class="bill-doc-payment-grid">
+          <div class="payment-card due-date-card">
+            <div class="pay-lbl">Due Date (آخری تاریخ)</div>
+            <div class="pay-val due-date-val">${bill.dueDate || 'N/A'}</div>
+            <div class="pay-sub">${isPaid ? 'Payment Status: PAID ✓' : 'Pay on or before this date'}</div>
+          </div>
+
+          <div class="payment-card within-due-card ${isPaid ? 'paid-card' : ''}">
+            <div class="pay-lbl">${isPaid ? 'Amount Paid (ادا شدہ رقم)' : 'Payable Within Due Date (تاریخ کے اندر)'}</div>
+            <div class="pay-val within-val">${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : '-'}</div>
+            <div class="pay-sub">${isPaid ? '✓ Paid & Cleared' : `Payable by ${bill.dueDate || 'due date'}`}</div>
+          </div>
+
+          <div class="payment-card surcharge-card">
+            <div class="pay-lbl">Late Surcharge (سرچارج)</div>
+            <div class="pay-val surcharge-val">${isPaid ? 'Rs. 0' : (charges.lateSurcharge ? formatRs(charges.lateSurcharge) : 'Rs. 0')}</div>
+            <div class="pay-sub">${isPaid ? 'Waived (No Penalty)' : 'Added after due date'}</div>
+          </div>
+
+          <div class="payment-card after-due-card">
+            <div class="pay-lbl">Payable After Due Date (تاریخ کے بعد)</div>
+            <div class="pay-val after-val">${isPaid ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : (charges.amountAfterDueDate ? formatRs(charges.amountAfterDueDate) : '-')}</div>
+            <div class="pay-sub">${isPaid ? 'Paid in full' : 'Includes late surcharge'}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Charges & Taxes Breakdown -->
+      <div class="bill-doc-section">
+        <div class="bill-doc-sec-title">
+          <span>Charges & Taxes Breakdown (بل چارجز اور ٹیکس کی تفصیل)</span>
+        </div>
+        <div class="bill-doc-grid-2col">
+          <table class="bill-doc-table">
+            <tbody>
+              <tr><th>Electricity Charges:</th><td class="num">${formatRs(charges.electricityCharges)}</td></tr>
+              ${charges.subsidies && charges.subsidies !== '0' ? `<tr><th>Tariff Subsidies:</th><td class="num discount">- ${formatRs(charges.subsidies)}</td></tr>` : ''}
+              <tr><th>Net Electricity Charges:</th><td class="num">${formatRs(charges.netElectricityCharges || charges.electricityCharges)}</td></tr>
+              ${charges.fpa ? `<tr><th>Fuel Price Adjustment (FPA):</th><td class="num">${formatRs(charges.fpa)}</td></tr>` : ''}
+              <tr><th>Government Taxes:</th><td class="num">${formatRs(charges.taxes)}</td></tr>
+            </tbody>
+          </table>
+          <table class="bill-doc-table">
+            <tbody>
+              <tr><th>Current Month Bill:</th><td class="num">${formatRs(charges.currentBill)}</td></tr>
+              <tr><th>Arrears / Previous Dues:</th><td class="num ${charges.arrears && charges.arrears !== '0' ? 'arrears-val' : ''}">${formatRs(charges.arrears || '0')}</td></tr>
+              ${charges.installment && charges.installment !== '0' ? `<tr><th>Installment:</th><td class="num">${formatRs(charges.installment)}</td></tr>` : ''}
+              <tr class="total-row"><th>Grand Total Payable:</th><td class="num total-val">${formatRs(charges.payableWithinDueDate || charges.totalAmount)}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 12-Month Consumption History -->
       ${chartBarsHtml}
 
       <!-- Bottom Action Tools -->
       <div class="bill-actions-bar">
-        <!-- 1. Print Duplicate Bill (Opens 1:1 bill layout) -->
+        <!-- 1. Print Original Bill (Opens 1:1 bill layout) -->
         <button type="button" class="btn-bill-action original-print" onclick="printOriginalBill()">
           <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           Print Original Bill (اصل بل کا پرنٹ)
