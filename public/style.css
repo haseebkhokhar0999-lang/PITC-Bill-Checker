@@ -1295,9 +1295,18 @@ body[data-theme="dark"] .disco-logo-wrap {
   font-size: 20px;
   font-weight: 800;
   color: var(--text-main);
-  margin: 0 0 2px;
+  margin: 0;
   line-height: 1.2;
   letter-spacing: -0.3px;
+}
+
+.bill-doc-slogan {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.8px;
+  margin: 2px 0;
+  text-transform: uppercase;
 }
 
 .bill-doc-main-title {
@@ -1532,7 +1541,7 @@ body[data-theme="dark"] .units-display {
   color: #60a5fa;
 }
 
-/* 5. Bill History Table */
+/* 5. Bill History Table (5 Columns: Month, Status Code, Units, Bill Amount, Payment Amount) */
 .bill-history-table-container {
   overflow-x: auto;
   border-radius: 8px;
@@ -1557,6 +1566,31 @@ body[data-theme="dark"] .units-display {
   letter-spacing: 0.3px;
 }
 
+.bill-history-table th:nth-child(2),
+.bill-history-table td.col-status-code {
+  text-align: center;
+}
+
+.bill-history-table th:nth-child(3),
+.bill-history-table td.col-units {
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.bill-history-table th:nth-child(4),
+.bill-history-table td.col-amount {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.bill-history-table th:nth-child(5),
+.bill-history-table td.col-payment {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
 .bill-history-table td {
   padding: 9px 12px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -1567,52 +1601,16 @@ body[data-theme="dark"] .bill-history-table td {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.bill-history-table tr.current-month-row {
-  background: rgba(37, 99, 235, 0.06);
-}
-
-body[data-theme="dark"] .bill-history-table tr.current-month-row {
-  background: rgba(37, 99, 235, 0.15);
-}
-
-.history-current-pill {
-  background: #2563eb;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-left: 6px;
-  vertical-align: middle;
-}
-
-.history-status-badge {
+.status-code-tag {
   display: inline-block;
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: 4px;
+  font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 800;
-  text-align: center;
-}
-
-.history-status-badge.paid {
-  background: #dcfce7;
-  color: #15803d;
-}
-
-body[data-theme="dark"] .history-status-badge.paid {
-  background: rgba(34, 197, 94, 0.2);
-  color: #86efac;
-}
-
-.history-status-badge.unpaid {
-  background: #fee2e2;
-  color: #b91c1c;
-}
-
-body[data-theme="dark"] .history-status-badge.unpaid {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
 }
 
 .history-empty-note {
@@ -1677,6 +1675,15 @@ body[data-theme="dark"] .history-status-badge.unpaid {
   color: var(--text-main);
   margin: 0;
   line-height: 1.2;
+}
+
+.bank-copy-slogan {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.6px;
+  margin: 1px 0 2px;
+  text-transform: uppercase;
 }
 
 .bank-copy-sub {

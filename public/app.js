@@ -788,27 +788,23 @@ function renderBillResult(res) {
     return isNaN(num) ? `Rs. ${val}` : `Rs. ${num.toLocaleString()}`;
   };
 
-  // Pre-result Payment Status Verification Banner
+  // Top Bar: reads "Duplicate Electricity Bill" with badge reading only "UNPAID" (or "PAID"), with no extra "Payment Due" line in the top banner
   const statusBannerHtml = `
     <div class="payment-status-banner ${isPaid ? 'paid' : 'unpaid'}" id="paymentStatusBanner">
       <div class="status-banner-badge">
-        ${isPaid ? '✓ PAID (ادا شدہ)' : '⚠️ UNPAID (غیر ادا شدہ)'}
+        ${isPaid ? 'PAID' : 'UNPAID'}
       </div>
       <div class="status-banner-content">
-        <div class="status-banner-title">
-          ${isPaid ? 'Bill Payment Verified ✓ (بل ادا ہو چکا ہے)' : `Payment Due: ${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : '-'} (بل غیر ادا شدہ ہے)`}
-        </div>
-        <div class="status-banner-desc">
-          ${isPaid 
-            ? `Electricity billing records confirm this bill is <strong>PAID</strong>. ${payment.paymentDate ? `Payment Cleared: <strong>${payment.paymentDate}</strong> &bull; ` : ''}${payment.amountPaid ? `Paid Amount: <strong>Rs. ${Number(payment.amountPaid).toLocaleString()}</strong> &bull; ` : ''}Verified via PITC Live Database Feed.`
-            : `Payable within due date: <strong>${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : '-'}</strong> &bull; Due Date: <strong>${bill.dueDate || 'N/A'}</strong>.<br><span style="display: inline-block; margin-top: 4px; font-size: 11.5px; opacity: 0.9;">⚡ <em>اگر آپ نے حال ہی میں بینک، ایزی پیسہ یا جاز کیش سے بل جمع کرایا ہے تو سنٹرل ریکارڈ میں اپڈیٹ ہونے میں 24 سے 48 گھنٹے لگ سکتے ہیں۔</em></span>`
-          }
-        </div>
+        <div class="status-banner-title">Duplicate Electricity Bill</div>
       </div>
     </div>
   `;
 
-  // 5. BILL HISTORY: a TABLE of the 12-month history (bill month, units, amount, payment status) - table, NOT a bar chart
+  // 12-Month History table:
+  // - remove wrong "Current" tag — no history row for a past month may be tagged "Current"
+  // - list same 12 months in same order as duplicate bill
+  // - use duplicate bill's 5 columns: month, status code, units, bill amount, payment amount
+  // - use ONLY data already fetched from PITC; if payment amount is not provided by PITC, show payment status for that row instead of inventing a number
   let historyTableHtml = '';
   if (history && history.length > 0) {
     historyTableHtml = `
@@ -816,31 +812,26 @@ function renderBillResult(res) {
         <table class="bill-history-table">
           <thead>
             <tr>
-              <th>Bill Month</th>
+              <th>Month</th>
+              <th>Status Code</th>
               <th>Units</th>
-              <th>Amount</th>
-              <th>Payment Status</th>
+              <th>Bill Amount</th>
+              <th>Payment Amount</th>
             </tr>
           </thead>
           <tbody>
-            ${history.map((h, i) => {
-              const isCurrent = i === 0;
-              const statusVal = h.status || (isCurrent ? (isPaid ? 'PAID' : 'UNPAID') : 'PAID');
-              const statusUpper = String(statusVal).toUpperCase();
-              const isRowPaid = statusUpper.includes('PAID') && !statusUpper.includes('UNPAID');
+            ${history.map((h) => {
+              const statusCode = h.status || '-';
+              const paymentDisplay = (h.paymentAmount && Number(h.paymentAmount) > 0)
+                ? formatRs(h.paymentAmount)
+                : (h.status || '-');
               return `
-                <tr class="${isCurrent ? 'current-month-row' : ''}">
-                  <td class="col-month">
-                    <strong>${h.month || '-'}</strong>
-                    ${isCurrent ? '<span class="history-current-pill">Current</span>' : ''}
-                  </td>
+                <tr>
+                  <td class="col-month"><strong>${h.month || '-'}</strong></td>
+                  <td class="col-status-code"><span class="status-code-tag">${statusCode}</span></td>
                   <td class="col-units">${h.units !== undefined && h.units !== null ? Number(h.units).toLocaleString() : '-'}</td>
                   <td class="col-amount">${h.billAmount ? formatRs(h.billAmount) : '-'}</td>
-                  <td class="col-status">
-                    <span class="history-status-badge ${isRowPaid ? 'paid' : 'unpaid'}">
-                      ${isRowPaid ? '✓ PAID' : '⚠️ UNPAID'}
-                    </span>
-                  </td>
+                  <td class="col-payment">${paymentDisplay}</td>
                 </tr>
               `;
             }).join('')}
@@ -851,7 +842,7 @@ function renderBillResult(res) {
   } else {
     historyTableHtml = `
       <div class="history-empty-note">
-        12-Month electricity consumption history is not available in PITC response for this record.
+        12-Month electricity consumption history is not available in PITC record for this connection.
       </div>
     `;
   }
@@ -885,11 +876,11 @@ function renderBillResult(res) {
       ${isPaid ? `
         <div class="voucher-paid-stamp" id="voucherPaidStamp">
           <span>PAID</span>
-          <small>ONLINE VERIFIED &bull; ادا شدہ</small>
+          <small>ONLINE VERIFIED</small>
         </div>
       ` : ''}
 
-      <!-- 1. HEADER: the DISCO's logo, DISCO name, and the title "ELECTRICITY CONSUMER BILL", with bill month, due date, payable within due date, and payable after due date shown in top summary boxes, plus PAID / UNPAID status -->
+      <!-- 1. HEADER: DISCO logo, DISCO name, slogan "YOUR BETTER SERVICE – OUR PRIDE", title "ELECTRICITY CONSUMER BILL", Top Summary Boxes, badge reading only "UNPAID" / "PAID" -->
       <div class="bill-doc-header-wrap">
         <div class="bill-doc-header-top">
           <div class="bill-doc-disco-left">
@@ -898,12 +889,13 @@ function renderBillResult(res) {
             </div>
             <div class="bill-doc-disco-info">
               <h2 class="bill-doc-disco-name">${discoFull.toUpperCase()}</h2>
-              <div class="bill-doc-main-title">ELECTRICITY CONSUMER BILL &bull; بجلی کا بل</div>
+              <div class="bill-doc-slogan">YOUR BETTER SERVICE – OUR PRIDE</div>
+              <div class="bill-doc-main-title">ELECTRICITY CONSUMER BILL</div>
             </div>
           </div>
           <div class="bill-doc-header-right">
             <span class="badge-status ${isPaid ? 'paid' : 'unpaid'}" id="billStatusBadge">
-              ${isPaid ? '✓ PAID (ادا شدہ)' : '⚠️ UNPAID / DUE (غیر ادا شدہ)'}
+              ${isPaid ? 'PAID' : 'UNPAID'}
             </span>
             <div class="bill-doc-ref-pill" onclick="copyToClipboard('${res.refNo}', 'Reference Number copied!')" title="Click to copy Reference Number">
               REF: <strong>${res.refNo}</strong> 📋
@@ -914,19 +906,19 @@ function renderBillResult(res) {
         <!-- Top Summary Boxes: Bill Month, Due Date, Payable Within Due Date, Payable After Due Date -->
         <div class="bill-doc-top-summary-grid">
           <div class="summary-box">
-            <div class="s-label">BILL MONTH (بل کا مہینہ)</div>
+            <div class="s-label">BILL MONTH</div>
             <div class="s-val month-val">${bill.billMonth || '-'}</div>
           </div>
           <div class="summary-box">
-            <div class="s-label">DUE DATE (آخری تاریخ)</div>
+            <div class="s-label">DUE DATE</div>
             <div class="s-val due-val">${bill.dueDate || 'N/A'}</div>
           </div>
           <div class="summary-box ${isPaid ? 's-paid' : 's-within'}">
-            <div class="s-label">${isPaid ? 'AMOUNT PAID (ادا شدہ رقم)' : 'PAYABLE WITHIN DUE DATE (تاریخ کے اندر)'}</div>
+            <div class="s-label">${isPaid ? 'AMOUNT PAID' : 'PAYABLE WITHIN DUE DATE'}</div>
             <div class="s-val within-val">${charges.payableWithinDueDate || charges.totalAmount ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : '-'}</div>
           </div>
           <div class="summary-box s-after">
-            <div class="s-label">PAYABLE AFTER DUE DATE (تاریخ کے بعد)</div>
+            <div class="s-label">PAYABLE AFTER DUE DATE</div>
             <div class="s-val after-val">${isPaid ? formatRs(charges.payableWithinDueDate || charges.totalAmount) : (charges.amountAfterDueDate ? formatRs(charges.amountAfterDueDate) : '-')}</div>
           </div>
         </div>
@@ -935,7 +927,7 @@ function renderBillResult(res) {
       <!-- 2. CONSUMER DETAIL: consumer name, address, feeder, sub-division, reference number, consumer ID, connection category, tariff, and sanctioned load -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
-          <span>CONSUMER DETAIL (صارف کی تفصیلات)</span>
+          <span>CONSUMER DETAIL</span>
         </div>
         <div class="bill-doc-grid-2col">
           <table class="bill-doc-table">
@@ -961,7 +953,7 @@ function renderBillResult(res) {
       <!-- 3. METER INFO: meter number, previous reading, present reading, and units consumed, with reading date and issue date -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
-          <span>METER INFO (میٹر کی تفصیلات اور استعمال شدہ یونٹس)</span>
+          <span>METER INFO</span>
         </div>
         <div class="bill-doc-grid-2col">
           <table class="bill-doc-table">
@@ -985,7 +977,7 @@ function renderBillResult(res) {
       <!-- 4. BILL CHARGES BREAKDOWN: electricity charges, tariff subsidies, net electricity charges, fuel price adjustment (FPA), government taxes, current month bill, arrears / previous dues, and grand total payable -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
-          <span>BILL CHARGES BREAKDOWN (بل چارجز اور ٹیکسز کی تفصیل)</span>
+          <span>BILL CHARGES BREAKDOWN</span>
         </div>
         <div class="bill-doc-grid-2col">
           <table class="bill-doc-table">
@@ -1009,17 +1001,17 @@ function renderBillResult(res) {
         </div>
       </div>
 
-      <!-- 5. BILL HISTORY: a TABLE of the 12-month history (bill month, units, amount, payment status) — a table, NOT a bar chart -->
+      <!-- 5. BILL HISTORY: a TABLE of the 12-month history (month, status code, units, bill amount, payment amount) — table, NOT a bar chart -->
       <div class="bill-doc-section">
         <div class="bill-doc-sec-title">
-          <span>BILL HISTORY (گزشتہ 12 ماہ کے بل اور ادائیگی کا ریکارڈ)</span>
+          <span>BILL HISTORY</span>
         </div>
         ${historyTableHtml}
       </div>
 
       <!-- 6. Below the main bill, a BANK-USE COPY block repeating the same bill data (DISCO name and logo, "ELECTRICITY CONSUMER BILL", consumer ID, reference number, bill month, due date, payable within due date, payable after due date, units) with a barcode area and a bank stamp area -->
       <div class="bill-tear-line">
-        <span>✂ TEAR HERE &bull; BANK-USE COPY (برائے بینک / ڈاکخانہ ریکارڈ) ✂</span>
+        <span>✂ TEAR HERE &bull; BANK-USE COPY ✂</span>
       </div>
 
       <div class="bill-bank-copy-block">
@@ -1030,12 +1022,13 @@ function renderBillResult(res) {
             </div>
             <div>
               <h3 class="bank-copy-company">${discoFull.toUpperCase()}</h3>
-              <div class="bank-copy-sub">ELECTRICITY CONSUMER BILL &bull; BANK-USE COPY (برائے بینک ریکارڈ)</div>
+              <div class="bank-copy-slogan">YOUR BETTER SERVICE – OUR PRIDE</div>
+              <div class="bank-copy-sub">ELECTRICITY CONSUMER BILL — BANK-USE COPY</div>
             </div>
           </div>
           <div class="bank-copy-status">
             <span class="badge-status ${isPaid ? 'paid' : 'unpaid'}">
-              ${isPaid ? '✓ PAID' : '⚠️ UNPAID'}
+              ${isPaid ? 'PAID' : 'UNPAID'}
             </span>
           </div>
         </div>
