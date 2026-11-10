@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAPDA Bill Check Online - All DISCOs &amp; Electricity Bill Calculator</title>
+  <meta name="description" content="Check any WAPDA or regional DISCO electricity bill online via PITC using your 14-digit reference number or 10-digit Customer ID, and estimate monthly electricity charges with our NEPRA S.R.O. 279(I)/2026 bill calculator.">
+  <meta name="keywords" content="WAPDA bill check online, PITC duplicate bill, electricity bill calculator Pakistan, NEPRA S.R.O. 279(I)/2026, LESCO, MEPCO, FESCO, IESCO, GEPCO, PESCO, HESCO, SEPCO, QESCO">
+  <link rel="canonical" href="https://www.bijlibillchecker.com/wapda-bill">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .wapda-main {
+      max-width: 960px;
+      margin: -32px auto 64px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .wapda-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .wapda-section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .wapda-section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--blue-light-bg);
+      color: var(--blue-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    body[data-theme="dark"] .wapda-section-icon {
+      background: rgba(59, 130, 246, 0.16);
+      color: #60a5fa;
+    }
+
+    .wapda-section-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .wapda-lead {
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+
+    .wapda-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .wapda-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--blue-gradient);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 11px 20px;
+      border-radius: var(--radius-md);
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 102, 255, 0.22);
+    }
+
+    .wapda-btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 102, 255, 0.28);
+    }
+
+    .wapda-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 11px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-card);
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .wapda-btn-secondary:hover {
+      border-color: var(--blue-primary);
+    }
+
+    /* DISCO Directory Table */
+    .disco-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      margin-top: 14px;
+    }
+
+    .disco-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      font-size: 14px;
+    }
+
+    .disco-table th,
+    .disco-table td {
+      padding: 13px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: middle;
+    }
+
+    html[dir="rtl"] .disco-table th,
+    html[dir="rtl"] .disco-table td {
+      text-align: right;
+    }
+
+    .disco-table thead th {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    html[dir="rtl"] .disco-table thead th {
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .disco-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .disco-table tbody tr:hover {
+      background: var(--bg-subtle);
+    }
+
+    .disco-code-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue-primary);
+      background: var(--blue-light-bg);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    body[data-theme="dark"] .disco-code-badge {
+      background: rgba(59, 130, 246, 0.16);
+      color: #60a5fa;
+    }
+
+    .disco-table-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #ffffff;
+      background: var(--blue-primary);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.18s ease;
+    }
+
+    .disco-table-link:hover {
+      background: var(--blue-primary-hover);
+    }
+
+    /* Bill Calculator Styles */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .calc-form-box,
+    .calc-result-box {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 22px;
+    }
+
+    .calc-field-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .calc-units-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-card);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .calc-units-input:focus {
+      border-color: var(--blue-primary);
+    }
+
+    .calc-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+
+    .calc-preset-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      color: var(--text-body);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .calc-preset-btn:hover {
+      border-color: var(--blue-primary);
+      color: var(--blue-primary);
+    }
+
+    .calc-type-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .calc-type-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-card);
+      background: var(--bg-card);
+      cursor: pointer;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .calc-type-option:hover {
+      border-color: var(--blue-border);
+    }
+
+    .calc-type-option.selected {
+      border-color: var(--blue-primary);
+      background: var(--blue-light-bg);
+    }
+
+    body[data-theme="dark"] .calc-type-option.selected {
+      background: rgba(59, 130, 246, 0.14);
+      border-color: #60a5fa;
+    }
+
+    .calc-type-option input[type="radio"] {
+      margin-top: 4px;
+      accent-color: var(--blue-primary);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .calc-type-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .calc-type-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .calc-result-kicker {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--blue-text);
+      margin-bottom: 6px;
+    }
+
+    html[dir="rtl"] .calc-result-kicker {
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .calc-total-amount {
+      font-family: var(--font-mono);
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .calc-slab-meta {
+      font-size: 13px;
+      color: var(--text-body);
+      margin-bottom: 14px;
+    }
+
+    .calc-breakdown-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+
+    .calc-breakdown-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    html[dir="rtl"] .calc-breakdown-title {
+      text-transform: none;
+    }
+
+    .calc-breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border-light);
+      font-size: 13.5px;
+      color: var(--text-body);
+    }
+
+    .calc-breakdown-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .calc-breakdown-row.total-row {
+      border-top: 1.5px solid var(--border-card);
+      border-bottom: none;
+      margin-top: 6px;
+      padding-top: 10px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .calc-amt-mono {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      white-space: nowrap;
+      color: var(--text-main);
+    }
+
+    .calc-warning-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    body[data-theme="dark"] .calc-warning-box {
+      background: rgba(245, 158, 11, 0.14);
+      border-color: rgba(251, 191, 36, 0.35);
+      color: #fde68a;
+    }
+
+    .calc-note-box {
+      background: var(--bg-card);
+      border-left: 3px solid var(--blue-primary);
+      border-radius: 6px;
+      padding: 11px 14px;
+      font-size: 12.5px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    html[dir="rtl"] .calc-note-box {
+      border-left: none;
+      border-right: 3px solid var(--blue-primary);
+    }
+
+    .calc-rates-details {
+      margin-top: 18px;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      background: var(--bg-subtle);
+      padding: 14px 18px;
+    }
+
+    .calc-rates-details summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .rates-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .rate-mini-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 12.5px;
+    }
+
+    .rate-mini-card h4 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .rate-mini-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      color: var(--text-body);
+    }
+
+    .rate-mini-card li {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* Steps List */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .step-mini-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .step-num-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--blue-primary);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-mini-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .step-mini-card p {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+
+    .urdu-font-block {
+      font-family: 'Noto Sans Arabic', 'Noto Nastaliq Urdu', sans-serif;
+      line-height: 1.95;
+    }
+
+    .wapda-badge-green {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #16a34a;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+    }
+
+    .legal-page-hero {
+      padding-bottom: 72px;
+    }
+
+    html[dir="rtl"] .legal-hero-title {
+      line-height: 1.65;
+    }
+
+    html[dir="rtl"] .legal-hero-subtitle {
+      line-height: 2.15;
+    }
+
+    @media (max-width: 820px) {
+      .calc-grid,
+      .rates-grid-3,
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+      .wapda-card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body data-lang="en">
+
+  <!-- Top Clean White Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <!-- Brand Logo on Left -->
+      <a href="/" class="brand-link">
+        <div class="brand-icon-box">
+          <svg class="brand-bolt-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v17l-2.5-1.5-2.5 1.5-2.5-1.5-2.5 1.5-2.5-1.5L4 20V3z" stroke="#ffffff" stroke-width="1.75" stroke-linejoin="round"/>
+            <line x1="8" y1="7" x2="16" y2="7" stroke="#ffffff" stroke-width="1.75" stroke-linecap="round"/>
+            <line x1="8" y1="10.5" x2="13" y2="10.5" stroke="#ffffff" stroke-width="1.75" stroke-linecap="round"/>
+            <path d="M9 15l2 2 4.5-4.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title" data-i18n="brandTitle">Bijli Bill Checker</span>
+          <span class="brand-subtitle" data-i18n="brandSubtitle">Check Your Electricity Bill Online</span>
+        </div>
+      </a>
+
+      <!-- Center Navigation Links -->
+      <nav class="nav-links">
+        <a href="/" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+          <span data-i18n="navHome">Home</span>
+        </a>
+        <a href="/wapda-bill" class="nav-item active">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span data-en="WAPDA Bill" data-ur="واپڈا بل">WAPDA Bill</span>
+        </a>
+        <a href="#billCalculatorSection" class="nav-item">
+          <span data-en="Calculator" data-ur="کیلکولیٹر">Calculator</span>
+        </a>
+        <a href="#discoDirectorySection" class="nav-item">
+          <span data-en="All 9 DISCOs" data-ur="تمام 9 کمپنیاں">All 9 DISCOs</span>
+        </a>
+        <a href="#wapdaFaqSection" class="nav-item">
+          <span data-i18n="navFaq">FAQ</span>
+        </a>
+      </nav>
+
+      <!-- Right Controls: Language Toggle & Theme Toggle -->
+      <div class="nav-right">
+        <button type="button" class="lang-toggle-btn" id="langToggleBtn" aria-label="Toggle English and Urdu Language" title="اردو / English">
+          <span class="lang-text-en active">EN</span>
+          <span class="lang-sep">|</span>
+          <span class="lang-text-ur">اردو</span>
+        </button>
+
+        <button type="button" class="theme-icon-btn" id="themeToggleBtn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+          <svg class="sun-moon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="legal-page-hero">
+    <div class="legal-hero-inner">
+      <div class="hero-badges-row">
+        <span class="badge-wapda" data-en="All 9 Pakistani DISCOs" data-ur="پاکستان کی تمام 9 ڈسکوز">All 9 Pakistani DISCOs</span>
+        <span class="wapda-badge-green" data-en="PITC Duplicate Bill &amp; Estimator" data-ur="ڈپلیکیٹ بل اور بل کیلکولیٹر">PITC Duplicate Bill &amp; Estimator</span>
+      </div>
+      <h1 class="legal-hero-title" data-en="WAPDA Bill Check Online" data-ur="واپڈا بل آن لائن چیک کریں">WAPDA Bill Check Online</h1>
+      <p class="legal-hero-subtitle" data-en="Access duplicate electricity bills for every regional DISCO via PITC using your 14-digit Reference Number or 10-digit Customer ID, and estimate monthly unit charges using NEPRA S.R.O. 279(I)/2026 residential tariffs." data-ur="اپنے 14 ہندسوں کے ریفرنس نمبر یا 10 ہندسوں کی کسٹمر آئی ڈی کے ذریعے تمام علاقائی ڈسکوز کا ڈپلیکیٹ بل آن لائن دیکھیں اور نیپرا S.R.O. 279(I)/2026 نرخوں کے مطابق ماہانہ بل کا اندازہ لگائیں۔">
+        Access duplicate electricity bills for every regional DISCO via PITC using your 14-digit Reference Number or 10-digit Customer ID, and estimate monthly unit charges using NEPRA S.R.O. 279(I)/2026 residential tariffs.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="wapda-main">
+
+    <!-- 1. Short Intro -->
+    <section class="wapda-card" id="introSection">
+      <div class="wapda-section-head">
+        <div class="wapda-section-icon">⚡</div>
+        <h2 class="wapda-section-title" data-en="Check Any WAPDA / DISCO Electricity Bill Online" data-ur="کوئی بھی واپڈا / ڈسکو بجلی کا بل آن لائن چیک کریں">Check Any WAPDA / DISCO Electricity Bill Online</h2>
+      </div>
+
+      <div class="disco-article-lang-en">
+        <p class="wapda-lead">
+          Electricity billing across Pakistan’s regional WAPDA distribution companies (DISCOs) is managed centrally through the <strong>PITC (Power Information Technology Company)</strong> billing portal at <a href="https://bill.pitc.com.pk" target="_blank" rel="noopener noreferrer" style="color: var(--blue-primary); font-weight: 600;">bill.pitc.com.pk</a>. Whether you live in Lahore, Multan, Faisalabad, Islamabad, Gujranwala, Peshawar, Hyderabad, Sukkur, or Quetta, you can view and download your monthly duplicate bill online using either your <strong>14-digit Reference Number</strong> or your <strong>10-digit Customer ID</strong> printed on the top section of an earlier bill.
+        </p>
+        <p class="wapda-lead" style="margin-bottom: 0;">
+          Simply select your regional DISCO from the table below to open its bill-check page on this website with your 14-digit Reference Number, or use the PITC portal directly when searching by your 10-digit Customer ID. Below the company list, you can also estimate your monthly energy charges with our built-in WAPDA bill calculator.
+        </p>
+      </div>
+
+      <div class="disco-article-lang-ur urdu-font-block">
+        <p class="wapda-lead">
+          پاکستان کی تمام علاقائی واپڈا بجلی تقسیم کار کمپنیوں (DISCOs) کے بلز کا آن لائن نظام <strong>پی آئی ٹی سی (PITC - Power Information Technology Company)</strong> پورٹل <a href="https://bill.pitc.com.pk" target="_blank" rel="noopener noreferrer" dir="ltr" style="color: var(--blue-primary); font-weight: 600;">bill.pitc.com.pk</a> کے ذریعے کام کرتا ہے۔ چاہے آپ لاہور، ملتان، فیصل آباد، اسلام آباد، گوجرانوالہ، پشاور، حیدرآباد، سکھر یا کوئٹہ کے رہائشی ہوں، آپ اپنے پرانے بل کے اوپری حصے پر درج <strong>14 ہندسوں کے ریفرنس نمبر</strong> یا <strong>10 ہندسوں کی کسٹمر آئی ڈی</strong> کی مدد سے اپنا ماہانہ ڈپلیکیٹ بل آن لائن دیکھ اور ڈاؤن لوڈ کر سکتے ہیں۔
+        </p>
+        <p class="wapda-lead" style="margin-bottom: 0;">
+          14 ہندسوں کے ریفرنس نمبر سے بل دیکھنے کے لیے نیچے دی گئی فہرست میں سے اپنی متعلقہ کمپنی کا صفحہ کھولیں، یا 10 ہندسوں کی کسٹمر آئی ڈی سے چیک کرنے کے لیے براہِ راست پی آئی ٹی سی پورٹل استعمال کریں۔ نیچے موجود کیلکولیٹر سے آپ اپنے ماہانہ یونٹس کے مطابق بجلی کے تخمینی بل کا حساب بھی لگا سکتے ہیں۔
+        </p>
+      </div>
+
+      <div class="wapda-cta-row">
+        <a href="#discoDirectorySection" class="wapda-btn-primary" data-en="Select Your DISCO ↓" data-ur="اپنی بجلی کمپنی منتخب کریں ↓">Select Your DISCO ↓</a>
+        <a href="#billCalculatorSection" class="wapda-btn-secondary" data-en="Open Bill Calculator 🧮" data-ur="بل کیلکولیٹر کھولیں 🧮">Open Bill Calculator 🧮</a>
+      </div>
+    </section>
+
+    <!-- 2. Table / List of All 9 DISCOs -->
+    <section class="wapda-card" id="discoDirectorySection">
+      <div class="wapda-section-head">
+        <div class="wapda-section-icon">🏢</div>
+        <h2 class="wapda-section-title" data-en="All 9 Pakistani DISCOs — Direct Bill Check Pages" data-ur="پاکستان کی تمام 9 بجلی کمپنیاں (DISCOs) — براہِ راست بل چیک صفحات">All 9 Pakistani DISCOs — Direct Bill Check Pages</h2>
+      </div>
+
+      <div class="disco-article-lang-en">
+        <p class="wapda-lead" style="margin-bottom: 8px;">
+          Choose your electricity supply company below to check your current duplicate bill on this website:
+        </p>
+        <div class="disco-table-wrap">
+          <table class="disco-table">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Full Name</th>
+                <th>Major Coverage Areas</th>
+                <th>Check Bill</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="disco-code-badge">LESCO</span></td>
+                <td>Lahore Electric Supply Company</td>
+                <td>Lahore, Kasur, Okara, Sheikhupura, Nankana Sahib</td>
+                <td><a href="/lesco-bill" class="disco-table-link">Check LESCO Bill &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">MEPCO</span></td>
+                <td>Multan Electric Power Company</td>
+                <td>Multan, Bahawalpur, D.G. Khan, Sahiwal, Vehari, Rahim Yar Khan</td>
+                <td><a href="/mepco-bill" class="disco-table-link">Check MEPCO Bill &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">FESCO</span></td>
+                <td>Faisalabad Electric Supply Company</td>
+                <td>Faisalabad, Sargodha, Jhang, Chiniot, Toba Tek Singh, Mianwali</td>
+                <td><a href="/fesco-bill" class="disco-table-link">Check FESCO Bill &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">IESCO</span></td>
+                <td>Islamabad Electric Supply Company</td>
+                <td>Islamabad, Rawalpindi, Attock, Jhelum, Chakwal</td>
+                <td><a href="/iesco-bill" class="disco-table-link">Check IESCO Bill &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">GEPCO</span></td>
+                <td>Gujranwala Electric Power Company</td>
+                <td>Gujranwala, Sialkot, Gujrat, Narowal, Hafizabad, Mandi Bahauddin</td>
+                <td><a href="/gepco-bill" class="disco-table-link">Check GEPCO Bill &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">PESCO</span></td>
+                <td>Peshawar Electric Supply Company</td>
+                <td>Peshawar, Mardan, Abbottabad, Swat, Kohat, Bannu &amp; KP</td>
+                <td><a href="/pesco-bill" class="disco-table-link">Check PESCO Bill &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">HESCO</span></td>
+                <td>Hyderabad Electric Supply Company</td>
+                <td>Hyderabad, Mirpurkhas, Badin, Shaheed Benazirabad, Sanghar</td>
+                <td><a href="/hesco-bill" class="disco-table-link">Check HESCO Bill &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">SEPCO</span></td>
+                <td>Sukkur Electric Power Company</td>
+                <td>Sukkur, Larkana, Khairpur, Jacobabad, Ghotki, Shikarpur</td>
+                <td><a href="/sepco-bill" class="disco-table-link">Check SEPCO Bill &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">QESCO</span></td>
+                <td>Quetta Electric Supply Company</td>
+                <td>Quetta, Gwadar, Khuzdar, Turbat, Sibi &amp; Balochistan</td>
+                <td><a href="/qesco-bill" class="disco-table-link">Check QESCO Bill &rarr;</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="disco-article-lang-ur urdu-font-block">
+        <p class="wapda-lead" style="margin-bottom: 8px;">
+          اپنی بجلی فراہم کرنے والی کمپنی کا بل آن لائن دیکھنے کے لیے نیچے دی گئی فہرست میں سے متعلقہ لنک پر کلک کریں:
+        </p>
+        <div class="disco-table-wrap">
+          <table class="disco-table">
+            <thead>
+              <tr>
+                <th>کوڈ</th>
+                <th>کمپنی کا پورا نام</th>
+                <th>بڑے شہر اور علاقے</th>
+                <th>بل چیک کریں</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="disco-code-badge">LESCO</span></td>
+                <td>لاہور الیکٹرک سپلائی کمپنی</td>
+                <td>لاہور، قصور، اوکاڑہ، شیخوپورہ، ننکانہ صاحب</td>
+                <td><a href="/lesco-bill" class="disco-table-link">لیسکو بل چیک کریں &larr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">MEPCO</span></td>
+                <td>ملتان الیکٹرک پاور کمپنی</td>
+                <td>ملتان، بہاولپور، ڈیرہ غازی خان، ساہیوال، وہاڑی، رحیم یار خان</td>
+                <td><a href="/mepco-bill" class="disco-table-link">میپکو بل چیک کریں &larr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">FESCO</span></td>
+                <td>فیصل آباد الیکٹرک سپلائی کمپنی</td>
+                <td>فیصل آباد، سرگودھا، جھنگ، چنیوٹ، ٹوبہ ٹیک سنگھ، میانوالی</td>
+                <td><a href="/fesco-bill" class="disco-table-link">فیسکو بل چیک کریں &larr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">IESCO</span></td>
+                <td>اسلام آباد الیکٹرک سپلائی کمپنی</td>
+                <td>اسلام آباد، راولپنڈی، اٹک، جہلم، چکوال</td>
+                <td><a href="/iesco-bill" class="disco-table-link">آئیسکو بل چیک کریں &larr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">GEPCO</span></td>
+                <td>گوجرانوالہ الیکٹرک پاور کمپنی</td>
+                <td>گوجرانوالہ، سیالکوٹ، گجرات، نارووال، حافظ آباد، منڈی بہاؤالدین</td>
+                <td><a href="/gepco-bill" class="disco-table-link">گیپکو بل چیک کریں &larr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">PESCO</span></td>
+                <td>پشاور الیکٹرک سپلائی کمپنی</td>
+                <td>پشاور، مردان، ایبٹ آباد، سوات، کوہاٹ، بنوں اور خیبر پختونخوا</td>
+                <td><a href="/pesco-bill" class="disco-table-link">پیسکو بل چیک کریں &larr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">HESCO</span></td>
+                <td>حیدرآباد الیکٹرک سپلائی کمپنی</td>
+                <td>حیدرآباد، میرپورخاص، بدین، شہید بینظیر آباد، سانگھڑ</td>
+                <td><a href="/hesco-bill" class="disco-table-link">حیسکو بل چیک کریں &larr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">SEPCO</span></td>
+                <td>سکھر الیکٹرک پاور کمپنی</td>
+                <td>سکھر، لاڑکانہ، خیرپور، جیکب آباد، گھوٹکی، شکارپور</td>
+                <td><a href="/sepco-bill" class="disco-table-link">سیپکو بل چیک کریں &larr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="disco-code-badge">QESCO</span></td>
+                <td>کوئٹہ الیکٹرک سپلائی کمپنی</td>
+                <td>کوئٹہ، گوادر، خضدار، تربت، سبی اور بلوچستان</td>
+                <td><a href="/qesco-bill" class="disco-table-link">کیسکو بل چیک کریں &larr;</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Bill Calculator Section (below intro, before FAQs) -->
+    <section class="wapda-card" id="billCalculatorSection">
+      <div class="wapda-section-head">
+        <div class="wapda-section-icon">🧮</div>
+        <h2 class="wapda-section-title" data-en="WAPDA Electricity Bill Calculator (NEPRA S.R.O. 279(I)/2026)" data-ur="واپڈا بجلی بل کیلکولیٹر (نیپرا S.R.O. 279(I)/2026)">WAPDA Electricity Bill Calculator (NEPRA S.R.O. 279(I)/2026)</h2>
+      </div>
+
+      <p class="wapda-lead" data-en="Enter your monthly units consumed and select your residential consumer category to estimate your base electricity unit cost under uniform NEPRA residential slab rates effective 12 February 2026 across all DISCOs." data-ur="اپنے ماہانہ استعمال شدہ یونٹس درج کریں اور صارف کی قسم منتخب کریں تاکہ 12 فروری 2026 سے تمام ڈسکوز میں نافذ نیپرا رہائشی سلیب نرخوں کے مطابق بجلی کے بنیادی بل کا اندازہ لگایا جا سکے۔">
+        Enter your monthly units consumed and select your residential consumer category to estimate your base electricity unit cost under uniform NEPRA residential slab rates effective 12 February 2026 across all DISCOs.
+      </p>
+
+      <div class="calc-grid">
+        <!-- Left: Calculator Form -->
+        <form id="wapdaCalcForm" class="calc-form-box" onsubmit="return false;">
+          <label for="calcUnitsInput" class="calc-field-label" data-en="Monthly Units Used (kWh)" data-ur="ماہانہ استعمال شدہ یونٹس (kWh)">Monthly Units Used (kWh)</label>
+          <input type="number" id="calcUnitsInput" class="calc-units-input" min="0" max="100000" step="1" value="250" placeholder="Enter units (e.g. 250)">
+
+          <div class="calc-presets" aria-label="Quick unit presets">
+            <button type="button" class="calc-preset-btn" data-units="50">50</button>
+            <button type="button" class="calc-preset-btn" data-units="100">100</button>
+            <button type="button" class="calc-preset-btn" data-units="150">150</button>
+            <button type="button" class="calc-preset-btn" data-units="250">250</button>
+            <button type="button" class="calc-preset-btn" data-units="350">350</button>
+            <button type="button" class="calc-preset-btn" data-units="550">550</button>
+            <button type="button" class="calc-preset-btn" data-units="750">750</button>
+          </div>
+
+          <span class="calc-field-label" data-en="Consumer Type" data-ur="صارف کی قسم">Consumer Type</span>
+          <div class="calc-type-list" id="calcTypeList">
+            <label class="calc-type-option" for="typeLifeline">
+              <input type="radio" id="typeLifeline" name="consumerType" value="lifeline">
+              <div>
+                <div class="calc-type-title" data-en="Lifeline" data-ur="لائف لائن (Lifeline)">Lifeline</div>
+                <div class="calc-type-desc" data-en="Up to 100 units, smallest residential users." data-ur="ماہانہ 100 یونٹ تک، کم ترین بجلی استعمال کرنے والے صارفین۔">Up to 100 units, smallest residential users.</div>
+              </div>
+            </label>
+
+            <label class="calc-type-option" for="typeProtected">
+              <input type="radio" id="typeProtected" name="consumerType" value="protected">
+              <div>
+                <div class="calc-type-title" data-en="Protected" data-ur="پروٹیکٹڈ (Protected)">Protected</div>
+                <div class="calc-type-desc" data-en="200 units or less every month for the last 6 months." data-ur="گزشتہ 6 مسلسل مہینوں میں ہر ماہ 200 یا اس سے کم یونٹ استعمال کرنے والے صارفین۔">200 units or less every month for the last 6 months.</div>
+              </div>
+            </label>
+
+            <label class="calc-type-option selected" for="typeUnprotected">
+              <input type="radio" id="typeUnprotected" name="consumerType" value="unprotected" checked>
+              <div>
+                <div class="calc-type-title" data-en="Unprotected (Default)" data-ur="ان پروٹیکٹڈ (Unprotected — عام صارفین)">Unprotected (Default)</div>
+                <div class="calc-type-desc" data-en="Everyone else (above 200 units in at least one of the last 6 months)." data-ur="دیگر تمام صارفین (گزشتہ 6 ماہ میں کسی بھی ماہ 200 سے زیادہ یونٹ استعمال کرنے والے)۔">Everyone else (above 200 units in at least one of the last 6 months).</div>
+              </div>
+            </label>
+          </div>
+
+          <button type="submit" id="calcSubmitBtn" class="wapda-btn-primary" style="width: 100%;" data-en="Calculate Estimated Bill" data-ur="تخمینی بل کا حساب لگائیں">Calculate Estimated Bill</button>
+        </form>
+
+        <!-- Right: Output Breakdown & Disclaimer -->
+        <div class="calc-result-box" id="calcResultBox" aria-live="polite">
+          <!-- Rendered dynamically by inline script -->
+        </div>
+      </div>
+
+      <details class="calc-rates-details">
+        <summary data-en="View NEPRA S.R.O. 279(I)/2026 Residential Slab Rates Used (Effective 12 Feb 2026)" data-ur="استعمال شدہ نیپرا S.R.O. 279(I)/2026 رہائشی سلیب نرخ دیکھیں (مؤثر 12 فروری 2026)">
+          View NEPRA S.R.O. 279(I)/2026 Residential Slab Rates Used (Effective 12 Feb 2026)
+        </summary>
+        <div class="rates-grid-3">
+          <div class="rate-mini-card">
+            <h4 data-en="Lifeline (Flat Band Rate)" data-ur="لائف لائن (متعلقہ سلیب ریٹ)">Lifeline (Flat Band Rate)</h4>
+            <ul>
+              <li><span data-en="1–50 units" data-ur="1 تا 50 یونٹ">1–50 units</span><strong class="calc-amt-mono">Rs 3.95</strong></li>
+              <li><span data-en="51–100 units" data-ur="51 تا 100 یونٹ">51–100 units</span><strong class="calc-amt-mono">Rs 7.74</strong></li>
+            </ul>
+          </div>
+          <div class="rate-mini-card">
+            <h4 data-en="Protected (One-Previous-Slab Benefit)" data-ur="پروٹیکٹڈ (سابقہ سلیب رعایت)">Protected (One-Previous-Slab Benefit)</h4>
+            <ul>
+              <li><span data-en="1–100 units" data-ur="1 تا 100 یونٹ">1–100 units</span><strong class="calc-amt-mono">Rs 10.54</strong></li>
+              <li><span data-en="101–200 units" data-ur="101 تا 200 یونٹ">101–200 units</span><strong class="calc-amt-mono">Rs 13.01</strong></li>
+            </ul>
+          </div>
+          <div class="rate-mini-card">
+            <h4 data-en="Unprotected (Flat Band Rate, All Units)" data-ur="ان پروٹیکٹڈ (تمام یونٹس پر ایک ریٹ)">Unprotected (Flat Band Rate, All Units)</h4>
+            <ul>
+              <li><span data-en="1–100 units" data-ur="1 تا 100 یونٹ">1–100 units</span><strong class="calc-amt-mono">Rs 22.44</strong></li>
+              <li><span data-en="101–200 units" data-ur="101 تا 200 یونٹ">101–200 units</span><strong class="calc-amt-mono">Rs 28.91</strong></li>
+              <li><span data-en="201–300 units" data-ur="201 تا 300 یونٹ">201–300 units</span><strong class="calc-amt-mono">Rs 33.10</strong></li>
+              <li><span data-en="301–400 units" data-ur="301 تا 400 یونٹ">301–400 units</span><strong class="calc-amt-mono">Rs 36.46</strong></li>
+              <li><span data-en="401–500 units" data-ur="401 تا 500 یونٹ">401–500 units</span><strong class="calc-amt-mono">Rs 38.95</strong></li>
+              <li><span data-en="501–600 units" data-ur="501 تا 600 یونٹ">501–600 units</span><strong class="calc-amt-mono">Rs 40.22</strong></li>
+              <li><span data-en="601–700 units" data-ur="601 تا 700 یونٹ">601–700 units</span><strong class="calc-amt-mono">Rs 41.85</strong></li>
+              <li><span data-en="Above 700 units" data-ur="700 سے زائد یونٹ">Above 700 units</span><strong class="calc-amt-mono">Rs 47.20</strong></li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 4. Short Steps to Check a Bill -->
+    <section class="wapda-card" id="stepsSection">
+      <div class="wapda-section-head">
+        <div class="wapda-section-icon">📝</div>
+        <h2 class="wapda-section-title" data-en="How to Check Your WAPDA Electricity Bill in 4 Simple Steps" data-ur="اپنا واپڈا بجلی کا بل چیک کرنے کے 4 آسان مراحل">How to Check Your WAPDA Electricity Bill in 4 Simple Steps</h2>
+      </div>
+
+      <div class="disco-article-lang-en">
+        <div class="steps-grid">
+          <div class="step-mini-card">
+            <span class="step-num-pill">1</span>
+            <div>
+              <h3>Identify Your DISCO</h3>
+              <p>Check the top corner of a previous electricity bill to see which company supplies your area (for example LESCO, MEPCO, FESCO, or IESCO).</p>
+            </div>
+          </div>
+          <div class="step-mini-card">
+            <span class="step-num-pill">2</span>
+            <div>
+              <h3>Find Reference Number or Customer ID</h3>
+              <p>Note your <strong>14-digit Reference Number</strong> or <strong>10-digit Customer ID</strong> printed in the consumer details block.</p>
+            </div>
+          </div>
+          <div class="step-mini-card">
+            <span class="step-num-pill">3</span>
+            <div>
+              <h3>Open Your Company Page or PITC Portal</h3>
+              <p>Click your DISCO link in the table above to check by Reference Number, or visit <strong>bill.pitc.com.pk</strong> to search with your Customer ID.</p>
+            </div>
+          </div>
+          <div class="step-mini-card">
+            <span class="step-num-pill">4</span>
+            <div>
+              <h3>View &amp; Print Your Duplicate Bill</h3>
+              <p>Inspect the payable amount, due date, and units billed, then download or print the duplicate copy for bank or digital payment.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="disco-article-lang-ur urdu-font-block">
+        <div class="steps-grid">
+          <div class="step-mini-card">
+            <span class="step-num-pill">1</span>
+            <div>
+              <h3>اپنی بجلی کمپنی (DISCO) کی شناخت کریں</h3>
+              <p>اپنے پرانے بجلی کے بل کے اوپری حصے پر دیکھیں کہ آپ کے علاقے کی کمپنی کون سی ہے (جیسے لیسکو، میپکو، فیسکو یا آئیسکو)۔</p>
+            </div>
+          </div>
+          <div class="step-mini-card">
+            <span class="step-num-pill">2</span>
+            <div>
+              <h3>ریفرنس نمبر یا کسٹمر آئی ڈی حاصل کریں</h3>
+              <p>صارف کی تفصیلات والے حصے میں درج اپنا <strong>14 ہندسوں کا ریفرنس نمبر</strong> یا <strong>10 ہندسوں کی کسٹمر آئی ڈی</strong> نوٹ کریں۔</p>
+            </div>
+          </div>
+          <div class="step-mini-card">
+            <span class="step-num-pill">3</span>
+            <div>
+              <h3>کمپنی کا صفحہ یا پی آئی ٹی سی پورٹل کھولیں</h3>
+              <p>ریفرنس نمبر سے بل چیک کرنے کے لیے اوپر جدول میں اپنی کمپنی کے لنک پر کلک کریں، یا کسٹمر آئی ڈی کے لیے <strong>bill.pitc.com.pk</strong> استعمال کریں۔</p>
+            </div>
+          </div>
+          <div class="step-mini-card">
+            <span class="step-num-pill">4</span>
+            <div>
+              <h3>ڈپلیکیٹ بل دیکھیں اور پرنٹ کریں</h3>
+              <p>واجب الادا رقم، آخری تاریخ اور یونٹس چیک کریں، اور بینک یا آن لائن ایپ سے ادائیگی کے لیے ڈپلیکیٹ کاپی محفوظ یا پرنٹ کر لیں۔</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. FAQs -->
+    <section class="wapda-card" id="wapdaFaqSection">
+      <div class="wapda-section-head">
+        <div class="wapda-section-icon">❓</div>
+        <h2 class="wapda-section-title" data-en="Frequently Asked Questions (WAPDA Bill &amp; Complaints)" data-ur="اکثر پوچھے جانے والے سوالات (واپڈا بل اور شکایات)">Frequently Asked Questions (WAPDA Bill &amp; Complaints)</h2>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+        <!-- FAQ 1 -->
+        <div class="faq-item-card open">
+          <button type="button" class="faq-question-btn" onclick="toggleWapdaFaq(this)">
+            <span data-en="1. How do I check my WAPDA bill with a Reference Number or Customer ID?" data-ur="1. ریفرنس نمبر یا کسٹمر آئی ڈی کے ذریعے واپڈا بل کیسے چیک کریں؟">1. How do I check my WAPDA bill with a Reference Number or Customer ID?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            <p class="disco-article-lang-en">Open your DISCO's bill-check page from the directory above and enter your <strong>14-digit Reference Number</strong> to retrieve the duplicate PITC bill document. If you only have your <strong>10-digit Customer ID</strong>, open your DISCO's page on <strong>bill.pitc.com.pk</strong> and choose the Customer ID option.</p>
+            <p class="disco-article-lang-ur urdu-font-block">اوپر دی گئی فہرست میں سے اپنی بجلی کمپنی کا صفحہ کھولیں اور اپنا <strong>14 ہندسوں کا ریفرنس نمبر</strong> درج کر کے ڈپلیکیٹ بل حاصل کریں۔ اگر آپ کے پاس صرف <strong>10 ہندسوں کی کسٹمر آئی ڈی</strong> ہے تو <strong>bill.pitc.com.pk</strong> پر جا کر کسٹمر آئی ڈی کے ذریعے اپنا بل چیک کریں۔</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item-card">
+          <button type="button" class="faq-question-btn" onclick="toggleWapdaFaq(this)">
+            <span data-en="2. Where should I register electricity bill complaints or wrong reading issues?" data-ur="2. بل میں غلطی، زائد یونٹس یا بجلی کی شکایت کہاں درج کرائیں؟">2. Where should I register electricity bill complaints or wrong reading issues?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            <p class="disco-article-lang-en">All bill corrections, overbilling disputes, meter faults, and power supply complaints go directly to the <strong>Power Division / DISCO helpline 118</strong>, via <strong>SMS to 8118</strong>, or at your local DISCO sub-division office — <strong>not to this website</strong>. Bijli Bill Checker is an independent informational tool and cannot edit or resolve billing records.</p>
+            <p class="disco-article-lang-ur urdu-font-block">بل میں درستگی، زائد یونٹس، میٹر خرابی یا بجلی کی فراہمی سے متعلق تمام شکایات براہِ راست <strong>ہیلپ لائن 118</strong> پر کال کر کے، <strong>8118 پر ایس ایم ایس</strong> بھیج کر، یا اپنے قریبی ڈسکو سب ڈویژن دفتر میں درج کروائیں — <strong>اس ویب سائٹ پر نہیں</strong>۔ بجلی بل چیکر ایک آزاد معلوماتی ویب سائٹ ہے اور بل کے ریکارڈ میں کوئی تبدیلی نہیں کر سکتی۔</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item-card">
+          <button type="button" class="faq-question-btn" onclick="toggleWapdaFaq(this)">
+            <span data-en="3. Why can the calculator result differ from my printed monthly bill?" data-ur="3. کیلکولیٹر کا تخمینہ میرے اصل پرنٹ شدہ بل سے مختلف کیوں ہو سکتا ہے؟">3. Why can the calculator result differ from my printed monthly bill?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            <p class="disco-article-lang-en">The calculator estimates base electricity unit charges using NEPRA S.R.O. 279(I)/2026 residential tariff slabs. Your printed bill can also include fixed charges (where applicable), monthly Fuel Price Adjustment (FPA), quarterly tariff adjustments, electricity duty, TV fee, further/extra taxes, and GST, as well as any arrears or adjustments.</p>
+            <p class="disco-article-lang-ur urdu-font-block">یہ کیلکولیٹر صرف نیپرا S.R.O. 279(I)/2026 کے رہائشی سلیب نرخوں کے مطابق بجلی کے بنیادی یونٹس کی لاگت کا اندازہ لگاتا ہے۔ آپ کے اصل بل میں فکسڈ چارجز، فیول پرائس ایڈجسٹمنٹ (FPA)، ٹیکسز، جی ایس ٹی (GST) اور ممکنہ بقایاجات الگ سے شامل ہوتے ہیں، اس لیے حتمی بل مختلف ہو سکتا ہے۔</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item-card">
+          <button type="button" class="faq-question-btn" onclick="toggleWapdaFaq(this)">
+            <span data-en="4. What is the difference between Protected and Unprotected residential consumers?" data-ur="4. پروٹیکٹڈ اور ان پروٹیکٹڈ گھریلو صارفین میں کیا فرق ہے؟">4. What is the difference between Protected and Unprotected residential consumers?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer-panel">
+            <p class="disco-article-lang-en"><strong>Protected</strong> consumers keep monthly consumption at <strong>200 units or less every month for 6 consecutive months</strong> and pay lower progressive rates with the one-previous-slab benefit. <strong>Unprotected</strong> consumers exceed 200 units in at least one month during that 6-month window and are charged a higher single slab rate across all monthly units consumed.</p>
+            <p class="disco-article-lang-ur urdu-font-block"><strong>پروٹیکٹڈ</strong> صارف وہ ہوتا ہے جو <strong>مسلسل 6 مہینوں تک ہر ماہ 200 یا اس سے کم یونٹ</strong> استعمال کرے؛ اسے کم نرخ اور پچھلے سلیب کی رعایت ملتی ہے۔ جبکہ <strong>ان پروٹیکٹڈ</strong> صارف وہ ہے جس کا استعمال گزشتہ 6 ماہ میں کسی بھی ماہ 200 یونٹ سے بڑھا ہو، اور اس کے تمام یونٹس موجودہ سلیب کے یکساں ریٹ پر شمار ہوتے ہیں۔</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Left: Logo & Subtitle -->
+      <div class="footer-left">
+        <div class="footer-brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" style="width: 20px; height: 20px;">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="footer-brand-text">
+          <span class="footer-title" data-i18n="footerTitle">Bijli Bill Checker</span>
+          <span class="footer-subtitle" data-i18n="footerSubtitle">All Pakistani DISCOs &amp; WAPDA</span>
+        </div>
+      </div>
+
+      <!-- Center: Links -->
+      <div class="footer-center">
+        <a href="/" class="footer-link" data-i18n="footerHome">Home</a>
+        <span class="footer-divider">|</span>
+        <a href="/wapda-bill" class="footer-link active" data-en="WAPDA Bill" data-ur="واپڈا بل">WAPDA Bill</a>
+        <span class="footer-divider">|</span>
+        <a href="/faq" class="footer-link" data-i18n="footerFaq">FAQ</a>
+        <span class="footer-divider">|</span>
+        <a href="/terms" class="footer-link" data-i18n="footerTerms">Terms &amp; Conditions</a>
+        <span class="footer-divider">|</span>
+        <a href="/privacy" class="footer-link" data-i18n="footerPrivacy">Privacy Policy</a>
+        <span class="footer-divider">|</span>
+        <a href="/about" class="footer-link" data-i18n="footerAbout">About Us</a>
+        <span class="footer-divider">|</span>
+        <a href="/contact" class="footer-link" data-i18n="footerContact">Contact</a>
+      </div>
+
+      <!-- Right: Made for a Better Pakistan -->
+      <div class="footer-right">
+        <span class="footer-serving-text" data-i18n="footerServing">Made for a Better Pakistan 🇵🇰 💚</span>
+        <span class="footer-copy" data-i18n="footerCopy">&copy; 2026 Bijli Bill Checker. All rights reserved.</span>
+      </div>
+
+      <div class="footer-disclaimer" style="width: 100%; text-align: center; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-light); padding-top: 12px; margin-top: 4px; line-height: 1.5;">
+        Disclaimer: Bijli Bill Checker is an independent, unofficial tool. It is not affiliated with, endorsed by, or connected to PITC, WAPDA, or any DISCO (LESCO, FESCO, IESCO, MEPCO, GEPCO, PESCO, QESCO, SEPCO, HESCO).
+      </div>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+  <script>
+    function toggleWapdaFaq(btn) {
+      const card = btn.closest('.faq-item-card');
+      if (card) card.classList.toggle('open');
+    }
+
+    (function () {
+      const UNPROTECTED_SLABS = [
+        { max: 100, rate: 22.44, en: '1–100 units', ur: '1 تا 100 یونٹ' },
+        { max: 200, rate: 28.91, en: '101–200 units', ur: '101 تا 200 یونٹ' },
+        { max: 300, rate: 33.10, en: '201–300 units', ur: '201 تا 300 یونٹ' },
+        { max: 400, rate: 36.46, en: '301–400 units', ur: '301 تا 400 یونٹ' },
+        { max: 500, rate: 38.95, en: '401–500 units', ur: '401 تا 500 یونٹ' },
+        { max: 600, rate: 40.22, en: '501–600 units', ur: '501 تا 600 یونٹ' },
+        { max: 700, rate: 41.85, en: '601–700 units', ur: '601 تا 700 یونٹ' },
+        { max: Infinity, rate: 47.20, en: 'Above 700 units', ur: '700 سے زائد یونٹ' }
+      ];
+
+      function round2(n) {
+        return Math.round(n * 100) / 100;
+      }
+
+      function formatRs(amount) {
+        return 'Rs ' + round2(amount).toLocaleString('en-PK', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      }
+
+      function calculateWapdaEstimate(unitsInput, consumerType) {
+        const units = Number(unitsInput);
+        if (!Number.isFinite(units) || units < 0) {
+          return {
+            valid: false,
+            errorCode: 'INVALID_UNITS'
+          };
+        }
+
+        if (consumerType === 'lifeline') {
+          if (units > 100) {
+            return {
+              valid: false,
+              errorCode: 'LIFELINE_LIMIT',
+              units
+            };
+          }
+          const rate = units <= 50 ? 3.95 : 7.74;
+          const bandEn = units <= 50 ? 'Lifeline (1–50 units slab, flat rate)' : 'Lifeline (51–100 units slab, flat rate)';
+          const bandUr = units <= 50 ? 'لائف لائن (1 تا 50 یونٹ سلیب، یکساں ریٹ)' : 'لائف لائن (51 تا 100 یونٹ سلیب، یکساں ریٹ)';
+          const amount = round2(units * rate);
+          return {
+            valid: true,
+            consumerType: 'lifeline',
+            units,
+            total: amount,
+            bandEn,
+            bandUr,
+            rows: [
+              {
+                units,
+                rate,
+                amount,
+                en: units <= 50 ? '1–50 units band' : '51–100 units band',
+                ur: units <= 50 ? '1 تا 50 یونٹ سلیب' : '51 تا 100 یونٹ سلیب'
+              }
+            ]
+          };
+        }
+
+        if (consumerType === 'protected') {
+          if (units > 200) {
+            return {
+              valid: false,
+              errorCode: 'PROTECTED_LIMIT',
+              units
+            };
+          }
+          const rows = [];
+          const firstUnits = Math.min(units, 100);
+          const firstAmt = round2(firstUnits * 10.54);
+          rows.push({
+            units: firstUnits,
+            rate: 10.54,
+            amount: firstAmt,
+            en: '1–100 units slab',
+            ur: '1 تا 100 یونٹ سلیب'
+          });
+
+          if (units > 100) {
+            const secondUnits = units - 100;
+            const secondAmt = round2(secondUnits * 13.01);
+            rows.push({
+              units: secondUnits,
+              rate: 13.01,
+              amount: secondAmt,
+              en: '101–200 units slab',
+              ur: '101 تا 200 یونٹ سلیب'
+            });
+          }
+
+          const total = round2(rows.reduce((sum, r) => sum + r.amount, 0));
+          return {
+            valid: true,
+            consumerType: 'protected',
+            units,
+            total,
+            bandEn: units <= 100
+              ? 'Protected (1–100 units slab)'
+              : 'Protected (101–200 units, progressive one-previous-slab benefit)',
+            bandUr: units <= 100
+              ? 'پروٹیکٹڈ (1 تا 100 یونٹ سلیب)'
+              : 'پروٹیکٹڈ (101 تا 200 یونٹ، پچھلے سلیب کی رعایت کے ساتھ)',
+            rows
+          };
+        }
+
+        // Default: Unprotected (flat rate of the band total lands in — NO slab benefit)
+        const slab = UNPROTECTED_SLABS.find(s => units <= s.max) || UNPROTECTED_SLABS[UNPROTECTED_SLABS.length - 1];
+        const total = round2(units * slab.rate);
+        return {
+          valid: true,
+          consumerType: 'unprotected',
+          units,
+          total,
+          bandEn: `Unprotected (${slab.en}, no slab benefit)`,
+          bandUr: `ان پروٹیکٹڈ (${slab.ur}، بغیر سلیب رعایت)`,
+          rows: [
+            {
+              units,
+              rate: slab.rate,
+              amount: total,
+              en: `${slab.en} (all units)`,
+              ur: `${slab.ur} (تمام یونٹس)`
+            }
+          ]
+        };
+      }
+
+      window.calculateWapdaEstimate = calculateWapdaEstimate;
+
+      const unitsInput = document.getElementById('calcUnitsInput');
+      const resultBox = document.getElementById('calcResultBox');
+      const formEl = document.getElementById('wapdaCalcForm');
+      const presetBtns = document.querySelectorAll('.calc-preset-btn');
+      const typeRadios = document.querySelectorAll('input[name="consumerType"]');
+
+      function getCurrentLang() {
+        return document.body.getAttribute('data-lang') === 'ur' ? 'ur' : 'en';
+      }
+
+      function getSelectedType() {
+        const checked = document.querySelector('input[name="consumerType"]:checked');
+        return checked ? checked.value : 'unprotected';
+      }
+
+      function updateSelectedCardStyles() {
+        document.querySelectorAll('.calc-type-option').forEach(label => {
+          const radio = label.querySelector('input[type="radio"]');
+          if (radio && radio.checked) {
+            label.classList.add('selected');
+          } else {
+            label.classList.remove('selected');
+          }
+        });
+      }
+
+      function renderCalculatorResult() {
+        if (!resultBox || !unitsInput) return;
+
+        const isUr = getCurrentLang() === 'ur';
+        const rawVal = unitsInput.value.trim();
+        const selectedType = getSelectedType();
+        const noteHtml = isUr
+          ? 'یہ صرف ایک اندازہ (تخمینہ) ہے — آپ کا اصل بل مختلف ہو سکتا ہے۔ فکسڈ چارجز، فیول پرائس ایڈجسٹمنٹ (FPA)، ٹیکسز اور جی ایس ٹی (GST) اس کے علاوہ ہیں۔ نرخ نیپرا S.R.O. 279(I)/2026 (مؤثر 12 فروری 2026) کے مطابق ہیں اور تبدیل ہو سکتے ہیں۔'
+          : 'Estimate only — your actual bill may differ. Fixed charges, fuel price adjustment (FPA), taxes and GST are extra. Rates follow NEPRA S.R.O. 279(I)/2026 (effective 12 Feb 2026) and can change.';
+
+        if (rawVal === '') {
+          resultBox.innerHTML = `
+            <div class="calc-result-kicker">${isUr ? 'تخمینی بل' : 'Estimated Cost of Electricity'}</div>
+            <div class="calc-total-amount">Rs 0.00</div>
+            <div class="calc-slab-meta">${isUr ? 'حساب لگانے کے لیے اوپر ماہانہ یونٹس درج کریں۔' : 'Enter your monthly units to calculate your estimate.'}</div>
+            <div class="calc-note-box">${noteHtml}</div>
+          `;
+          return;
+        }
+
+        const res = calculateWapdaEstimate(rawVal, selectedType);
+
+        if (!res.valid) {
+          let warnTitle = '';
+          let warnMsg = '';
+          let showSwitchBtn = false;
+
+          if (res.errorCode === 'LIFELINE_LIMIT') {
+            warnTitle = isUr ? 'لائف لائن حد (100 یونٹ) سے تجاوز' : 'Exceeds Lifeline Limit (100 units max)';
+            warnMsg = isUr
+              ? `لائف لائن ٹیرف صرف ماہانہ 100 یا اس سے کم یونٹس کے لیے ہے۔ آپ نے ${res.units} یونٹس درج کیے ہیں جو لائف لائن کی حد سے زیادہ ہیں۔ عام سلیب نرخ دیکھنے کے لیے ان پروٹیکٹڈ منتخب کریں۔`
+              : `Lifeline tariff applies strictly up to 100 units per month (1–50 at Rs 3.95, 51–100 at Rs 7.74). Because ${res.units} units exceeds 100 units, Lifeline does not apply.`;
+            showSwitchBtn = true;
+          } else if (res.errorCode === 'PROTECTED_LIMIT') {
+            warnTitle = isUr ? 'پروٹیکٹڈ حد (200 یونٹ) سے تجاوز' : 'Exceeds Protected Limit (200 units max)';
+            warnMsg = isUr
+              ? `پروٹیکٹڈ کیٹیگری صرف تب لاگو ہوتی ہے جب گزشتہ 6 مسلسل مہینوں تک ہر ماہ 200 یا اس سے کم یونٹ استعمال ہوں۔ ${res.units} یونٹس پروٹیکٹڈ حد سے زیادہ ہیں — تخمینے کے لیے ان پروٹیکٹڈ منتخب کریں۔`
+              : `Protected tariff applies only when monthly usage stays at 200 units or less every month for the last 6 months. ${res.units} units exceeds the 200-unit Protected cap.`;
+            showSwitchBtn = true;
+          } else {
+            warnTitle = isUr ? 'غلط یونٹس' : 'Invalid Units';
+            warnMsg = isUr ? 'براہِ کرم صفر یا مثبت نمبر درج کریں۔' : 'Please enter a valid non-negative number of units.';
+          }
+
+          resultBox.innerHTML = `
+            <div class="calc-result-kicker">${isUr ? 'تخمینی بل' : 'Estimated Cost of Electricity'}</div>
+            <div class="calc-warning-box">
+              <strong style="display: block; margin-bottom: 6px;">${warnTitle}</strong>
+              <div>${warnMsg}</div>
+              ${showSwitchBtn ? `<button type="button" id="switchUnprotectedBtn" class="wapda-btn-primary" style="margin-top: 12px; padding: 8px 14px; font-size: 13px;">${isUr ? 'ان پروٹیکٹڈ کے ساتھ حساب لگائیں' : 'Switch to Unprotected &amp; Calculate'}</button>` : ''}
+            </div>
+            <div class="calc-note-box">${noteHtml}</div>
+          `;
+
+          const switchBtn = document.getElementById('switchUnprotectedBtn');
+          if (switchBtn) {
+            switchBtn.addEventListener('click', () => {
+              const unprotectedRadio = document.getElementById('typeUnprotected');
+              if (unprotectedRadio) {
+                unprotectedRadio.checked = true;
+                updateSelectedCardStyles();
+                renderCalculatorResult();
+              }
+            });
+          }
+          return;
+        }
+
+        const rowsHtml = res.rows.map(row => {
+          const leftLabel = isUr
+            ? `${row.units} یونٹ × Rs ${row.rate.toFixed(2)} (${row.ur})`
+            : `${row.units} units × Rs ${row.rate.toFixed(2)} (${row.en})`;
+          return `
+            <div class="calc-breakdown-row">
+              <span>${leftLabel}</span>
+              <span class="calc-amt-mono">${formatRs(row.amount)}</span>
+            </div>
+          `;
+        }).join('');
+
+        resultBox.innerHTML = `
+          <div class="calc-result-kicker">${isUr ? 'تخمینی بجلی لاگت (بنیادی یونٹ چارجز)' : 'Estimated Cost of Electricity (Base Units)'}</div>
+          <div class="calc-total-amount">${formatRs(res.total)}</div>
+          <div class="calc-slab-meta">${isUr ? res.bandUr : res.bandEn} &bull; <strong dir="ltr">${res.units}</strong> ${isUr ? 'یونٹس' : 'units'}</div>
+
+          <div class="calc-breakdown-box">
+            <div class="calc-breakdown-title">${isUr ? 'سلیب کے مطابق تفصیل' : 'Slab Breakdown'}</div>
+            ${rowsHtml}
+            <div class="calc-breakdown-row total-row">
+              <span>${isUr ? 'کل تخمینی لاگت' : 'Total Estimated Unit Cost'}</span>
+              <span class="calc-amt-mono">${formatRs(res.total)}</span>
+            </div>
+          </div>
+
+          <div class="calc-note-box">${noteHtml}</div>
+        `;
+      }
+
+      if (unitsInput) {
+        unitsInput.addEventListener('input', renderCalculatorResult);
+      }
+
+      if (formEl) {
+        formEl.addEventListener('submit', (e) => {
+          e.preventDefault();
+          renderCalculatorResult();
+        });
+      }
+
+      typeRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          updateSelectedCardStyles();
+          renderCalculatorResult();
+        });
+      });
+
+      presetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const u = btn.getAttribute('data-units');
+          if (unitsInput && u !== null) {
+            unitsInput.value = u;
+            renderCalculatorResult();
+          }
+        });
+      });
+
+      const observer = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          if (m.attributeName === 'data-lang') {
+            renderCalculatorResult();
+          }
+        }
+      });
+      observer.observe(document.body, { attributes: true, attributeFilter: ['data-lang'] });
+
+      updateSelectedCardStyles();
+      renderCalculatorResult();
+    })();
+  </script>
+</body>
+</html>
