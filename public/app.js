@@ -724,15 +724,88 @@ function retryWithCompany(discoCode, refNo) {
   if (billForm) billForm.dispatchEvent(new Event('submit'));
 }
 
-// Loading Spinner State
+// Loading Spinner State, Estimated Progress Bar & Elapsed Timer
+let billLoadingInterval = null;
+let billLoadingHideTimeout = null;
+let billLoadingStartMs = 0;
+
+function computeEstimatedProgress(elapsedMs) {
+  if (elapsedMs <= 0) return 4;
+  if (elapsedMs <= 20000) {
+    const ratio = elapsedMs / 20000;
+    return 4 + 86 * (1 - Math.pow(1 - ratio, 1.4));
+  }
+  const extraSec = (elapsedMs - 20000) / 1000;
+  return Math.min(95, 90 + extraSec * 0.25);
+}
+
+function getOrCreateLoadingProgressEl() {
+  let wrap = document.getElementById('billCheckProgressWrap');
+  if (wrap) return wrap;
+
+  const anchor = billForm || (btnSubmit ? btnSubmit.closest('form') || btnSubmit : null);
+  if (!anchor || !anchor.parentNode) return null;
+
+  wrap = document.createElement('div');
+  wrap.id = 'billCheckProgressWrap';
+  wrap.className = 'bill-loading-progress-wrap';
+  wrap.setAttribute('role', 'status');
+  wrap.setAttribute('aria-live', 'polite');
+  wrap.innerHTML = `
+    <div class="bill-loading-bar-row">
+      <div class="bill-loading-track" role="progressbar" aria-label="Estimated check progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4" id="billCheckProgressTrack">
+        <div class="bill-loading-fill" id="billCheckProgressFill" style="width: 4%;"></div>
+      </div>
+      <span class="bill-loading-timer" id="billCheckElapsedTimer" dir="ltr">0s</span>
+    </div>
+    <div class="bill-loading-hint">
+      <span>Estimated wait &mdash; usually takes 10-20 seconds</span>
+      <span class="bill-loading-hint-ur">عام طور پر 10 سے 20 سیکنڈ لگتے ہیں</span>
+    </div>
+  `;
+  anchor.insertAdjacentElement('afterend', wrap);
+  return wrap;
+}
+
 function setLoading(isLoading, customText = 'Verifying Bill & Payment Status...') {
   if (!btnSubmit) return;
+
+  if (billLoadingHideTimeout) {
+    clearTimeout(billLoadingHideTimeout);
+    billLoadingHideTimeout = null;
+  }
+  if (billLoadingInterval) {
+    clearInterval(billLoadingInterval);
+    billLoadingInterval = null;
+  }
+
   if (isLoading) {
     btnSubmit.disabled = true;
     btnSubmit.innerHTML = `
       <div style="width: 14px; height: 14px; border: 2px solid #ffffff; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block;"></div>
       <span>${customText}</span>
     `;
+
+    const wrap = getOrCreateLoadingProgressEl();
+    if (wrap) {
+      wrap.classList.remove('is-completing');
+      const fillEl = document.getElementById('billCheckProgressFill');
+      const trackEl = document.getElementById('billCheckProgressTrack');
+      const timerEl = document.getElementById('billCheckElapsedTimer');
+      if (fillEl) fillEl.style.width = '4%';
+      if (trackEl) trackEl.setAttribute('aria-valuenow', '4');
+      if (timerEl) timerEl.textContent = '0s';
+
+      billLoadingStartMs = Date.now();
+      billLoadingInterval = setInterval(() => {
+        const elapsedMs = Date.now() - billLoadingStartMs;
+        const pct = computeEstimatedProgress(elapsedMs);
+        const sec = Math.floor(elapsedMs / 1000);
+        if (fillEl) fillEl.style.width = `${pct.toFixed(1)}%`;
+        if (trackEl) trackEl.setAttribute('aria-valuenow', String(Math.round(pct)));
+        if (timerEl) timerEl.textContent = `${sec}s`;
+      }, 200);
+    }
   } else {
     btnSubmit.disabled = false;
     btnSubmit.innerHTML = `
@@ -743,6 +816,20 @@ function setLoading(isLoading, customText = 'Verifying Bill & Payment Status...'
       <span id="btnSubmitText">Check ${state.selectedCompany.toUpperCase()} Bill</span>
       <span class="btn-arrow">&rarr;</span>
     `;
+
+    const wrap = document.getElementById('billCheckProgressWrap');
+    if (wrap) {
+      wrap.classList.add('is-completing');
+      const fillEl = document.getElementById('billCheckProgressFill');
+      const trackEl = document.getElementById('billCheckProgressTrack');
+      if (fillEl) fillEl.style.width = '100%';
+      if (trackEl) trackEl.setAttribute('aria-valuenow', '100');
+      billLoadingHideTimeout = setTimeout(() => {
+        const currentWrap = document.getElementById('billCheckProgressWrap');
+        if (currentWrap) currentWrap.remove();
+        billLoadingHideTimeout = null;
+      }, 220);
+    }
   }
 }
 

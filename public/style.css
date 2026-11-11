@@ -3943,3 +3943,87 @@ html[dir="ltr"] .disco-article-lang-en {
   display: block;
 }
 
+/* ==========================================================================
+   14. Bill Check Loading Progress Bar & Elapsed Timer
+   ========================================================================== */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bill-loading-progress-wrap {
+  max-width: 580px;
+  width: 100%;
+  margin: -6px 0 14px 0;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 102, 255, 0.06);
+  transition: opacity 0.18s ease;
+}
+
+.bill-loading-progress-wrap.is-completing {
+  opacity: 0.92;
+}
+
+.bill-loading-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bill-loading-track {
+  flex: 1;
+  min-width: 0;
+  height: 6px;
+  background: var(--border-light);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.bill-loading-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--blue-gradient);
+  border-radius: 9999px;
+  transition: width 0.25s linear;
+}
+
+.bill-loading-progress-wrap.is-completing .bill-loading-fill {
+  transition: width 0.14s ease-out;
+}
+
+.bill-loading-timer {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue-primary);
+  min-width: 28px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+body[data-theme="dark"] .bill-loading-timer {
+  color: #60a5fa;
+}
+
+.bill-loading-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.bill-loading-hint-ur {
+  font-family: 'Noto Sans Arabic', 'Noto Nastaliq Urdu', sans-serif;
+  direction: rtl;
+}
+
