@@ -4027,3 +4027,35 @@ body[data-theme="dark"] .bill-loading-timer {
   direction: rtl;
 }
 
+/* ==========================================================================
+   15. PITC Direct Fallback Button
+   ========================================================================== */
+.pitc-fallback-wrap {
+  margin-top: -4px;
+  margin-bottom: 12px;
+}
+
+.pitc-fallback-btn {
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex: none;
+}
+
+.pitc-fallback-btn:hover {
+  background: var(--blue-light-bg);
+  border-color: var(--blue-border);
+  color: var(--blue-primary);
+  transform: translateY(-1px);
+}
+
+body[data-theme="dark"] .pitc-fallback-btn:hover {
+  background: rgba(59, 130, 246, 0.14);
+  border-color: #3b82f6;
+  color: #60a5fa;
+}
+

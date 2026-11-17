@@ -724,6 +724,32 @@ function retryWithCompany(discoCode, refNo) {
   if (billForm) billForm.dispatchEvent(new Event('submit'));
 }
 
+// Direct Fallback to PITC Portal Bill View
+function openPitcDirectBill() {
+  const input = document.getElementById('refNoInput');
+  const raw = (input ? input.value : '').trim();
+  const digits = raw.replace(/[^0-9]/g, '');
+
+  if (!digits || digits.length !== 14) {
+    const isUr = (typeof state !== 'undefined' && state.lang === 'ur') || (document.body && document.body.getAttribute('data-lang') === 'ur');
+    const msg = isUr
+      ? 'براہ کرم فارم میں 14 ہندسوں کا ریفرنس نمبر درج کریں۔'
+      : 'Please enter a 14-digit reference number in the form.';
+    if (typeof showAlert === 'function') {
+      showAlert(msg, 'warning');
+    }
+    if (input) {
+      input.focus();
+    }
+    return;
+  }
+
+  if (typeof clearAlert === 'function') {
+    clearAlert();
+  }
+  window.open(`https://bill.pitc.com.pk/gbill.aspx?refno=${digits}`, '_blank', 'noopener,noreferrer');
+}
+
 // Loading Spinner State, Estimated Progress Bar & Elapsed Timer
 let billLoadingInterval = null;
 let billLoadingHideTimeout = null;
@@ -1378,4 +1404,5 @@ if (typeof window !== 'undefined') {
   window.DISCO_CITY_MAP = DISCO_CITY_MAP;
   window.selectCompany = selectCompany;
   window.selectCity = selectCity;
+  window.openPitcDirectBill = openPitcDirectBill;
 }
