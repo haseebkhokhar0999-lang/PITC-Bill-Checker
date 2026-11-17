@@ -146,6 +146,72 @@
           Fast, secure and easy — all in one place.
         </p>
 
+        <!-- All DISCOs Direct PITC Search Form -->
+        <form class="search-bar-wrap" id="billSearchForm" method="POST" target="_blank" action="https://bill.pitc.com.pk/gbill.aspx">
+          <div class="search-input-inner">
+            
+            <!-- Company Selector Dropdown -->
+            <div class="search-company-badge" title="Select Electricity Company">
+              <span class="company-badge-icon">⚡</span>
+              <select id="companySelectDropdown" name="company" class="company-inline-select">
+                <option value="lesco">LESCO — Lahore</option>
+                <option value="mepco">MEPCO — Multan</option>
+                <option value="fesco">FESCO — Faisalabad</option>
+                <option value="iesco">IESCO — Islamabad</option>
+                <option value="gepco">GEPCO — Gujranwala</option>
+                <option value="pesco">PESCO — Peshawar</option>
+                <option value="hesco">HESCO — Hyderabad</option>
+                <option value="sepco">SEPCO — Sukkur</option>
+                <option value="qesco">QESCO — Quetta</option>
+                <option value="hazeco">HAZECO — Hazara</option>
+                <option value="tesco">TESCO — Tribal Areas</option>
+              </select>
+            </div>
+
+            <!-- Input Field -->
+            <input 
+              type="text" 
+              id="refNoInput" 
+              name="refno"
+              class="search-input-field" 
+              placeholder="14-digit reference no" 
+              data-en-placeholder="14-digit reference no"
+              data-ur-placeholder="14 ہندسوں کا ریفرنس نمبر"
+              maxlength="14"
+              inputmode="numeric"
+              value=""
+              autocomplete="off"
+            />
+
+            <!-- Urban / Rural Selector -->
+            <div class="search-ru-badge" title="Urban or Rural Consumer">
+              <select id="ruSelectDropdown" name="ru" class="ru-inline-select">
+                <option value="U">Urban (U)</option>
+                <option value="R">Rural (R)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-check-bill" id="btnSubmitBill">
+            <svg class="btn-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span id="btnSubmitText" data-en="Open Bill" data-ur="بل کھولیں">Open Bill</span>
+            <span class="btn-arrow">&rarr;</span>
+          </button>
+        </form>
+
+        <!-- Prefix Hint Box -->
+        <div class="prefix-hint-box" id="prefixHintBox">
+          <span class="prefix-hint-icon">💡</span>
+          <span id="prefixHintText">Reference numbers for this company start with: 01, 03, 11</span>
+        </div>
+
+        <!-- Alert Notification Container -->
+        <div id="alertContainer"></div>
+
         <!-- Popular Providers Pills Row (Direct Links to DISCO Bill Check Pages) -->
         <div class="popular-providers-row">
           <span class="popular-label" data-i18n="popularProviders">Popular Providers:</span>

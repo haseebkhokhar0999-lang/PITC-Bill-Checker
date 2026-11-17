@@ -113,33 +113,6 @@ app.get("/api/check-bill", async (req, res) => {
     // 1. Fetch bill from target company
     let result = await getPITCBill(validation.refNo, companyCode, effectiveRuCode);
 
-    // 2. If not found in target company, automatically search all other DISCOs in parallel
-    if (!result.success && result.error && (
-        result.error.toLowerCase().includes("not belong") || 
-        result.error.toLowerCase().includes("not found") ||
-        result.error.toLowerCase().includes("no bill record") ||
-        result.error.toLowerCase().includes("invalid reference")
-    )) {
-      const otherCompanies = Object.keys(COMPANIES)
-        .map((k) => k.toLowerCase())
-        .filter((c) => c !== companyCode);
-
-      const searchPromises = otherCompanies.map((c) =>
-        getPITCBill(validation.refNo, c, effectiveRuCode)
-          .then((r) => (r.success ? { company: c, result: r } : null))
-          .catch(() => null)
-      );
-
-      const searchResults = await Promise.all(searchPromises);
-      const foundMatch = searchResults.find((r) => r && r.result && r.result.success);
-
-      if (foundMatch) {
-        result = foundMatch.result;
-        result.autoDiscovered = true;
-        result.originalTarget = companyCode;
-      }
-    }
-
     if (result.success) {
       if (includeHtml !== "true" && result.data && result.data.rawHtml) {
         const { rawHtml, ...cleanData } = result.data;
@@ -237,31 +210,6 @@ app.get("/api/original-bill", async (req, res) => {
 
   try {
     let result = await getPITCBill(validation.refNo, companyCode, effectiveRuCode);
-
-    // If not found in target company, try auto-discovery
-    if (!result.success && result.error && (
-        result.error.toLowerCase().includes("not belong") || 
-        result.error.toLowerCase().includes("not found") ||
-        result.error.toLowerCase().includes("no bill record") ||
-        result.error.toLowerCase().includes("invalid reference")
-    )) {
-      const otherCompanies = Object.keys(COMPANIES)
-        .map((k) => k.toLowerCase())
-        .filter((c) => c !== companyCode);
-
-      const searchPromises = otherCompanies.map((c) =>
-        getPITCBill(validation.refNo, c, effectiveRuCode)
-          .then((r) => (r.success ? { company: c, result: r } : null))
-          .catch(() => null)
-      );
-
-      const searchResults = await Promise.all(searchPromises);
-      const foundMatch = searchResults.find((r) => r && r.result && r.result.success);
-
-      if (foundMatch) {
-        result = foundMatch.result;
-      }
-    }
 
     if (!result.success || !result.data || !result.data.rawHtml) {
       return res.status(404).send(`

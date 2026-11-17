@@ -101,7 +101,39 @@ const DISCO_NAMES_URDU = {
   pesco: { name: 'پیسکو', fullName: 'پشاور الیکٹرک سپلائی کمپنی', city: 'پشاور' },
   hesco: { name: 'حیسکو', fullName: 'حیدرآباد الیکٹرک سپلائی کمپنی', city: 'حیدرآباد' },
   qesco: { name: 'کیسکو', fullName: 'کوئٹہ الیکٹرک سپلائی کمپنی', city: 'کوئٹہ' },
-  sepco: { name: 'سیپکو', fullName: 'سکھر الیکٹرک پاور کمپنی', city: 'سکھر' }
+  sepco: { name: 'سیپکو', fullName: 'سکھر الیکٹرک پاور کمپنی', city: 'سکھر' },
+  hazeco: { name: 'ہیزیکو', fullName: 'ہزارہ الیکٹرک سپلائی کمپنی', city: 'ہزارہ' },
+  tesco: { name: 'ٹیسکو', fullName: 'قبائلی علاقہ جات الیکٹرک سپلائی کمپنی', city: 'قبائلی علاقہ جات' }
+};
+
+// Official PITC Reference Number Starting Digit Prefixes
+const DISCO_PREFIXES = {
+  lesco: ['01', '03', '11'],
+  mepco: ['13', '04', '31'],
+  fesco: ['06', '08'],
+  iesco: ['14', '16'],
+  gepco: ['12'],
+  pesco: ['17', '19'],
+  hesco: ['22', '24'],
+  sepco: ['26', '28'],
+  qesco: ['29'],
+  hazeco: [],
+  tesco: []
+};
+
+// Bilingual Display Names for All DISCOs
+const DISCO_FULL_NAMES = {
+  lesco: { en: 'LESCO — Lahore', ur: 'لیسکو — لاہور' },
+  mepco: { en: 'MEPCO — Multan', ur: 'میپکو — ملتان' },
+  fesco: { en: 'FESCO — Faisalabad', ur: 'فیسکو — فیصل آباد' },
+  iesco: { en: 'IESCO — Islamabad', ur: 'آئیسکو — اسلام آباد' },
+  gepco: { en: 'GEPCO — Gujranwala', ur: 'گیپکو — گوجرانوالہ' },
+  pesco: { en: 'PESCO — Peshawar', ur: 'پیسکو — پشاور' },
+  hesco: { en: 'HESCO — Hyderabad', ur: 'حیسکو — حیدرآباد' },
+  sepco: { en: 'SEPCO — Sukkur', ur: 'سیپکو — سکھر' },
+  qesco: { name: 'QESCO — Quetta', ur: 'کیسکو — کوئٹہ', en: 'QESCO — Quetta' },
+  hazeco: { en: 'HAZECO — Hazara', ur: 'ہیزیکو — ہزارہ' },
+  tesco: { en: 'TESCO — Tribal Areas', ur: 'ٹیسکو — قبائلی علاقہ جات' }
 };
 
 // UI Translations Dictionary (English & Urdu)
@@ -312,6 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     state.selectedCompany = null;
     document.querySelectorAll('.provider-pill').forEach(pill => pill.classList.remove('active'));
     document.querySelectorAll('.disco-card').forEach(card => card.classList.remove('active'));
+    updatePrefixHint(companySelectDropdown ? companySelectDropdown.value : 'lesco');
   }
 
   // 6. Synchronize company select dropdown in search bar & handle changes anywhere
@@ -485,6 +518,9 @@ function applyLanguage(lang) {
   document.querySelectorAll('.disco-article-lang-ur').forEach(el => {
     el.style.display = isUr ? 'block' : 'none';
   });
+
+  // 10. Update Dynamic Prefix Hint Language
+  updatePrefixHint(state.selectedCompany);
 }
 
 // Theme Management
@@ -644,7 +680,10 @@ function selectCompany(code, shouldScroll = false) {
     }
   }
 
-  // 6. Smooth scroll and focus if user clicked a card
+  // 6. Automatically update Dynamic Prefix Hint Box
+  updatePrefixHint(normalizedCode);
+
+  // 7. Smooth scroll and focus if user clicked a card
   if (shouldScroll) {
     const hero = document.getElementById('heroSection');
     if (hero) hero.scrollIntoView({ behavior: 'smooth' });
@@ -654,100 +693,97 @@ function selectCompany(code, shouldScroll = false) {
   }
 }
 
-// Handle Form Submission & Live PITC Query
-async function handleBillSubmit(e) {
-  e.preventDefault();
-  const rawInput = (refInput ? refInput.value : '').trim().toUpperCase();
-  const digits = rawInput.replace(/[^0-9]/g, '');
-  const isRural = /R$/.test(rawInput);
-  const ruParam = isRural ? '&ruCode=R' : '';
-  const company = state.selectedCompany || 'lesco';
+// Dynamic Prefix Hint Function
+function updatePrefixHint(company) {
+  const hintEl = document.getElementById('prefixHintText');
+  if (!hintEl) return;
+  const compSelect = document.getElementById('companySelectDropdown');
+  const comp = (company || (compSelect ? compSelect.value : '') || (state && state.selectedCompany) || 'lesco').toLowerCase();
+  const prefixes = DISCO_PREFIXES[comp] || [];
+  const isUr = (typeof state !== 'undefined' && state.lang === 'ur') || (document.body && document.body.getAttribute('data-lang') === 'ur');
 
-  if (!digits || digits.length < 10) {
-    showAlert('Please enter a valid 10-14 digit reference number from your electricity bill.', 'warning');
-    return;
+  if (prefixes.length > 0) {
+    hintEl.textContent = isUr
+      ? `اس کمپنی کے ریفرنس نمبر ان سے شروع ہوتے ہیں: ${prefixes.join('، ')}`
+      : `Reference numbers for this company start with: ${prefixes.join(', ')}`;
+  } else {
+    hintEl.textContent = isUr
+      ? 'اس کمپنی کے شروعاتی ہندسے تصدیق شدہ نہیں ہیں — کوئی بھی 14 ہندسوں کا نمبر درج کریں۔'
+      : 'Starting digits not confirmed for this company — enter any 14-digit number.';
+  }
+}
+
+// Handle Direct PITC Bill Submission (Client-Side, No Backend API Recall)
+function handleBillSubmit(e) {
+  const form = (e && e.target && e.target.tagName === 'FORM') ? e.target : document.getElementById('billSearchForm');
+  const refInputEl = document.getElementById('refNoInput');
+  const compSelectEl = document.getElementById('companySelectDropdown');
+
+  const raw = (refInputEl ? refInputEl.value : '').trim();
+  const digits = raw.replace(/[^0-9]/g, '');
+  const company = (compSelectEl ? compSelectEl.value : (state.selectedCompany || 'lesco')).toLowerCase();
+  const isUr = (typeof state !== 'undefined' && state.lang === 'ur') || (document.body && document.body.getAttribute('data-lang') === 'ur');
+
+  // Check 1: 10-14 digit number check
+  if (!digits || !/^\d{10,14}$/.test(digits)) {
+    if (e && e.preventDefault) e.preventDefault();
+    const msg = isUr ? '10 سے 14 ہندسوں کا درست نمبر درج کریں۔' : 'Please enter a 10-14 digit reference number.';
+    if (typeof showAlert === 'function') showAlert(msg, 'warning');
+    if (refInputEl) refInputEl.focus();
+    return false;
   }
 
-  clearAlert();
-  setLoading(true);
-
-  try {
-    const res = await fetch(`/api/check-bill?refNo=${encodeURIComponent(digits)}&company=${encodeURIComponent(company)}${ruParam}`);
-    const json = await res.json();
-
-    if (!res.ok || !json.success) {
-      const errorMsg = json.error || `The reference number <strong>${digits}</strong> was not found in <strong>${company.toUpperCase()}</strong>.`;
-      const otherCompanies = DISCOS.filter(d => d.code !== company).slice(0, 4);
-      showAlert(`
-        <div>${errorMsg}</div>
-        <div style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">
-          If your electricity connection belongs to another company, select below:
-        </div>
-        <div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
-          ${otherCompanies.map(d => `
-            <button type="button" class="provider-pill" onclick="retryWithCompany('${d.code}', '${digits}')">
-              Try with ${d.name}
-            </button>
-          `).join('')}
-        </div>
-      `, 'danger');
-
-      if (billResultSection) billResultSection.style.display = 'none';
-      return;
-    }
-
-    if (json.autoDiscovered && json.company) {
-      selectCompany(json.company, false);
-      showAlert(`
-        ⚡ Note: Reference number was automatically found in <strong>${(json.companyName || json.company).toUpperCase()}</strong>!
-      `, 'warning');
-    }
-
-    state.currentBill = json;
-    renderBillResult(json);
-
-    if (billResultSection) {
-      billResultSection.style.display = 'block';
-      billResultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  } catch (err) {
-    showAlert('Unable to reach the bill verification server. Please verify your connection or try again.', 'danger');
-  } finally {
-    setLoading(false);
+  // Check 2: Exactly 14 digits required
+  if (digits.length !== 14) {
+    if (e && e.preventDefault) e.preventDefault();
+    const msg = isUr 
+      ? `نمبر ${digits.length} ہندسوں کا ہے — پورا 14 ہندسوں کا نمبر درج کریں، ورنہ "Bill Not Found" آئے گا۔`
+      : `The reference number is ${digits.length} digits — please enter the full 14-digit number, otherwise "Bill Not Found" will appear.`;
+    if (typeof showAlert === 'function') showAlert(msg, 'warning');
+    if (refInputEl) refInputEl.focus();
+    return false;
   }
+
+  // Check 3: Starting Prefix Validation
+  const prefixes = DISCO_PREFIXES[company] || [];
+  const startTwo = digits.substring(0, 2);
+  if (prefixes.length > 0 && prefixes.indexOf(startTwo) === -1) {
+    const compInfo = DISCO_FULL_NAMES[company];
+    const compDisplayName = compInfo ? (isUr ? compInfo.ur : compInfo.en) : company.toUpperCase();
+    const confirmMsg = isUr
+      ? `نمبر ${startTwo} سے شروع ہوتا ہے، لیکن ${compDisplayName} کے نمبر عام طور پر ${prefixes.join('/')} سے شروع ہوتے ہیں۔ کیا پھر بھی کھولنا چاہتے ہیں؟`
+      : `Number starts with ${startTwo}, but ${compDisplayName} reference numbers usually start with ${prefixes.join('/')}. Open anyway?`;
+    if (!confirm(confirmMsg)) {
+      if (e && e.preventDefault) e.preventDefault();
+      return false;
+    }
+  }
+
+  if (typeof clearAlert === 'function') clearAlert();
+
+  const targetUrl = `https://bill.pitc.com.pk/gbill.aspx?refno=${digits}`;
+  if (form) {
+    form.action = targetUrl;
+    form.method = 'POST';
+    form.target = '_blank';
+  } else {
+    window.open(targetUrl, '_blank', 'noopener,noreferrer');
+  }
+  return true;
 }
 
 // 1-Click Retry with Another Company
 function retryWithCompany(discoCode, refNo) {
   selectCompany(discoCode, false);
-  if (refInput) refInput.value = refNo;
-  if (billForm) billForm.dispatchEvent(new Event('submit'));
+  const refInputEl = document.getElementById('refNoInput');
+  if (refInputEl) refInputEl.value = refNo;
+  const form = document.getElementById('billSearchForm');
+  if (form) form.dispatchEvent(new Event('submit'));
 }
 
-// Direct Fallback to PITC Portal Bill View
+// Direct Fallback / Action Helper
 function openPitcDirectBill() {
-  const input = document.getElementById('refNoInput');
-  const raw = (input ? input.value : '').trim();
-  const digits = raw.replace(/[^0-9]/g, '');
-
-  if (!digits || digits.length !== 14) {
-    const isUr = (typeof state !== 'undefined' && state.lang === 'ur') || (document.body && document.body.getAttribute('data-lang') === 'ur');
-    const msg = isUr
-      ? 'براہ کرم فارم میں 14 ہندسوں کا ریفرنس نمبر درج کریں۔'
-      : 'Please enter a 14-digit reference number in the form.';
-    if (typeof showAlert === 'function') {
-      showAlert(msg, 'warning');
-    }
-    if (input) {
-      input.focus();
-    }
-    return;
-  }
-
-  if (typeof clearAlert === 'function') {
-    clearAlert();
-  }
-  window.open(`https://bill.pitc.com.pk/gbill.aspx?refno=${digits}`, '_blank', 'noopener,noreferrer');
+  handleBillSubmit({ preventDefault: () => {}, target: document.getElementById('billSearchForm') });
 }
 
 // Loading Spinner State, Estimated Progress Bar & Elapsed Timer

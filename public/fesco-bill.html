@@ -141,27 +141,50 @@
           Fast, secure and easy — view payment status, payable amount &amp; due date.
         </p>
 
-        <!-- Search Input Bar with Only FESCO pre-selected -->
-        <form class="search-bar-wrap" id="billSearchForm">
+        <!-- All DISCOs Direct PITC Search Form -->
+        <form class="search-bar-wrap" id="billSearchForm" method="POST" target="_blank" action="https://bill.pitc.com.pk/gbill.aspx">
           <div class="search-input-inner">
             
-            <!-- Company Pre-Selected Badge -->
-            <div class="search-company-badge" style="cursor: default;" title="Faisalabad Electric Supply Company">
+            <!-- Company Selector Dropdown -->
+            <div class="search-company-badge" title="Select Electricity Company">
               <span class="company-badge-icon">⚡</span>
-              <span style="font-weight: 700; font-size: 13.5px; color: var(--text-main); margin-right: 4px;">FESCO</span>
-              <input type="hidden" id="companySelectDropdown" value="fesco">
+              <select id="companySelectDropdown" name="company" class="company-inline-select">
+                <option value="lesco">LESCO — Lahore</option>
+                <option value="mepco">MEPCO — Multan</option>
+                <option value="fesco" selected>FESCO — Faisalabad</option>
+                <option value="iesco">IESCO — Islamabad</option>
+                <option value="gepco">GEPCO — Gujranwala</option>
+                <option value="pesco">PESCO — Peshawar</option>
+                <option value="hesco">HESCO — Hyderabad</option>
+                <option value="sepco">SEPCO — Sukkur</option>
+                <option value="qesco">QESCO — Quetta</option>
+                <option value="hazeco">HAZECO — Hazara</option>
+                <option value="tesco">TESCO — Tribal Areas</option>
+              </select>
             </div>
 
             <!-- Input Field -->
             <input 
               type="text" 
               id="refNoInput" 
+              name="refno"
               class="search-input-field" 
-              placeholder="Enter 14-digit Reference Number (e.g. 13112340123401)" 
+              placeholder="14-digit reference no" 
+              data-en-placeholder="14-digit reference no"
+              data-ur-placeholder="14 ہندسوں کا ریفرنس نمبر"
               maxlength="14"
+              inputmode="numeric"
               value=""
               autocomplete="off"
             />
+
+            <!-- Urban / Rural Selector -->
+            <div class="search-ru-badge" title="Urban or Rural Consumer">
+              <select id="ruSelectDropdown" name="ru" class="ru-inline-select">
+                <option value="U">Urban (U)</option>
+                <option value="R">Rural (R)</option>
+              </select>
+            </div>
           </div>
 
           <!-- Submit Button -->
@@ -170,13 +193,15 @@
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <span id="btnSubmitText">Check FESCO Bill</span>
+            <span id="btnSubmitText" data-en="Check FESCO Bill" data-ur="فیسکو کا بل چیک کریں">Check FESCO Bill</span>
             <span class="btn-arrow">&rarr;</span>
           </button>
         </form>
 
-        <div class="pitc-fallback-wrap">
-          <button type="button" class="btn-bill-action pitc-fallback-btn" id="btnPitcFallback" onclick="openPitcDirectBill()" data-en="View bill directly on PITC portal" data-ur="PITC portal par seedha bill dekho">View bill directly on PITC portal</button>
+        <!-- Prefix Hint Box -->
+        <div class="prefix-hint-box" id="prefixHintBox">
+          <span class="prefix-hint-icon">💡</span>
+          <span id="prefixHintText">Reference numbers for this company start with: 06, 08</span>
         </div>
 
         <p style="margin-top: 10px; font-size: 12px; color: var(--text-muted);">
