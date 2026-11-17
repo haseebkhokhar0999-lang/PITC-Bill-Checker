@@ -141,37 +141,19 @@
           Fast, secure and easy — view payment status, payable amount &amp; due date.
         </p>
 
-        <!-- All DISCOs Direct PITC Search Form -->
+        <!-- LESCO Bill Check Form -->
         <form class="search-bar-wrap" id="billSearchForm" method="POST" target="_blank" action="https://bill.pitc.com.pk/gbill.aspx">
+          <input type="hidden" id="companySelectDropdown" name="company" value="lesco">
           <div class="search-input-inner">
-            
-            <!-- Company Selector Dropdown -->
-            <div class="search-company-badge" title="Select Electricity Company">
-              <span class="company-badge-icon">⚡</span>
-              <select id="companySelectDropdown" name="company" class="company-inline-select">
-                <option value="lesco" selected>LESCO — Lahore</option>
-                <option value="mepco">MEPCO — Multan</option>
-                <option value="fesco">FESCO — Faisalabad</option>
-                <option value="iesco">IESCO — Islamabad</option>
-                <option value="gepco">GEPCO — Gujranwala</option>
-                <option value="pesco">PESCO — Peshawar</option>
-                <option value="hesco">HESCO — Hyderabad</option>
-                <option value="sepco">SEPCO — Sukkur</option>
-                <option value="qesco">QESCO — Quetta</option>
-                <option value="hazeco">HAZECO — Hazara</option>
-                <option value="tesco">TESCO — Tribal Areas</option>
-              </select>
-            </div>
-
             <!-- Input Field -->
             <input 
               type="text" 
               id="refNoInput" 
               name="refno"
               class="search-input-field" 
-              placeholder="14-digit reference no" 
-              data-en-placeholder="14-digit reference no"
-              data-ur-placeholder="14 ہندسوں کا ریفرنس نمبر"
+              placeholder="Enter 14-digit reference number" 
+              data-en-placeholder="Enter 14-digit reference number"
+              data-ur-placeholder="14 ہندسوں کا ریفرنس نمبر درج کریں"
               maxlength="14"
               inputmode="numeric"
               value=""
@@ -197,6 +179,10 @@
             <span class="btn-arrow">&rarr;</span>
           </button>
         </form>
+
+        <div class="pitc-fallback-wrap">
+          <button type="button" class="btn-bill-action pitc-fallback-btn" id="btnPitcFallback" onclick="openPitcDirectBill()" data-en="View bill directly on PITC portal" data-ur="PITC portal par seedha bill dekho">View bill directly on PITC portal</button>
+        </div>
 
         <!-- Prefix Hint Box -->
         <div class="prefix-hint-box" id="prefixHintBox">

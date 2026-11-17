@@ -204,7 +204,7 @@ const TRANSLATIONS = {
     footerContact: "Contact",
 
     // DISCO Dedicated Pages
-    refInputPlaceholder: "Enter Reference Number (e.g. 14-digit)",
+    refInputPlaceholder: "Enter 14-digit reference number",
     btnCheckBill: "Check Bill",
     otherDiscosTitle: "Check Other Electricity Distribution Companies",
     otherDiscosDesc: "Quickly access bill checking for any other Pakistani electric supply company:"
@@ -496,7 +496,7 @@ function applyLanguage(lang) {
 
   // 8. Update Input Placeholders and Submit Button on DISCO Form Pages
   if (refInput) {
-    refInput.placeholder = isUr ? '14 ہندسوں کا ریفرنس نمبر درج کریں' : 'Enter Reference Number (e.g. 14-digit)';
+    refInput.placeholder = isUr ? '14 ہندسوں کا ریفرنس نمبر درج کریں' : 'Enter 14-digit reference number';
   }
   if (citySearchInput) {
     citySearchInput.placeholder = isUr ? 'اپنا شہر تلاش کریں...' : 'Search your city...';
