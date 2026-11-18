@@ -303,6 +303,28 @@ app.get("/new-connection", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "new-connection.html"));
 });
 
+// Dedicated Monthly Bill Check Pages
+const monthlyPages = [
+  "january-bill-check",
+  "february-bill-check",
+  "march-bill-check",
+  "april-bill-check",
+  "may-bill-check",
+  "june-bill-check",
+  "july-bill-check",
+  "august-bill-check",
+  "september-bill-check",
+  "october-bill-check",
+  "november-bill-check",
+  "december-bill-check",
+];
+
+monthlyPages.forEach((page) => {
+  app.get(`/${page}`, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", `${page}.html`));
+  });
+});
+
 // Dedicated DISCO Pages
 const discoPages = [
   "mepco-bill",
