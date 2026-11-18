@@ -345,6 +345,17 @@ discoPages.forEach((page) => {
   });
 });
 
+// Urdu DISCO Pages
+app.get("/ur", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "ur", "index.html"));
+});
+
+discoPages.forEach((page) => {
+  app.get(`/ur/${page}`, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "ur", `${page}.html`));
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
