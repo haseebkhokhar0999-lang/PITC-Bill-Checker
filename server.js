@@ -356,6 +356,23 @@ discoPages.forEach((page) => {
   });
 });
 
+// Blog Section Pages
+const blogPosts = [
+  "november-2026-fca-rs-2-37",
+  "qesco-new-connection",
+  "fesco-helpline-complaints",
+];
+
+app.get("/blog", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "blog", "index.html"));
+});
+
+blogPosts.forEach((post) => {
+  app.get(`/blog/${post}`, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "blog", `${post}.html`));
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
