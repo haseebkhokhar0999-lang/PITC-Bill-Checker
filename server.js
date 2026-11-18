@@ -283,6 +283,10 @@ app.get("/duplicate-bill", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "duplicate-bill.html"));
 });
 
+app.get("/bill-glossary", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "bill-glossary.html"));
+});
+
 // Dedicated DISCO Pages
 const discoPages = [
   "mepco-bill",
