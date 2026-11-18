@@ -361,6 +361,10 @@ const blogPosts = [
   "november-2026-fca-rs-2-37",
   "qesco-new-connection",
   "fesco-helpline-complaints",
+  "sngpl-bill-payment-methods",
+  "sngpl-helpline-complaints",
+  "sngpl-new-connection",
+  "suthra-punjab-duplicate-bill",
 ];
 
 app.get("/blog", (req, res) => {
