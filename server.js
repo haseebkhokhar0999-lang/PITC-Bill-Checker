@@ -299,6 +299,10 @@ app.get("/wasa-bill", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "wasa-bill.html"));
 });
 
+app.get("/new-connection", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "new-connection.html"));
+});
+
 // Dedicated DISCO Pages
 const discoPages = [
   "mepco-bill",
