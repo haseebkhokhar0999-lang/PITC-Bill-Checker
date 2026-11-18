@@ -290,6 +290,7 @@ const discoPages = [
   "hesco-bill",
   "sepco-bill",
   "qesco-bill",
+  "hazeco-bill",
 ];
 
 discoPages.forEach((page) => {
