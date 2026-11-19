@@ -3019,742 +3019,861 @@ body[data-theme="dark"] .bill-history-dual-table td {
   }
 }
 
-/* Medium Tablets & Large Phones (<= 768px) */
+/* Medium Tablets & Mobile Devices (<= 768px) */
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
-  }
-  .nav-container {
-    padding: 0 16px;
-  }
-  .brand-title {
-    font-size: 16px;
-  }
-  .brand-subtitle {
-    font-size: 10.5px;
-  }
-  .hero-title {
-    font-size: 30px;
-  }
-  .disco-cards-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  .how-steps-row {
-    flex-direction: column;
-    gap: 16px;
-  }
-  .step-arrow {
-    display: none;
-  }
-  .bill-kpi-grid,
-  .bill-details-grid {
-    grid-template-columns: 1fr;
-  }
-  .bill-card-wrapper {
-    padding: 18px 14px;
-  }
-  .bill-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-  }
-  .bill-header-right {
-    align-items: flex-start;
-    text-align: left;
-  }
-  .chart-bars-row {
-    overflow-x: auto;
-    padding-bottom: 12px;
-  }
-  .bill-actions-bar {
-    justify-content: stretch;
-  }
-  .btn-bill-action {
-    flex: 1 1 45%;
-    justify-content: center;
-  }
-  
-  /* Legal Pages on Tablet */
-  .legal-page-hero {
-    padding: 30px 0 20px;
-  }
-  .legal-hero-title {
-    font-size: 27px;
-  }
-  .legal-hero-subtitle {
-    font-size: 13.5px;
-  }
-  .legal-content-container {
-    margin: 24px auto 44px;
-    padding: 0 16px;
-  }
-  .legal-card {
-    padding: 26px 24px;
-    border-radius: 14px;
-  }
-  .legal-section-title {
-    font-size: 17px;
-    margin: 22px 0 10px;
+  /* 1. Global Zero-Overflow Foundation */
+  html, body {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    position: relative;
+    width: 100% !important;
   }
 
-  /* Footer on Tablet */
-  .footer-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 18px;
-    align-items: center;
+  *, *::before, *::after {
+    box-sizing: border-box !important;
   }
-  .footer-left {
-    justify-content: center;
-  }
-  .footer-center {
-    justify-content: center;
-    gap: 8px 14px;
-  }
-  .footer-divider {
-    display: none;
-  }
-  .footer-right {
-    align-items: center;
-  }
-}
 
-/* Mobile Devices (<= 640px) */
-@media (max-width: 640px) {
+  img, svg, iframe, video {
+    max-width: 100% !important;
+    height: auto;
+  }
+
+  p, h1, h2, h3, h4, h5, h6, a, span, code, pre, div {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+  }
+
+  /* 2. Header & Navigation - Stack Cleanly Without Overlapping or Overflow */
   .navbar {
-    height: 60px;
+    height: auto !important;
+    min-height: 56px !important;
+    padding: 8px 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
   }
 
   .nav-container {
-    padding: 0 14px;
-    gap: 8px;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 0 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* No hamburger menu */
+  .nav-links {
+    display: none !important;
   }
 
   .brand-link {
-    gap: 8px;
-    flex-shrink: 1;
-    min-width: 0;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
   }
 
   .brand-icon-box {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    flex-shrink: 0;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
   }
 
   .brand-bolt-svg {
-    width: 20px;
-    height: 20px;
+    width: 18px !important;
+    height: 18px !important;
   }
 
   .brand-text {
-    min-width: 0;
+    min-width: 0 !important;
   }
 
   .brand-title {
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: -0.2px;
-    white-space: nowrap;
-    line-height: 1.2;
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .brand-subtitle {
-    display: none;
+    display: none !important;
   }
 
   .nav-right {
-    gap: 6px;
-    flex-shrink: 0;
-  }
-
-  .lang-toggle-btn {
-    padding: 5px 8px;
-    font-size: 11.5px;
-    min-height: 34px;
-    flex-shrink: 0;
-    box-sizing: border-box;
-  }
-
-  .theme-icon-btn {
-    width: 32px;
-    height: 32px;
-    min-height: 32px;
-    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
   }
 
   .city-selector-btn {
-    padding: 5px 8px;
-    font-size: 11.5px;
-    min-height: 34px;
-    gap: 4px;
-    flex-shrink: 0;
-    box-sizing: border-box;
+    padding: 5px 8px !important;
+    font-size: 11.5px !important;
+    min-height: 32px !important;
+    gap: 4px !important;
+    flex-shrink: 0 !important;
   }
 
   .selected-city-text {
-    max-width: 58px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 55px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
   }
 
   .city-menu-popover {
-    width: min(290px, calc(100vw - 24px));
-    right: 0;
-  }
-
-  /* Hero Section on Mobile */
-  .hero-section {
-    padding: 24px 0 20px;
-  }
-
-  .hero-container {
-    padding: 0 16px;
-    flex-direction: column;
-    gap: 20px;
-    text-align: left;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .hero-left {
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .hero-title {
-    font-size: 26px;
-    line-height: 1.25;
-    letter-spacing: -0.3px;
-    margin-bottom: 10px;
-  }
-
-  .hero-subtitle {
-    font-size: 13.5px;
-    line-height: 1.55;
-    margin-bottom: 16px;
-    max-width: 100%;
-  }
-
-  /* Search Bar Wrapper on Mobile */
-  .search-bar-wrap {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 8px;
-    gap: 8px;
-    border-radius: 14px;
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 16px;
-    box-sizing: border-box;
-  }
-
-  .search-input-inner {
-    width: 100%;
-    background: var(--bg-subtle);
-    border: 1px solid var(--border-light);
-    border-radius: 10px;
-    padding: 8px 10px;
-    gap: 8px;
-    box-sizing: border-box;
-  }
-
-  .search-company-badge {
-    padding: 4px 7px;
-    font-size: 11.5px;
-    flex-shrink: 0;
-  }
-
-  .search-ru-badge {
-    padding: 4px 6px;
-    font-size: 11.5px;
-    flex-shrink: 0;
-  }
-
-  .ru-inline-select {
-    font-size: 12.5px;
-  }
-
-  .prefix-hint-box {
-    font-size: 11.5px;
-    padding: 6px 10px;
-  }
-
-  .company-inline-select {
-    font-size: 14px;
-    max-width: 120px;
-  }
-
-  .search-input-field {
-    font-size: 16px;
-    padding: 3px 0;
-    width: 100%;
-  }
-
-  #billSearchForm .btn-check-bill {
-    width: 100%;
-    min-height: 44px;
-    justify-content: center;
-    padding: 12px 18px;
-    font-size: 14px;
-    border-radius: 10px;
-  }
-
-  /* Popular Providers Row - Wrap cleanly */
-  .popular-providers-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    width: 100%;
-    margin-top: 4px;
-  }
-
-  .popular-label {
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 0.2px;
-  }
-
-  .provider-pills-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    width: 100%;
-  }
-
-  .provider-pill {
-    padding: 6px 14px;
-    font-size: 12.5px;
-    font-weight: 700;
-    min-height: 38px;
-    border-radius: var(--radius-pill);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-  }
-
-  .hero-right {
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto;
-    justify-content: center;
-  }
-
-  .hero-img-stage {
-    width: 100%;
-    max-width: 260px;
-  }
-
-  .hero-illustration-img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* DISCO Cards Section - Single Column Stack on Mobile */
-  .disco-cards-section {
-    padding: 14px 0 28px;
-  }
-
-  .disco-cards-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    width: 100%;
-  }
-
-  .disco-card {
-    width: 100%;
-    padding: 18px 16px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    border-radius: 14px;
-    box-sizing: border-box;
-    box-shadow: var(--shadow-card);
-    height: auto;
-    min-height: 195px;
-  }
-
-  .disco-logo-wrap {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    flex-shrink: 0;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    box-sizing: border-box;
-  }
-
-  .hero-left .disco-logo-wrap {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 14px;
-  }
-
-  .disco-title {
-    font-size: 17px;
-    font-weight: 800;
-    color: var(--text-main);
-    margin: 0 0 4px 0;
-    line-height: 1.25;
-    letter-spacing: -0.2px;
-    text-align: center;
-  }
-
-  .disco-fullname {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    line-height: 1.4;
-    min-height: 24px;
-    margin: 0 0 14px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    flex-grow: 1;
-    word-break: normal;
-    padding: 0 2px;
-  }
-
-  .btn-disco-action {
-    width: 100%;
-    max-width: 280px;
-    min-height: 44px;
-    border-radius: var(--radius-pill);
-    padding: 11px 20px;
-    font-size: 13.5px;
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    cursor: pointer;
-    text-align: center;
-    margin-top: auto;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    line-height: 1.3;
-  }
-
-  /* Why Section on Mobile */
-  .why-section {
-    padding: 10px 0 20px;
-  }
-
-  .why-card-bar {
-    flex-direction: column;
-    padding: 18px 16px;
-    gap: 16px;
-    border-radius: 14px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .why-left {
-    width: 100%;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .why-title {
-    font-size: 15px;
-    font-weight: 800;
-  }
-
-  .why-desc {
-    font-size: 12.5px;
-    line-height: 1.45;
-  }
-
-  .why-right {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .feature-item {
-    width: 100%;
-    gap: 10px;
-  }
-
-  .feat-title {
-    font-size: 13.5px;
-    font-weight: 700;
-  }
-
-  .feat-desc {
-    font-size: 12px;
-  }
-
-  /* How It Works on Mobile */
-  .how-it-works-section {
-    padding: 10px 0 24px;
-  }
-
-  .how-it-works-container {
-    flex-direction: column;
-    padding: 18px 16px;
-    gap: 18px;
-    border-radius: 14px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .how-left {
-    border-right: none;
-    border-bottom: 1px solid var(--border-light);
-    padding-right: 0;
-    padding-bottom: 14px;
-    width: 100%;
-    gap: 12px;
-  }
-
-  .how-main-title {
-    font-size: 16px;
-    font-weight: 800;
-  }
-
-  .how-sub-title {
-    font-size: 12px;
-  }
-
-  .how-steps-row {
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-  }
-
-  .step-col {
-    width: 100%;
-  }
-
-  .step-title {
-    font-size: 13.5px;
-    font-weight: 700;
-  }
-
-  .step-desc {
-    font-size: 12px;
-    line-height: 1.4;
-  }
-
-  .step-arrow {
-    display: none;
-  }
-
-  /* FAQ Accordion on Mobile */
-  .faq-section-home {
-    padding: 28px 0 36px;
-  }
-
-  .faq-header-center {
-    margin-bottom: 20px;
-    padding: 0 10px;
-  }
-
-  .faq-question-btn {
-    padding: 14px 16px;
-    font-size: 14px;
-    gap: 12px;
-  }
-
-  .faq-answer-panel {
-    padding: 0 16px 14px;
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  /* Footer on Mobile */
-  .site-footer {
-    padding: 22px 0 18px;
-  }
-
-  .footer-container {
-    padding: 0 16px;
-    flex-direction: column;
-    text-align: center;
-    gap: 14px;
-    align-items: center;
-  }
-
-  .footer-left {
-    justify-content: center;
-  }
-
-  .footer-center {
-    justify-content: center;
-    gap: 6px 12px;
-    flex-wrap: wrap;
-  }
-
-  .footer-right {
-    align-items: center;
-  }
-}
-
-/* Small SmartPhones (<= 480px, including 390px iPhone & Android screens) */
-@media (max-width: 480px) {
-  .navbar {
-    height: 58px;
-  }
-
-  .nav-container {
-    padding: 0 12px;
-    gap: 6px;
-  }
-
-  .brand-icon-box {
-    width: 32px;
-    height: 32px;
-    border-radius: 7px;
-  }
-
-  .brand-bolt-svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .brand-title {
-    font-size: 14px;
-    letter-spacing: -0.2px;
-  }
-
-  .brand-subtitle {
-    display: none;
-  }
-
-  .nav-right {
-    gap: 5px;
+    width: min(290px, calc(100vw - 24px)) !important;
+    right: 0 !important;
   }
 
   .lang-toggle-btn {
-    padding: 4px 7px;
-    font-size: 11px;
-    min-height: 32px;
+    padding: 5px 8px !important;
+    font-size: 11.5px !important;
+    min-height: 32px !important;
+    flex-shrink: 0 !important;
   }
 
   .theme-icon-btn {
-    width: 30px;
-    height: 30px;
-    min-height: 30px;
+    width: 32px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    flex-shrink: 0 !important;
   }
 
-  .city-selector-btn {
-    padding: 4px 7px;
-    font-size: 11px;
-    min-height: 32px;
-    gap: 3px;
+  /* 3. Containers & Layout */
+  .container,
+  .hero-container,
+  .disco-articles-container,
+  .footer-container,
+  .legal-content-container,
+  .wapda-main {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  .selected-city-text {
-    max-width: 52px;
+  /* 4. Hero Section */
+  .hero-section {
+    padding: 20px 0 16px !important;
   }
 
-  /* Legal Pages on Mobile */
-  .legal-page-hero {
-    padding: 22px 0 16px;
+  .hero-container {
+    flex-direction: column !important;
+    text-align: left !important;
+    gap: 16px !important;
   }
-  .legal-hero-title {
-    font-size: 23px;
-    line-height: 1.25;
+
+  .hero-left {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
   }
-  .legal-hero-subtitle {
-    font-size: 12.5px;
-    line-height: 1.5;
+
+  .hero-title {
+    font-size: 26px !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.3px !important;
+    margin-bottom: 8px !important;
   }
-  .legal-content-container {
-    margin: 16px auto 32px;
-    padding: 0 10px;
+
+  .hero-subtitle {
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 14px !important;
+    max-width: 100% !important;
   }
-  .legal-card {
-    padding: 18px 14px;
-    border-radius: 12px;
+
+  .hero-right {
+    width: 100% !important;
+    max-width: 260px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
   }
-  .legal-section-title {
-    font-size: 15.5px;
-    margin: 18px 0 8px;
-    flex-wrap: wrap;
+
+  .hero-img-stage {
+    width: 100% !important;
+    max-width: 240px !important;
   }
-  .legal-p {
-    font-size: 13.5px;
-    line-height: 1.6;
-    margin-bottom: 12px;
+
+  .hero-illustration-img {
+    width: 100% !important;
+    height: auto !important;
   }
-  .legal-list {
-    padding-left: 18px;
-    margin-bottom: 14px;
+
+  /* 5. Form inputs and the Check button Full-Width */
+  .search-bar-wrap {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 8px !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 14px !important;
+    box-sizing: border-box !important;
   }
-  .legal-list li {
-    font-size: 13px;
-    margin-bottom: 6px;
-    line-height: 1.55;
+
+  .search-input-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+    background: var(--bg-subtle) !important;
+    border: 1px solid var(--border-light) !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
   }
-  .legal-callout {
-    padding: 10px 12px;
-    font-size: 12.5px;
-    margin: 14px 0;
-    border-radius: 0 8px 8px 0;
+
+  .search-input-field {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    font-size: 16px !important;
+    padding: 2px 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .search-company-badge,
+  .search-ru-badge {
+    padding: 4px 6px !important;
+    font-size: 11.5px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .ru-inline-select {
+    font-size: 12.5px !important;
+  }
+
+  .btn-check-bill,
+  #btnSubmitBill,
+  #billSearchForm .btn-check-bill {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 44px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: normal !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    box-sizing: border-box !important;
+  }
+
+  .pitc-fallback-wrap,
+  .pitc-fallback-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+
+  .popular-providers-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+  }
+
+  .provider-pills-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .provider-pill {
+    padding: 5px 12px !important;
+    font-size: 12px !important;
+    min-height: 34px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 6. DISCO Cards 1 Column */
+  .disco-cards-section {
+    padding: 14px 0 24px !important;
+  }
+
+  .disco-cards-grid,
+  .disco-other-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .disco-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 16px 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .disco-logo-wrap {
+    width: 48px !important;
+    height: 48px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .disco-title {
+    font-size: 17px !important;
+    margin: 0 0 4px 0 !important;
+  }
+
+  .disco-fullname {
+    font-size: 12.5px !important;
+    margin: 0 0 12px 0 !important;
+    min-height: auto !important;
+  }
+
+  .btn-disco-action {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 42px !important;
+    padding: 10px 16px !important;
+    font-size: 13.5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-top: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 7. Why & How It Works Sections */
+  .why-section,
+  .how-it-works-section {
+    padding: 10px 0 20px !important;
+  }
+
+  .why-card-bar,
+  .how-it-works-container {
+    flex-direction: column !important;
+    padding: 16px 14px !important;
+    gap: 14px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .why-left,
+  .why-right,
+  .how-left,
+  .how-steps-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    box-sizing: border-box !important;
+  }
+
+  .how-left {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    padding-right: 0 !important;
+    padding-bottom: 12px !important;
+  }
+
+  .step-arrow {
+    display: none !important;
+  }
+
+  .step-col {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 8. Tables Scroll Sideways Inside Their Own Box */
+  table {
+    max-width: 100%;
+  }
+
+  .disco-table-wrap,
+  .table-wrapper,
+  .table-container,
+  .bill-history-table-container,
+  .chart-bars-row,
+  .original-bill-frame-wrapper,
+  div[style*="overflow-x: auto"],
+  div:has(> table) {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .disco-table,
+  div[style*="overflow-x: auto"] table {
+    min-width: 480px;
+    width: 100%;
+  }
+
+  /* 9. Article Cards & Guides */
+  .disco-articles-section {
+    padding: 20px 0 30px !important;
+  }
+
+  .disco-section-header {
+    margin-bottom: 20px !important;
+  }
+
+  .disco-article-card {
+    padding: 18px 14px !important;
+    border-radius: 12px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .disco-article-header {
+    gap: 12px !important;
+  }
+
+  .disco-article-title {
+    font-size: 18px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .disco-article-p {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .disco-callout-box {
+    padding: 12px 14px !important;
+    font-size: 13px !important;
+    margin: 12px 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 10. Calculator Page (/wapda-bill) */
+  .wapda-main {
+    margin: -16px auto 36px auto !important;
+    padding: 0 14px !important;
+  }
+
+  .wapda-card {
+    padding: 20px 14px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .wapda-section-title {
+    font-size: 18px !important;
+  }
+
+  .wapda-lead {
+    font-size: 13.5px !important;
+  }
+
+  .calc-grid,
+  .rates-grid-3,
+  .steps-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .calc-form-box,
+  .calc-result-box {
+    padding: 16px 14px !important;
+    border-radius: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .calc-units-input {
+    font-size: 16px !important;
+    padding: 10px 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .calc-total-amount {
+    font-size: 24px !important;
+  }
+
+  .wapda-cta-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .wapda-btn-primary,
+  .wapda-btn-secondary {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 11. FAQ Accordion */
+  .faq-section-home {
+    padding: 20px 0 28px !important;
+  }
+
+  .faq-header-center {
+    margin-bottom: 16px !important;
+  }
+
+  .faq-question-btn {
+    padding: 12px 14px !important;
+    font-size: 13.5px !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .faq-answer-panel {
+    padding: 0 14px 12px !important;
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* 12. Footer Clean Stacking & Wrapping */
+  .site-footer {
+    padding: 20px 0 16px !important;
+  }
+
+  .footer-container {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 12px !important;
+    align-items: center !important;
+    padding: 0 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .footer-left {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .footer-center {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px 12px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .footer-divider {
+    display: none !important;
+  }
+
+  .footer-link {
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+    display: inline-block !important;
+    padding: 2px 4px !important;
+  }
+
+  .footer-right {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .footer-disclaimer {
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+    padding: 10px 8px 0 !important;
+    width: 100% !important;
+    word-break: break-word !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 13. Bill Document Result Section (when rendered) */
+  .bill-card-wrapper {
+    padding: 16px 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .bill-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .bill-header-right {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  .bill-kpi-grid,
+  .bill-details-grid {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+  }
+
+  .btn-bill-action {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Convert any inline grid to single column */
+  [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Inline max-widths made fully fluid */
+  [style*="max-width: 580px"],
+  [style*="max-width: 650px"],
+  [style*="max-width: 680px"],
+  [style*="max-width: 780px"] {
+    max-width: 100% !important;
+    width: 100% !important;
   }
 }
 
-/* Extra Small Mobile (<= 360px - iPhone SE, Galaxy Fold, etc.) */
-@media (max-width: 360px) {
+/* Small SmartPhones (<= 480px, including 360px iPhone & Android screens) */
+@media (max-width: 480px) {
+  /* Navbar */
+  .navbar {
+    height: auto !important;
+    min-height: 52px !important;
+    padding: 6px 0 !important;
+  }
+
   .nav-container {
-    padding: 0 8px;
-    gap: 4px;
+    padding: 0 10px !important;
+    gap: 6px 8px !important;
   }
+
+  .brand-icon-box {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 6px !important;
+  }
+
+  .brand-bolt-svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
   .brand-title {
-    font-size: 13px;
+    font-size: 13.5px !important;
+    max-width: 110px !important;
   }
-  .selected-city-text {
-    max-width: 42px;
+
+  .nav-right {
+    gap: 4px !important;
   }
+
+  .city-selector-btn,
   .lang-toggle-btn {
-    padding: 4px 5px;
-    font-size: 10.5px;
+    padding: 4px 6px !important;
+    font-size: 10.5px !important;
+    min-height: 30px !important;
   }
-  .city-selector-btn {
-    padding: 4px 5px;
-    font-size: 10.5px;
+
+  .selected-city-text {
+    max-width: 42px !important;
   }
-  .legal-card {
-    padding: 14px 10px;
+
+  .theme-icon-btn {
+    width: 28px !important;
+    height: 28px !important;
+    min-height: 28px !important;
   }
-  .legal-hero-title {
-    font-size: 20px;
+
+  /* Containers */
+  .container,
+  .hero-container,
+  .disco-articles-container,
+  .footer-container,
+  .legal-content-container,
+  .wapda-main {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
-  .legal-section-title {
-    font-size: 14.5px;
+
+  /* Hero Section */
+  .hero-title {
+    font-size: 22px !important;
+    line-height: 1.25 !important;
   }
-  .legal-p {
-    font-size: 13px;
+
+  .hero-subtitle {
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 12px !important;
   }
-  .legal-list {
-    padding-left: 14px;
+
+  .hero-right {
+    max-width: 220px !important;
+  }
+
+  .hero-img-stage {
+    max-width: 200px !important;
+  }
+
+  /* Form */
+  .search-bar-wrap {
+    padding: 6px !important;
+    gap: 6px !important;
+  }
+
+  .search-input-inner {
+    padding: 6px 8px !important;
+  }
+
+  .search-input-field {
+    font-size: 15px !important;
+  }
+
+  .btn-check-bill,
+  #btnSubmitBill,
+  #billSearchForm .btn-check-bill {
+    font-size: 13px !important;
+    min-height: 42px !important;
+    padding: 10px 12px !important;
+  }
+
+  .search-company-badge,
+  .search-ru-badge {
+    padding: 3px 5px !important;
+    font-size: 11px !important;
+  }
+
+  .ru-inline-select {
+    font-size: 11.5px !important;
+  }
+
+  /* Cards & Articles */
+  .disco-card {
+    padding: 14px 12px !important;
+  }
+
+  .disco-title {
+    font-size: 16px !important;
+  }
+
+  .disco-fullname {
+    font-size: 12px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .btn-disco-action {
+    font-size: 13px !important;
+    min-height: 38px !important;
+    padding: 8px 14px !important;
+  }
+
+  .disco-article-card,
+  .wapda-card,
+  .legal-card,
+  .why-card-bar,
+  .how-it-works-container,
+  .calc-form-box,
+  .calc-result-box {
+    padding: 14px 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .disco-article-title,
+  .wapda-section-title {
+    font-size: 16.5px !important;
+  }
+
+  .disco-article-p,
+  .wapda-lead {
+    font-size: 12.5px !important;
+  }
+
+  .disco-article-icon,
+  .wapda-section-icon {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 16px !important;
+    border-radius: 8px !important;
+  }
+
+  .pill-badge-wrap {
+    gap: 5px !important;
+  }
+
+  .badge-wapda,
+  .badge-official {
+    font-size: 10.5px !important;
+    padding: 2px 7px !important;
+  }
+
+  /* Calculator */
+  .calc-total-amount {
+    font-size: 21px !important;
+  }
+
+  .calc-breakdown-row {
+    font-size: 12px !important;
+  }
+
+  .calc-preset-btn {
+    padding: 4px 7px !important;
+    font-size: 11px !important;
+  }
+
+  .calc-type-option {
+    padding: 8px 10px !important;
+  }
+
+  .calc-type-title {
+    font-size: 13px !important;
+  }
+
+  .calc-type-desc {
+    font-size: 11.5px !important;
+  }
+
+  /* Footer */
+  .footer-center {
+    gap: 4px 8px !important;
+  }
+
+  .footer-link {
+    font-size: 11.5px !important;
+    padding: 2px 3px !important;
+  }
+
+  .footer-disclaimer {
+    font-size: 10.5px !important;
   }
 }
 
@@ -3890,7 +4009,7 @@ body[data-theme="dark"] .disco-callout-box {
   margin-top: 28px;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 769px) and (max-width: 900px) {
   .disco-other-grid {
     grid-template-columns: repeat(2, 1fr);
   }
