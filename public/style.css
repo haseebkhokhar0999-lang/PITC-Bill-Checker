@@ -4169,6 +4169,123 @@ body[data-theme="dark"] .wasa-icon-wrap { background: rgba(2, 132, 199, 0.12); b
     line-height: 1.6 !important;
     text-align: center !important;
   }
+  /* Mobile Bill Check Form Stacked */
+  .search-bar-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    gap: 10px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-bottom: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  .search-input-inner {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 48px !important;
+    padding: 4px 10px !important;
+    background: var(--bg-card) !important;
+    border: 1.5px solid var(--border-card) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--shadow-card) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  body[data-theme="dark"] .search-input-inner {
+    background: #111d32 !important;
+    border-color: #1e293b !important;
+  }
+
+  .search-input-inner:focus-within {
+    border-color: var(--blue-primary) !important;
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15) !important;
+  }
+
+  .search-bar-wrap input[type="text"],
+  .search-input-inner input.search-input-field {
+    flex: 1 1 0% !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    font-size: 13.5px !important;
+    height: 40px !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    color: var(--text-main) !important;
+    padding: 0 !important;
+  }
+
+  .search-input-field::placeholder {
+    font-size: 13px !important;
+  }
+
+  .search-ru-badge {
+    flex-shrink: 0 !important;
+    margin-left: 6px !important;
+    background: var(--bg-hero, #f1f5f9) !important;
+    border: 1px solid var(--border-light, #e2e8f0) !important;
+    border-radius: 8px !important;
+    padding: 3px 6px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: 90px !important;
+  }
+
+  body[data-theme="dark"] .search-ru-badge {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .search-bar-wrap select,
+  .search-ru-badge select.ru-inline-select {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 78px !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    color: var(--text-body) !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+  }
+
+  .btn-check-bill {
+    width: 100% !important;
+    min-height: 48px !important;
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 4px 14px rgba(0, 102, 255, 0.35) !important;
+  }
+
+  .btn-check-bill:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 18px rgba(0, 102, 255, 0.45) !important;
+  }
+
+  .pitc-fallback-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
   /* Homepage Redesign Responsive (768px) */
   .disco-section-h2,
   .other-bills-h2 {
@@ -4369,6 +4486,26 @@ body[data-theme="dark"] .wasa-icon-wrap { background: rgba(2, 132, 199, 0.12); b
 
   .footer-disclaimer {
     font-size: 10.5px !important;
+  }
+
+  /* Mobile Bill Check Form Stacked (<= 480px / 360px) */
+  .search-input-inner {
+    padding: 3px 10px !important;
+    min-height: 46px !important;
+  }
+
+  .search-input-field {
+    font-size: 13px !important;
+    height: 38px !important;
+  }
+
+  .search-input-field::placeholder {
+    font-size: 12px !important;
+  }
+
+  .btn-check-bill {
+    min-height: 46px !important;
+    font-size: 14px !important;
   }
 
   /* Homepage Redesign Responsive (480px / 360px) */
