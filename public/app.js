@@ -140,8 +140,8 @@ const DISCO_FULL_NAMES = {
 const TRANSLATIONS = {
   en: {
     // Header
-    brandTitle: "Bijli Bill Checker",
-    brandSubtitle: "Check Your Electricity Bill Online",
+    brandTitle: "Check Bill Online",
+    brandSubtitle: "Check All Your Bills Online",
     navHome: "Home",
     navBillCheck: "Bill Check",
     navHowItWorks: "How It Works",
