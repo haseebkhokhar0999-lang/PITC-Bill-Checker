@@ -4566,3 +4566,75 @@ body[data-theme="dark"] .wasa-icon-wrap { background: rgba(2, 132, 199, 0.12); b
     padding: 12px 18px !important;
   }
 }
+
+/* PWA Install App Header Button */
+.install-app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: var(--blue-light-bg);
+  color: var(--blue-primary);
+  border: 1px solid rgba(0, 102, 255, 0.25);
+  border-radius: var(--radius-pill);
+  padding: 5px 11px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.install-app-btn:hover {
+  background: var(--blue-primary);
+  color: #ffffff;
+  border-color: var(--blue-primary);
+}
+
+.install-app-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+body[data-theme="dark"] .install-app-btn {
+  background: rgba(0, 102, 255, 0.18);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+body[data-theme="dark"] .install-app-btn:hover {
+  background: var(--blue-primary);
+  color: #ffffff;
+  border-color: var(--blue-primary);
+}
+
+@media (max-width: 768px) {
+  .install-app-btn {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+    min-height: 30px !important;
+    gap: 4px !important;
+  }
+
+  .install-app-icon {
+    width: 13px !important;
+    height: 13px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .install-app-btn {
+    width: 28px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 !important;
+  }
+
+  .install-app-label {
+    display: none !important;
+  }
+}

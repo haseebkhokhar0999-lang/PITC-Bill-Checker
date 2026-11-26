@@ -137,6 +137,9 @@
 
   <link rel="stylesheet" href="/style.css">
   <script>try { localStorage.setItem('bijli_lang', 'ur'); } catch(e){}</script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0066ff">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 </head>
 <body data-disco="gepco" data-lang="ur">
 
@@ -201,6 +204,14 @@
 
       <!-- Right Controls: Theme Toggle & All Cities Dropdown -->
       <div class="nav-right">
+        <button type="button" class="install-app-btn" id="installAppBtn" aria-label="Install App" title="Install Check Bill Online App">
+          <svg class="install-app-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span class="install-app-label" data-en="Install App" data-ur="ایپ انسٹال کریں">ایپ انسٹال کریں</span>
+        </button>
                 <!-- English / Urdu Language Toggle Button -->
         <a href="/gepco-bill" class="lang-toggle-btn" id="langToggleBtn" aria-label="Switch to English" title="English / اردو" style="text-decoration:none;">
           <span class="lang-text-en">EN</span>
@@ -1891,5 +1902,6 @@
   </div>
 
   <script src="/app.js"></script>
+  <script src="/pwa.js" defer></script>
 </body>
 </html>
