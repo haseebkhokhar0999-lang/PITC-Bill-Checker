@@ -1,5 +1,5 @@
 /**
- * Bijli Bill Checker - Frontend JavaScript
+ * Check Bill Online - Frontend JavaScript
  * High-performance, bug-free, fully responsive, integrating city and company synchronization
  */
 
@@ -191,10 +191,10 @@ const TRANSLATIONS = {
     faqViewAll: "View All FAQs & Knowledge Base &rarr;",
 
     // Footer
-    footerTitle: "Bijli Bill Checker",
+    footerTitle: "Check Bill Online",
     footerSubtitle: "All Pakistani DISCOs & WAPDA",
     footerServing: "Made for a Better Pakistan 🇵🇰 💚",
-    footerCopy: "© 2026 Bijli Bill Checker. All rights reserved.",
+    footerCopy: "© 2026 Check Bill Online. All rights reserved.",
     footerHome: "Home",
     footerBillCheck: "Bill Check",
     footerFaq: "FAQ",
@@ -211,7 +211,7 @@ const TRANSLATIONS = {
   },
   ur: {
     // Header
-    brandTitle: "بجلی بل چیکر",
+    brandTitle: "Check Bill Online",
     brandSubtitle: "آن لائن بجلی کا بل چیک کریں",
     navHome: "ہوم",
     navBillCheck: "بل چیک",
@@ -262,10 +262,10 @@ const TRANSLATIONS = {
     faqViewAll: "تمام سوالات و معلومات دیکھیں &larr;",
 
     // Footer
-    footerTitle: "بجلی بل چیکر",
+    footerTitle: "Check Bill Online",
     footerSubtitle: "تمام پاکستانی ڈسکوز اور واپڈا",
     footerServing: "بہتر پاکستان کے لیے 🇵🇰 💚",
-    footerCopy: "© 2026 بجلی بل چیکر۔ جملہ حقوق محفوظ ہیں۔",
+    footerCopy: "© 2026 Check Bill Online۔ جملہ حقوق محفوظ ہیں۔",
     footerHome: "ہوم",
     footerBillCheck: "بل چیک",
     footerFaq: "سوالات",
@@ -1409,7 +1409,7 @@ function shareWhatsApp() {
     `⏰ Due Date: ${bill.dueDate || '-'}\n` +
     `🔴 Payable After Due Date: Rs. ${charges.amountAfterDueDate || '-'}\n` +
     `📊 Units Consumed: ${bill.unitsConsumed || '-'} Units\n\n` +
-    `Verified via Bijli Bill Checker: ${window.location.origin}`;
+    `Verified via Check Bill Online: ${window.location.origin}`;
 
   window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
 }
