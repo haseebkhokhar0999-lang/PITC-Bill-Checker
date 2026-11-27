@@ -155,8 +155,8 @@ const TRANSLATIONS = {
     badgeWapda: "WAPDA & DISCOs",
     badgeOfficial: "Bill Checking",
     heroTitle: 'Electricity Bill <span class="highlight-blue">Check Online</span>',
-    heroSubtitle: "Click your electricity company below to check your bill.<br>Fast, secure and easy — all in one place.",
-    popularProviders: "Popular Providers:",
+    heroSubtitle: "Pick your company below to check your electricity, gas, phone, or water bill. It is fast, safe, and free.",
+    popularProviders: "Pick Your Company:",
 
     // DISCO Action Buttons
     checkBillAction: "Check Bill &rarr;",
@@ -164,21 +164,21 @@ const TRANSLATIONS = {
     // Why Section
     whyTitle: "Why Check Your Bill Online?",
     whyDesc: "Get your electricity bill details in seconds. No waiting, no hassle.",
-    featFastTitle: "Fast & Easy",
+    featFastTitle: "Fast &amp; Easy",
     featFastDesc: "Get your bill in seconds",
-    featSecureTitle: "100% Secure",
+    featSecureTitle: "Safe and Private",
     featSecureDesc: "Your data is safe with us",
-    featAccessTitle: "24/7 Access",
+    featAccessTitle: "Open Day and Night",
     featAccessDesc: "Check anytime, anywhere",
 
     // How It Works
     howMainTitle: "How It Works",
     howSubTitle: "Checking your electricity bill is simple and takes less than a minute.",
-    step1Title: "Click Your DISCO Card/Chip",
+    step1Title: "Pick Your Company",
     step1Desc: "Click your DISCO card/chip (LESCO, MEPCO, FESCO, etc.).",
-    step2Title: "Enter Reference Number",
+    step2Title: "Type Your Reference Number",
     step2Desc: "On that DISCO's own page, enter your 14-digit reference number.",
-    step3Title: "View Bill Details",
+    step3Title: "See and Print Your Bill",
     step3Desc: "View your bill details.",
     step4Title: "Print Original Bill (اصل بل کا پرنٹ)",
     step4Desc: "Print Original Bill (اصل بل کا پرنٹ).",

@@ -109,14 +109,14 @@ body {
 }
 
 .nav-container {
-  max-width: 1180px;
+  max-width: 1260px;
   width: 100%;
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 /* Brand Logo */
@@ -126,6 +126,8 @@ body {
   gap: 10px;
   text-decoration: none;
   color: var(--text-main);
+  flex-shrink: 0;
+  min-width: max-content;
 }
 
 .brand-icon-box {
@@ -147,6 +149,8 @@ body {
 .brand-text {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
+  min-width: max-content;
 }
 
 .brand-title {
@@ -155,31 +159,34 @@ body {
   letter-spacing: -0.3px;
   line-height: 1.2;
   color: var(--text-main);
+  white-space: nowrap;
 }
 
 .brand-subtitle {
   font-size: 11px;
   color: var(--text-muted);
   font-weight: 500;
+  white-space: nowrap;
 }
 
 /* Nav Menu Items */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 }
 
 .nav-item {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   color: var(--text-body);
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
-  padding: 6px 14px;
+  padding: 6px 10px;
   border-radius: var(--radius-pill);
+  white-space: nowrap;
   transition: all 0.15s;
 }
 
@@ -3429,10 +3436,19 @@ body[data-theme="dark"] .pitc-fallback-btn:hover {
 
 .home-hero-section {
   position: relative;
-  background-image: linear-gradient(135deg, rgba(8, 20, 48, 0.90) 0%, rgba(13, 34, 76, 0.85) 50%, rgba(8, 20, 48, 0.92) 100%);
   padding: 68px 0 56px;
   color: #ffffff;
   overflow: hidden;
+}
+
+/* Dark gradient overlay sits between photo (z-index:0) and content (z-index:2) */
+.home-hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(8, 20, 48, 0.88) 0%, rgba(13, 34, 76, 0.80) 50%, rgba(8, 20, 48, 0.90) 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .home-hero-section .hero-container {
@@ -3443,6 +3459,8 @@ body[data-theme="dark"] .pitc-fallback-btn:hover {
   max-width: 960px;
   margin: 0 auto;
   padding: 0 20px;
+  position: relative;
+  z-index: 2;
 }
 
 .home-hero-section .hero-left {
@@ -3458,22 +3476,22 @@ body[data-theme="dark"] .pitc-fallback-btn:hover {
   line-height: 1.18;
   letter-spacing: -0.5px;
   margin-bottom: 16px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7), 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
 .home-hero-section .highlight-blue {
   color: #38bdf8 !important;
-  text-shadow: 0 0 24px rgba(56, 189, 248, 0.45);
+  text-shadow: 0 0 24px rgba(56, 189, 248, 0.6), 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .home-hero-section .hero-subtitle {
-  color: rgba(241, 245, 249, 0.94) !important;
+  color: rgba(241, 245, 249, 0.96) !important;
   font-size: 17px;
   font-weight: 400;
   line-height: 1.6;
   max-width: 720px;
   margin: 0 auto 28px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6), 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 .home-hero-section .popular-providers-row {
@@ -3504,15 +3522,14 @@ body[data-theme="dark"] .pitc-fallback-btn:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 15px;
+  padding: 7px 16px;
   font-size: 13.5px;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: #0b224d;
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid #60a5fa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   transition: all 0.2s ease;
   text-decoration: none;
 }
